@@ -20,6 +20,61 @@ I also want to show that Client Side Includes is a good first choice for transcl
 
 Finally, we'll argue that [h-include](https://github.com/gustafnk/h-include) is a good choice for a Client Side Includes library.
 
+## Table of Contents
+
+<!-- MarkdownTOC depth=5 -->
+
+- Why Microservices?
+  - Example: Retail site
+- Scaling web design: style guides and pattern labs
+  - Different design means different resources
+  - Responsive/adaptive web design
+- Client-side constraints
+  - Some mobile devices have a slow CPU
+  - Less room for change of framework
+  - High rate of change on the client-side
+  - Isomorphic web applications do not resolve the constraints
+- Integration techniques
+  - Data
+  - Code
+  - Content
+    - Edge-Side Includes
+      - Performance
+      - Headers
+      - Development perspective
+      - Summary
+    - Client Side Includes
+      - iFrames don’t scale
+      - Performance
+      - Headers
+      - Development perspective
+      - Summary
+    - Using ESI and CSI together
+- Client-Side Transclusion with &lt;h-include&gt;
+  - hinclude and &lt;h-include&gt;
+    - hinclude
+      - Timing
+      - Refresh resources
+      - Conditional transclusion for small screens
+      - Transitive transclusion not supported
+    - &lt;h-include&gt;
+      - Easy to extend
+      - Listens to the `@src` attribute
+      - Fragment extraction
+      - How to avoid a brief flash of fallback content
+      - Drawbacks
+  - Local stylesheets and scripts
+    - Local stylesheets
+    - Local scripts
+    - Loading scripts through ESI
+    - Summary
+  - Server driven partial updates
+- Example architecture
+  - Optimizations
+- Conclusion
+
+<!-- /MarkdownTOC -->
+
 
 ## Why Microservices?
 
@@ -192,7 +247,7 @@ It’s not a requirement for CSI to be declarative, but I think it’s a good pr
 
 - Traversing the DOM for a 'data-’ attribute on an `<a href>` and include the `href`
 - Traversing the DOM for an XML element and include its `src` attribute inside the XML element [hinclude.js](https://github.com/mnot/hinclude)
-- Registering a custom element [CE] and include its `src` attribute, may or may not keep the existing element [`<h-include>`](https://github.com/gustafnk/h-include), [`<include-fragment-element>`](https://github.com/github/include-fragment-element), [`<html-include>`](https://github.com/chris-l/html-include/)
+- Registering a custom element [CE] and include its `src` attribute, may or may not keep the existing element [&lt;h-include&gt;](https://github.com/gustafnk/h-include), [`<include-fragment-element>`](https://github.com/github/include-fragment-element), [`<html-include>`](https://github.com/chris-l/html-include/)
 
 One downside with CSI is that it doesn’t play well with links to JavaScript included dynamically. This means that it’s a bit more cumbersome to integrate a microservice that has dependencies to its own JavaScript. For an example on how this issue can be resolved (and why integrating CSS is not a problem), see the section [Local stylesheets and scripts](#local-stylesheets-and-scripts).
 
@@ -238,13 +293,13 @@ One possible strategy could be to use only CSI in the beginning of a project and
 
 It's also possible to combine ESI and CSI in related parts of the page. For example, a header menu could be transcluded with ESI and contain a client side included shopping cart. The opposite relationship also works – to include something with CSI that in turn uses ESI to construct a full response.
 
-## Client-Side Transclusion with <h-include>
+## Client-Side Transclusion with &lt;h-include&gt;
 
-In this section, we’ll look at how to transclude content on the client-side using the declarative libraries hinclude and <h-include>. We’ll also give some general advice when using transclusion.
+In this section, we’ll look at how to transclude content on the client-side using the declarative libraries hinclude and &lt;h-include&gt;. We’ll also give some general advice when using transclusion.
 
-### hinclude and `<h-include>`
+### hinclude and &lt;h-include&gt;
 
-Let’s look at two libraries that provides declarative ways to include content on the client-side: `hinclude` and `<h-include>`.
+Let’s look at two libraries that provides declarative ways to include content on the client-side: `hinclude` and &lt;h-include&gt;.
 
 #### hinclude
 
@@ -268,7 +323,7 @@ The result after transclusion will look something like this:
 </hx:include>
 ```
 
-If a link is used as the fallback content, search engines and other crawlers will be able to crawl the site without executing JavaScript, so I would consider it a good practice. However, this would mean that the link is shown briefly during initial load. In the section on `<h-include>` below, we’ll show how to avoid this brief flash of fallback content.
+If a link is used as the fallback content, search engines and other crawlers will be able to crawl the site without executing JavaScript, so I would consider it a good practice. However, this would mean that the link is shown briefly during initial load. In the section on &lt;h-include&gt; below, we’ll show how to avoid this brief flash of fallback content.
 
 ##### Timing
 
@@ -286,15 +341,15 @@ For small screens, one might want to skip the transclusion of some resources to 
 
 ##### Transitive transclusion not supported
 
-One drawback of `hinclude` is that transcluded responses containing *other* `hinclude` elements are not automatically processed. However, this is solved in `<h-include>`.
+One drawback of `hinclude` is that transcluded responses containing *other* `hinclude` elements are not automatically processed. However, this is solved in &lt;h-include&gt;.
 
-#### <a name="h-include"></a> `<h-include>`
+#### <a name="h-include">&lt;h-include&gt</a>;
 
-`<h-include>` is a port of hinclude using the Web Components standard [Custom Elements](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Custom_Elements) for detecting `hinclude` elements. Among other things, Custom Elements provides us with events when a custom element is created or attached to the DOM. This means that we get transitive transclusion “for free" when using `h-include`.
+&lt;h-include&gt; is a port of hinclude using the Web Components standard [Custom Elements](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Custom_Elements) for detecting `hinclude` elements. Among other things, Custom Elements provides us with events when a custom element is created or attached to the DOM. This means that we get transitive transclusion “for free" when using &lt;h-include&gt;.
 
 ##### Easy to extend 
 
-It’s easy to extend `<h-include>`, since it’s is a custom element and exposes its prototype. The simplest extension is to disable automatic transclusion, so that the `refresh` method needs to be called in order to load the content. This is how we would create such an extension, called `h-include-manual-loading`:
+It’s easy to extend &lt;h-include&gt;, since it’s is a custom element and exposes its prototype. The simplest extension is to disable automatic transclusion, so that the `refresh` method needs to be called in order to load the content. This is how we would create such an extension, called `h-include-manual-loading`:
 
 ```
 var proto = Object.create(HIncludeElement.prototype);
@@ -306,24 +361,24 @@ document.registerElement('h-include-manual-loading', { prototype: proto });
 
 At first, this seems like a strange thing to disable automatic loading, but there are at least two scenarios where this would be beneficial: wrapping content included with ESI with a `<h-include-manual-loading>’ element to make the content updatable, and lazy loading of content depending if the element is about to enter the viewport.
 
-Another extension to `<h-include>` could be to be trigger anchor scrolling after successful transclusion.
+Another extension to &lt;h-include&gt; could be to be trigger anchor scrolling after successful transclusion.
 
 
 ##### Listens to the `@src` attribute
 
-`<h-include>` listens to changes to the `@src` attribute and transcludes the new URL. This can be valuable in a master/detail scenario, where you can think of `<h-include>` as a lightweight iFrame.
+&lt;h-include&gt; listens to changes to the `@src` attribute and transcludes the new URL. This can be valuable in a master/detail scenario, where you can think of &lt;h-include&gt; as a lightweight iFrame.
 
 
 ##### Fragment extraction
 
-`<h-include>` supports *fragment extraction*, which allows the developer to specify a CSS selector to transclude a part of the response. Instead of having two separate resources (i.e. one with header and footer, and one without), one can expose a single resource and let the consumers use fragment extraction. This would work best for transcluding larger resources (like articles) and not smaller components (like a shopping cart).
+&lt;h-include&gt; supports *fragment extraction*, which allows the developer to specify a CSS selector to transclude a part of the response. Instead of having two separate resources (i.e. one with header and footer, and one without), one can expose a single resource and let the consumers use fragment extraction. This would work best for transcluding larger resources (like articles) and not smaller components (like a shopping cart).
 
-There are a few more features in `<h-include>` that you can read about its [GitHub page](https://github.com/gustafnk/h-include).
+There are a few more features in &lt;h-include&gt; that you can read about its [GitHub page](https://github.com/gustafnk/h-include).
 
 
 ##### How to avoid a brief flash of fallback content
 
-Even if our web servers usually responds fast, we’d like to avoid to show a brief flash of fallback content for our `<h-include>`s. Here’s an example of how to do it:
+Even if our web servers usually responds fast, we’d like to avoid to show a brief flash of fallback content for our &lt;h-include&gt;s. Here’s an example of how to do it:
 
 ```
 <!-- Put this code before the first h-include or in the <head> element -->
@@ -343,11 +398,11 @@ Even if our web servers usually responds fast, we’d like to avoid to show a br
 
 ```
 
-The first line of code is to detect if JavaScript is enabled in the browser at all, otherwise we’ll always show the fallback content. The first CSS rule then hides all the `<h-include>`s that are not included (`<h-include>` adds an `included` class after the AJAX request returns). The second CSS rule shows all included `<h-include>`s.
+The first line of code is to detect if JavaScript is enabled in the browser at all, otherwise we’ll always show the fallback content. The first CSS rule then hides all the &lt;h-include&gt;s that are not included (&lt;h-include&gt; adds an `included` class after the AJAX request returns). The second CSS rule shows all included &lt;h-include&gt;s.
 
 ##### Drawbacks
 
-In order to use `<h-include>`, we need to conditionally load a polyfill for Custom Elements, for those browsers that don’t support Custom Elements. There are a few polyfills to choose from but one property that unites them all is that they drop support for Internet Explorer around version 9 or 10.
+In order to use &lt;h-include&gt;, we need to conditionally load a polyfill for Custom Elements, for those browsers that don’t support Custom Elements. There are a few polyfills to choose from but one property that unites them all is that they drop support for Internet Explorer around version 9 or 10.
 
 ### <a name="local-stylesheets-and-scripts"></a>Local stylesheets and scripts
 
@@ -586,11 +641,11 @@ When ESI is part of the infrastructure, we can choose to include the shopping ca
 
 ## Example architecture
 
-We use `<h-include>` to keep the initial infrastructure lightweight. For stylesheets and JavaScript local to each component, we use the approach in [Local stylesheets and scripts](#local-stylesheets-and-scripts): return stylesheet references in the transcluded the content and reference a JavaScript that in turn uses a script loader. To partially update the shopping cart component, we use the approach in [Server driven partial updates](#server-driven-partial-updates).
+We use &lt;h-include&gt; to keep the initial infrastructure lightweight. For stylesheets and JavaScript local to each component, we use the approach in [Local stylesheets and scripts](#local-stylesheets-and-scripts): return stylesheet references in the transcluded the content and reference a JavaScript that in turn uses a script loader. To partially update the shopping cart component, we use the approach in [Server driven partial updates](#server-driven-partial-updates).
 
 ### Optimizations
 
-We replace the `<h-include>` elements with ESI when appropriate, in order to increase performance and decrease the number of web requests. To reference component local JavaScript, we use the *ESI references* approaches in [Local stylesheets and scripts](#local-stylesheets-and-scripts). If we want to include the shopping cart with ESI and still partially update the shopping cart when the user adds a product, we need to wrap the transcluded content in an `h-include-manual-loading`.
+We replace the &lt;h-include&gt; elements with ESI when appropriate, in order to increase performance and decrease the number of web requests. To reference component local JavaScript, we use the *ESI references* approaches in [Local stylesheets and scripts](#local-stylesheets-and-scripts). If we want to include the shopping cart with ESI and still partially update the shopping cart when the user adds a product, we need to wrap the transcluded content in an `h-include-manual-loading`.
 
 
 ## Conclusion
