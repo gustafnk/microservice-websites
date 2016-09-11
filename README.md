@@ -8,15 +8,15 @@ To co-exist on the same page, the code for the different parts need to be integr
 
 When we build pages with parts from different teams, we’re building a *network* of pages and parts. The properties of a network as a whole depends largely on the way we integrate the parts, which in turn depends on how we build the parts. But the way we build the parts depends in turn on the way we integrate the parts, which depends on what properties we want the network as a whole to have. How do we resolve this deadlock?
 
-A rhetorical question: what do you think is most important, the network as a whole (the parts and their integrations) or the sum of all parts (without the integrations)? I think we shouldn't fall into the trap of letting the parts dictate how we integrate the whole. Instead, the whole should set the constraints on how we can build the parts.
+A rhetorical question: what do you think is most important, the network as a whole (the parts and their integrations) or the sum of all parts (without the integrations)? we think we shouldn't fall into the trap of letting the parts dictate how we integrate the whole. Instead, the whole should set the constraints on how we can build the parts.
 
 So, what are good ways of building a network of microservice web UIs?
 
 The meaning behind the word “good" depends on the current and future needs of the organisation responsible for the software and the users of the software. No architecture is good in-itself, it all depends on the context and the needs.
 
-With this article I want to show that [*server-side rendered web UIs integrated with transclusion*](#content) allow for high *long-term evolvability* compared to client-side rendering integrated with shared code. In other words, if you want a system with high long-term evolvability, you should not develop the web UIs using client-side JavaScript and integrate them using a shared components approach.
+With this article we want to show that [*server-side rendered web UIs integrated with transclusion*](#content) allow for high *long-term evolvability* compared to client-side rendering integrated with shared code. In other words, if you want a system with high long-term evolvability, you should not develop web UIs using only client-side JavaScript and integrate them using a shared components approach.
 
-I also want to show that Client Side Includes is a good first choice for transclusion technology, since they are lightweight and allow for a faster initial release than Edge-Side Includes (ESI). They also allow for keeping the option open for using ESI later, when beneficial.
+We also want to show that Client Side Includes is a good first choice for transclusion technology, since they are lightweight and allow for a faster initial release than Edge-Side Includes (ESI). They also allow for keeping the option open for using ESI later, when beneficial.
 
 Finally, we'll argue that [h-include](https://github.com/gustafnk/h-include) is a good choice for a Client Side Includes library.
 
@@ -144,7 +144,7 @@ Parsing of JavaScript is a CPU bound operation and the CPUs in many mobile devic
 
 On the server-side, we can partition our systems basically however we want and use different languages and frameworks for the different parts. There is certainly a cost associated with using multiple languages/frameworks at the same time, but this cost is mostly “cognitive" for the organisation. The big upside with allowing for multiple languages/frameworks is that the system can be migrated from using tech A to using tech B over a quite long period of time, without the user being aware of it. 
 
-On the client-side however, the cost of doing the same move would be much higher, since the end-user needs to download/parse/execute a double amount of code for the length of the migration. This means that the amount of time that the migration is active is a cost factor as well. And I suspect that this could be a reason behind why teams often want to rewrite their client-side web applications instead of migrating them.
+On the client-side however, the cost of doing the same move would be much higher, since the end-user needs to download/parse/execute a double amount of code for the length of the migration. This means that the amount of time that the migration is active is a cost factor as well. And we suspect that this could be a reason behind why teams often want to rewrite their client-side web applications instead of migrating them.
 
 Having two frameworks (or ecosystems) on the same page simultaneously is costly, which in turn leads to low evolvability of the system.
 
@@ -160,7 +160,7 @@ On the server-side there is much less change, in terms of frameworks and librari
 
 For the purposes of this article, the same constraints that apply to client-side web applications apply to isomorphic web applications as well. Therefore, we can think of the two strategies as the same thing, namely using a large amount of templating code on the client-side.
 
-As a side note, I think the [drawbacks of isomorphic web applications](https://www.jayway.com/2016/05/23/6-reasons-isomorphic-web-apps-not-silver-bullet-youre-looking/) are too large, compared with the benefits. However, *isomorphic parts* could be a good choice sometimes.
+As a side note, we think the [drawbacks of isomorphic web applications](https://www.jayway.com/2016/05/23/6-reasons-isomorphic-web-apps-not-silver-bullet-youre-looking/) are too large, compared with the benefits. However, *isomorphic parts* could be a good choice sometimes.
 
 <a name="integration-techniques"></a>
 ## Integration techniques
@@ -199,7 +199,7 @@ Integrating on content in our example means means that the Orders team will expo
 
 Another name for including content from another resource is to *[transclude](https://en.wikipedia.org/wiki/Transclusion)* the content from another service (inlining a document in the current document), like '<img>’ elements in HTML pages.
 
-There are several ways to transclude content. One could for example run imperative code to perform HTTP requests on either the server or client and include the responses at the proper places. However, I think that a declarative approach is better, since it mimics the design of other transcluded content in HTML, like images.
+There are several ways to transclude content. One could for example run imperative code to perform HTTP requests on either the server or client and include the responses at the proper places. However, we think that a declarative approach is better, since it mimics the design of other transcluded content in HTML, like images.
 
 Transclusion can be done either on the server or the client. Transclusion on the client is called Client Side Includes (CSI) and transclusion on the server is called Server Side Includes (SSI). However, SSI is also a specific (and old) language for including files or executing cgi-bin scripts in HTML files (or HTTP responses, in general), so the terms are a bit confusing. We’ll try to avoid using the term Server Side Includes for this reason.
 
@@ -263,7 +263,7 @@ Client Side Includes (CSI) is a bit broader concept than ESI, since ESI is a sta
 
 In our example, the shopping cart will be included with an AJAX request to the shopping cart resource, which returns HTML for the browser to render.
 
-It’s not a requirement for CSI to be declarative, but I think it’s a good practice. Some declarative CSI techniques/technologies are:
+It’s not a requirement for CSI to be declarative, but we think it’s a good practice. Some declarative CSI techniques/technologies are:
 
 - Traversing the DOM for a 'data-’ attribute on an `<a href>` and include the `href`
 - Traversing the DOM for an XML element and include its `src` attribute inside the XML element [hinclude.js](https://github.com/mnot/hinclude)
@@ -352,7 +352,7 @@ The result after transclusion will look something like this:
 </hx:include>
 ```
 
-If a link is used as the fallback content, search engines and other crawlers will be able to crawl the site without executing JavaScript, so I would consider it a good practice. However, this would mean that the link is shown briefly during initial load. In the section on &lt;h-include&gt; below, we’ll show how to avoid this brief flash of fallback content.
+If a link is used as the fallback content, search engines and other crawlers will be able to crawl the site without executing JavaScript, so we would consider it a good practice. However, this would mean that the link is shown briefly during initial load. In the section on &lt;h-include&gt; below, we’ll show how to avoid this brief flash of fallback content.
 
 <a name="timing"></a>
 ##### Timing
@@ -474,7 +474,7 @@ Either we can use ESI instead of CSI, which would look like this:
 <!-- shopping cart content here -->
 ```
 
-Another approach is to use ESI for the references to the stylesheets only, something we can call *ESI references*. I like this approach the most, since it’s quite flexible. Here, the transcluded service will expose separate resources for the stylesheet references, which the consumer can include with ESI (or CSI), like this:
+Another approach is to use ESI for the references to the stylesheets only, something we can call *ESI references*. we like this approach the most, since it’s quite flexible. Here, the transcluded service will expose separate resources for the stylesheet references, which the consumer can include with ESI (or CSI), like this:
 
 ```
 <esi:include src="/shopping-cart/component/stylesheets">
