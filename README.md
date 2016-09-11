@@ -14,7 +14,7 @@ So, what are good ways of building a network of microservice web UIs?
 
 The meaning behind the word “good" depends on the current and future needs of the organisation responsible for the software and the users of the software. No architecture is good in-itself, it all depends on the context and the needs.
 
-With this article I want to show that *server-side rendered web UIs integrated with transclusion* allow for high *long-term evolvability* compared to client-side rendering integrated with shared code. In other words, if you want a system with high long-term evolvability, you should not develop the web UIs using client-side JavaScript and integrate them using a shared components approach.
+With this article I want to show that [*server-side rendered web UIs integrated with transclusion*](#content) allow for high *long-term evolvability* compared to client-side rendering integrated with shared code. In other words, if you want a system with high long-term evolvability, you should not develop the web UIs using client-side JavaScript and integrate them using a shared components approach.
 
 I also want to show that Client Side Includes is a good first choice for transclusion technology, since they are lightweight and allow for a faster initial release than Edge-Side Includes (ESI). They also allow for keeping the option open for using ESI later, when beneficial.
 
