@@ -223,13 +223,13 @@ Edge-Side Includes is today the most popular way of transcluding content on the 
 <a name="performance"></a>
 ##### Performance
 
-Since transclusion is made on the server, it's not possible to inspect the returned HTML response and draw a conclusion that ESI was used. However, this property of ESI also introduces risk for degraded performance, since we need to rely on the included services’ performance in order to create a complete page.
+Since transclusion is made on the server, it's not possible to inspect the returned HTML response and draw a conclusion that ESI was used. However, this property of ESI also introduces risk for degraded performance, since we need to rely on the included services’ performance in order to create a complete page. If the transcluded content is cacheable, we can cache the fragments and the performance risk is removed. But for dynamic content, this option is not available.
 
-In our example, if we want to include the shopping cart early in the HTML and it’s having problems with performance, it will block the rest of the response until the service has responded.
+In our example, if we want to transclude the shopping cart (which contains dynamic content) early in the HTML and it at that time is having problems with performance, ESI will block the rest of the response until the service has responded or the ESI request times out.
 
 Also, one can argue that web UIs integrated with ESI is a violation of [Self-Contained Systems](http://scs-architecture.org/), since the page is no longer autonomous: if the shopping cart request is hanging, the whole page is hanging.
 
-To be fair though, ESI is really performant when it comes to transcluding static HTML files.
+To be fair though, ESI is really performant when it comes to transcluding static HTML files or cacheable content.
 
 
 <a name="headers"></a>
@@ -313,7 +313,7 @@ Client-Side Includes is a lightweight alternative to Edge-Side Includes. It remo
 <a name="using-esi-and-csi-together"></a>
 #### Using ESI and CSI together
 
-ESI and CSI complement each other: ESI can be quite heavyweight, but work really well with including static resources. CSI is lightweight, but for static content it would be better for performance to use ESI, especially if the static content contains references to JavaScript or CSS. However, the two techniques could very well be used together – use ESI for static content and CSI for dynamic content. A nice side-effect of this combination of techniques is that it’s easier to simulate ESI on a local developer machine if the only thing we use ESI for is to include static resources.
+ESI and CSI complement each other: ESI can be quite heavyweight, but work really well with including static resources. CSI is lightweight, but for static and/or cacheable content it would be better for performance to use ESI, especially if the content contains references to JavaScript or CSS. However, the two techniques could very well be used together – use ESI for static content and CSI for dynamic content. A nice side-effect of this combination of techniques is that it’s easier to simulate ESI on a local developer machine if the only thing we use ESI for is to include static resources.
 
 One possible strategy could be to use only CSI in the beginning of a project and when the project matures move some of the CSI elements to ESI instead, where appropriate. This way, we defer the investment in the heavier ESI infrastructure until later, allowing us to release earlier and extract value earlier. With regards to CSS, there would be a performance penalty to include a `<link rel="stylesheet">` in a CSI transcluded response (but with HTTP/2 the performance penalty would be limited). Later we could – again, if appropriate – use ESI instead of CSI. However, we can’t use this strategy with JavaScript, due to the way how browsers load JavaScript, all JavaScript files either needs to be available as shared resources or be included with ESI. For more details on this, see the section [Local stylesheets and scripts](#local-stylesheets-and-scripts)..
 
