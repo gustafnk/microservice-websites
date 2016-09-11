@@ -171,9 +171,9 @@ Going back to our retail example, we see that we need a way to integrate the pro
 <a name="data"></a>
 ### Data
 
-Integrating on data in our example means that the Orders team will expose an API endpoint containing the shopping cart information for a logged in user. The product team can then build their own component that use that API to display a shopping cart.
+Integrating on data in our example means that the Orders team will expose an API endpoint containing the shopping cart information for a logged in user. The Products team can then build their own component that use that API to display a shopping cart.
 
-This approach means that we will have as many shopping cart components as we have consumers of the shopping cart API. This is both good and bad: we don’t have a lot of coupling, but there is a lot of duplicated effort as well. Integrating on data puts the cost on the consumers, which doesn't scale well if the consumers are all members of the same organisation.
+This approach means that we will have as many shopping cart components as we have consumers of the shopping cart API (the Products team is one consumer here). This is both good and bad: we don’t have a lot of coupling, but there is a lot of duplicated effort as well. Integrating on data puts the cost on the consumers, which doesn't scale well if the consumers are all members of the same organisation.
 
 Also, if we’re not using [hypermedia controls](http://amundsen.com/hypermedia/hfactor/), we will have a duplication of business logic in the components. Say that we have a rule that says that a user should not be able to proceed to checkout if the user has zero products in their basket. In this case, it means that the rule will be implemented by all shopping cart API consumers.
 
@@ -223,11 +223,11 @@ Edge-Side Includes is today the most popular way of transcluding content on the 
 <a name="performance"></a>
 ##### Performance
 
-From the client’s perspective it can’t be seen that ESI was used, since the server returns a complete HTML document. However, this property of ESI also introduces risk for degraded performance, since we need to rely on the included services’ performance in order to create a complete page.
+Since transclusion is made on the server, it's not possible to inspect the returned HTML response and draw a conclusion that ESI was used. However, this property of ESI also introduces risk for degraded performance, since we need to rely on the included services’ performance in order to create a complete page.
 
 In our example, if we want to include the shopping cart early in the HTML and it’s having problems with performance, it will block the rest of the response until the service has responded.
 
-Also, one can argue that web UIs integrated with ESI is a violation of SCS, since the page is no longer autonomous: if the shopping cart request is hanging, the whole page is hanging.
+Also, one can argue that web UIs integrated with ESI is a violation of [Self-Contained Systems](http://scs-architecture.org/), since the page is no longer autonomous: if the shopping cart request is hanging, the whole page is hanging.
 
 To be fair though, ESI is really performant when it comes to transcluding static HTML files.
 
@@ -271,9 +271,9 @@ It’s not a requirement for CSI to be declarative, but we think it’s a good p
 
 One downside with CSI is that it doesn’t play well with links to JavaScript included dynamically. This means that it’s a bit more cumbersome to integrate a microservice that has dependencies to its own JavaScript. For an example on how this issue can be resolved (and why integrating CSS is not a problem), see the section [Local stylesheets and scripts](#local-stylesheets-and-scripts).
 
-Another downside with CSI is that it’s best if we know the height and width of the transcluded content in advance, in order to avoid a flickering UI. This is very similar to how we need to treat image elements in HTML. However, it’s sometimes cumbersome to know exactly how much space is needed for content with variable length. Over time, it’s better if we transclude that kind of content that come early in the DOM with ESI, while content with variable length that comes later in the DOM can be included with CSI.
+Another downside with CSI is that it’s best if we know the height and width of the transcluded content in advance, in order to avoid a flickering UI. This is very similar to how we need to treat image elements in HTML. However, it’s sometimes cumbersome to know exactly how much space is needed for content with variable length. Over time, it’s better if we transclude that kind of content that come early in the DOM with ESI, while content with variable length that comes later in the DOM can be included with CSI. However, we then also need to evaluate the possible performance risks with this change.   
 
-With CSI, we also need to follow the cross-origin policy for AJAX requests in the browser, or use CORS (if supported by the browser and enabled in the server). If CORS is not enabled, we need a reverse proxy or load balancer in front of the endpoint, so that they share the same host.
+With CSI, we also need to follow the cross-origin policy for AJAX requests in the browser, or use CORS (if supported by the browser and enabled in the server). If CORS is not enabled, we need a reverse proxy or load balancer in front of the endpoint, so that they share the same host (both in development mode and production).
 
 <a name="iframes-don’t-scale"></a>
 ##### iFrames don’t scale
@@ -298,12 +298,12 @@ And browsers with HTTP/2 are using HTTP/2 for xhr requests as well. So if both t
 <a name="headers-1"></a>
 ##### Headers
 
-Contrary to ESI, you don’t have to think about header forwarding when using CSI, since the resources are transcluded by the browser itself. However, the constraint you have to deal with is that AJAX calls can’t me made cross-origin, unless CORS is used. So, either use CORS or put a reverse proxy in front of all the web servers to have a single hostname for the services.
+Contrary to ESI, you don’t have to think about header forwarding when using CSI, since the resources are transcluded by the browser itself.
 
 <a name="development-perspective-1"></a>
 ##### Development perspective
 
-Again, contrary to ESI, the development perspective of using CSI is very low-friction, since we’re just using the browser to transclude the content. One caveat is, again, that we need a way to get around the cross-origin AJAX constraint during development.
+Again, contrary to ESI, the development perspective of using CSI is very low-friction, since we’re just using the browser to transclude the content.
 
 <a name="summary-1"></a>
 ##### Summary
@@ -315,14 +315,14 @@ Client-Side Includes is a lightweight alternative to Edge-Side Includes. It remo
 
 ESI and CSI complement each other: ESI can be quite heavyweight, but work really well with including static resources. CSI is lightweight, but for static content it would be better for performance to use ESI, especially if the static content contains references to JavaScript or CSS. However, the two techniques could very well be used together – use ESI for static content and CSI for dynamic content. A nice side-effect of this combination of techniques is that it’s easier to simulate ESI on a local developer machine if the only thing we use ESI for is to include static resources.
 
-One possible strategy could be to use only CSI in the beginning of a project and when the project matures move some of the CSI elements to ESI instead, where appropriate. This way, we defer the investment in the heavier ESI infrastructure until later, allowing us to release earlier and extract value earlier. With regards to CSS, there would be a performance penalty to include a `<link rel="stylesheet">` in a CSI transcluded response, but it would still work. Later we could – again, if appropriate – use ESI instead of CSI. However, we can’t use this strategy with JavaScript, due to the way how browsers load JavaScript, no JavaScript files either needs to be available as shared resources or be included with ESI. For more details on this, see the section [Local stylesheets and scripts](#local-stylesheets-and-scripts).
+One possible strategy could be to use only CSI in the beginning of a project and when the project matures move some of the CSI elements to ESI instead, where appropriate. This way, we defer the investment in the heavier ESI infrastructure until later, allowing us to release earlier and extract value earlier. With regards to CSS, there would be a performance penalty to include a `<link rel="stylesheet">` in a CSI transcluded response (but with HTTP/2 the performance penalty would be limited). Later we could – again, if appropriate – use ESI instead of CSI. However, we can’t use this strategy with JavaScript, due to the way how browsers load JavaScript, all JavaScript files either needs to be available as shared resources or be included with ESI. For more details on this, see the section [Local stylesheets and scripts](#local-stylesheets-and-scripts)..
 
 It's also possible to combine ESI and CSI in related parts of the page. For example, a header menu could be transcluded with ESI and contain a client side included shopping cart. The opposite relationship also works – to include something with CSI that in turn uses ESI to construct a full response.
 
 <a name="client-side-transclusion-with-h-include"></a>
 ## Client-Side Transclusion with &lt;h-include&gt;
 
-In this section, we’ll look at how to transclude content on the client-side using the declarative libraries hinclude and &lt;h-include&gt;. We’ll also give some general advice when using transclusion.
+In this section, we’ll look at how to transclude content on the client-side using the declarative libraries hinclude and &lt;h-include&gt;. We’ll also give some general advice when using transclusion. For transparency, we want to point out that the author of this article is the creator and core contributor of the &lt;h-include&gt; library.
 
 <a name="hinclude-and-h-include"></a>
 ### hinclude and &lt;h-include&gt;
