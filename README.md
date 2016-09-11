@@ -66,7 +66,7 @@ Finally, we'll argue that [h-include](https://github.com/gustafnk/h-include) is 
   - [Local stylesheets and scripts](#local-stylesheets-and-scripts)
     - [Local stylesheets](#local-stylesheets)
     - [Local scripts](#local-scripts)
-    - [Loading scripts through ESI](#loading-scripts-through-esi)
+    - [Local scripts with ESI enabled](#local-scripts-with-esi-enabled)
     - [Summary](#summary-2)
   - [Server driven partial updates](#server-driven-partial-updates)
 - [Example architecture](#example-architecture)
@@ -463,36 +463,18 @@ If we optimize for browsers supporting HTTP/2 (and SPDY) it’s not necessary to
 
 This approach would cause two HTTP requests in series, since the browser wouldn't see the stylesheet reference until the CSI request has completed. This could be good enough to start with, but we would want to optimize performance later. This optimization can be done in two ways.
 
-Either we can use ESI instead of CSI, which would look like this:
+If we want to avoid having series of HTTP request we can use ESI instead, which would look like this:
 
 `<esi:include src="/shopping-cart/component">`
 
 ...which after inclusion becomes:
 
 ```
-<link rel="stylesheet" href="/shopping-cart/style-[hash].css">
+<link rel="stylesheet" href="/shopping-cart/component/style-[hash].css">
 <!-- shopping cart content here -->
 ```
 
-Another approach is to use ESI for the references to the stylesheets only, something we can call *ESI references*. we like this approach the most, since it’s quite flexible. Here, the transcluded service will expose separate resources for the stylesheet references, which the consumer can include with ESI (or CSI), like this:
-
-```
-<esi:include src="/shopping-cart/component/stylesheets">
-<h-include src="/shopping-cart/component">
-  <!-- shopping cart content here -->
-</h-include>
-```
-
-The content of the '/shopping-cart/component/stylesheets’ resource would then be all the necessary stylesheet references to get the correct style for the exported component.
-
-Note that referencing the stylesheets directly from the consumer side is not a good idea, since we usually want to cache these resources an infinite amount of time. Releasing a new version of the stylesheet would then cause the consumers to release as well, so it doesn’t scale well. To clarify, don’t do this:
-
-```
-<link rel="stylesheet" href="/shopping-cart/component/style-[hash].css">
-<h-include src="/shopping-cart/component">
-  <!-- shopping cart content here -->
-</h-include>
-```
+Note that going from CSI to ESI, we now have introduced a performance risk for the transcluding page. Sometimes the benefit is worth the risk and sometimes not. However, the shopping cart's internal architecture matters here as well, so maybe the performance risk is actually quite low.
 
 <a name="local-scripts"></a>
 #### Local scripts
@@ -513,12 +495,15 @@ One downside with this approach is that the polyfills for HTML Imports use `eval
 Instead, we can use a script loader, i.e. [little-loader](https://github.com/walmartlabs/little-loader), to load cache busted script files:
 
 ```
+<!-- global resource in head -->
+<script src="/shared/vendor/little-loader.js"></script>
+
+<!-- shopping cart component -->
 <h-include src="/shopping-cart/component">
   <!-- shopping cart content here -->
 </h-include>
 <-- more content here -->
 <!-- use the good practice of loading scripts at the bottom of the page -->
-<script src="/shared/vendor/little-loader.js"></script>
 <script src="/shopping-cart/component/scripts.js"></script>
 </body></html>
 ```
@@ -529,43 +514,38 @@ Where `/shopping-cart/component/script.js` would look like this:
 window._lload('/shopping-cart/component/the-script-[hash].js";
 ```
 
-This way, we can release new versions of local scripts without forcing consumers to update their code.
+This way, we can release new versions of local scripts without forcing consumers to update their code. However, this approach means that we make HTTP requests in series for loading local scripts, since we need to download `/shopping-cart/component/scripts.js` in order to download the actual scripts the component need.
 
 
-<a name="loading-scripts-through-esi"></a>
-#### Loading scripts through ESI
+<a name="local-scripts-with-esi-enabled"></a>
+#### Local scripts with ESI enabled
 
-Using the approach of *ESI references* for JavaScript would increase performance (compared to using a script loader), like this:
+With ESI enabled, we can use the same approach as for loading CSS, i.e. inlining the script reference in the transcluded content, like this:
+
+`<esi:include src="/shopping-cart/component">`
+
+...which after inclusion becomes:
 
 ```
-<h-include src="/shopping-cart/component">
-  <!-- shopping cart content here -->
-</h-include>
-<-- more content here -->
-<!-- use the good practice of loading scripts at the bottom of the page -->
-<esi:include src="/shopping-cart/component/scripts">
-</body></html>
+<link rel="stylesheet" href="/shopping-cart/component/style-[hash].css">
+<script src="/shopping-cart/component/script-[hash].js"></script>
+<!-- shopping cart content here -->
 ```
 
-Where '/shopping-cart/component/scripts’ would look like this:
+Note that the page rendering now blocks and this point in the code until the script downloaded and executed. If you only include one script reference in the transcluded content, you can
 
-`<script src="/shopping-cart/component/the-script-[hash].js"></script>`
+- use the `async` attribute to download and execute the script in an asynchronous way, if the script has no dependencies
+- use the `defer` attribute to download the script in an asynchronous way, but execute in order just before `DOMContentLoaded`
 
-If you have ESI in your infrastructure, this is be a good way to load local scripts.
-
+The `async` and `defer` attributes are relatively well supported by the browsers. For more details, see [Deep dive into the murky waters of script loading](http://www.html5rocks.com/en/tutorials/speed/script-loading/).
 
 <a name="summary-2"></a>
 #### Summary
 
 In the beginning of the product development, include stylesheets references in the CSI responses. The services should expose a JavaScript file that in turns calls a script loader. The consumers should reference that JavaScript file at the bottom of each page.
 
-When ESI is part of the infrastructure, replace the references to the JavaScript script loaders files with the *ESI references* approach:
+When ESI is part of the infrastructure, remove the references to the JavaScript script loader and inline the scripts with the transcluded content. Note that this operation crosses two service boundaries, so it either needs to be coordinated or the scripts need to be able to detect if they have already been loaded (and then do nothing).
 
-`<script src="/shopping-cart/component/scripts.js"></script>`
-
-becomes
-
-`<esi:include src="/shopping-cart/component/scripts">`
 
 <a name="server-driven-partial-updates"></a>
 ### <a name="server-driven-partial-updates"></a>Server driven partial updates
@@ -692,7 +672,9 @@ We use &lt;h-include&gt; to keep the initial infrastructure lightweight. For sty
 <a name="optimizations"></a>
 ### Optimizations
 
-We replace the &lt;h-include&gt; elements with ESI when appropriate, in order to increase performance and decrease the number of web requests. To reference component local JavaScript, we use the *ESI references* approaches in [Local stylesheets and scripts](#local-stylesheets-and-scripts). If we want to include the shopping cart with ESI and still partially update the shopping cart when the user adds a product, we need to wrap the transcluded content in an `h-include-manual-loading`.
+We replace the &lt;h-include&gt; elements with ESI when appropriate, in order to increase performance and decrease the number of web requests. To reference component local JavaScript, remove the script loaders and inline the script elements with the transcluded content, as described in [Local stylesheets and scripts](#local-stylesheets-and-scripts).
+
+If we want to include the shopping cart with ESI and still partially update the shopping cart when the user adds a product, we need to wrap the transcluded content in an `h-include-manual-loading`.
 
 
 <a name="conclusion"></a>
