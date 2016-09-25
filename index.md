@@ -358,7 +358,7 @@ proto.attachedCallback = function(){};
 document.registerElement('h-include-manual-loading', { prototype: proto });
 ```
 
-At first, this seems like a strange thing to disable automatic loading, but there are at least two scenarios where this would be beneficial: wrapping content included with ESI with a `<h-include-manual-loading>’ element to make the content updatable, and lazy loading of content depending if the element is about to enter the viewport.
+At first, this seems like a strange thing to disable automatic loading, but there are at least two scenarios where this would be beneficial: wrapping content included with ESI with a `<h-include-manual-loading>` element to make the content updatable, and lazy loading of content depending if the element is about to enter the viewport.
 
 Another extension to &lt;h-include&gt; could be to be trigger anchor scrolling after successful transclusion.
 
