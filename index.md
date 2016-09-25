@@ -1,5 +1,7 @@
 ---
+layout: default
 ---
+
 # Microservice Web UIs
 
 How can we develop web UIs where the different parts of the pages are developed by different teams? If you work in a large enough organization which has its product(s) on the web, that is probably a question you have asked yourself several times.
@@ -24,7 +26,7 @@ Finally, we'll argue that [h-include](https://github.com/gustafnk/h-include) is 
 
 ## Table of Contents
 
-<!-- MarkdownTOC depth=5 autolink="true" autoanchor="true" bracket="round" -->
+<!-- REMOVE THIS TEXT TO ENABLE MarkdownTOC depth=5 autolink="true" autoanchor="true" bracket="round" -->
 
 - [Why Microservices?](#why-microservices)
   - [Example: Retail site](#example-retail-site)
@@ -76,7 +78,6 @@ Finally, we'll argue that [h-include](https://github.com/gustafnk/h-include) is 
 - [Conclusion](#conclusion)
 
 <!-- /MarkdownTOC -->
-
 
 <a name="why-microservices"></a>
 ## Why Microservices?

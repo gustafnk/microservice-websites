@@ -1,0 +1,30 @@
+---
+---
+
+@import "normalize";
+@import "typeplate-index";
+
+body {
+  width: 92%;
+  max-width: 40em;
+  margin: 0px auto;
+  font-family: georgia,serif;
+}
+
+h1 {
+  margin-top: 5rem;
+}
+
+// Table of contents
+ul:first-of-type {
+  list-style-type: none;
+  margin-left: 0.75rem;
+  padding-left: 0.75rem;
+}
+
+// Overrides
+
+p + p {
+  text-indent: 0rem;
+  margin-top: 0rem;
+}

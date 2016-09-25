@@ -1,0 +1,14 @@
+// $Unicode-Range-Ampersand
+// -------------------------------------//
+
+@font-face {
+  font-family: '#{$typl8-amp-fontface}';
+  src: $typl8-amp-src;
+  unicode-range: U+0026;
+}
+
+@font-face {
+  font-family: '#{$typl8-amp-fontface}'; // fallback
+  src: $typl8-amp-fallback;
+  unicode-range: U+270C;
+}
