@@ -39,9 +39,9 @@ Finally, we'll argue that [h-include](https://github.com/gustafnk/h-include) is 
   - [High rate of change on the client-side](#high-rate-of-change-on-the-client-side)
   - [Isomorphic web applications do not resolve the constraints](#isomorphic-web-applications-do-not-resolve-the-constraints)
 - [Integration techniques](#integration-techniques)
-  - [Data](#data)
-  - [Code](#code)
-  - [Content](#content)
+  - [Integrating on data](#data)
+  - [Integrating on code](#code)
+  - [Integrating on content](#content)
     - [Edge-Side Includes](#edge-side-includes)
       - [Performance](#performance)
       - [Headers](#headers)
@@ -158,7 +158,7 @@ As a side note, we think the [drawbacks of isomorphic web applications](https://
 Going back to our retail example, we see that we need a way to integrate the product pages with the shopping cart. We need to decide where to integrate (client/server), when to integrate (static/dynamic), and what to integrate (data/code/content). All in all, this gives twelve different combinations. I’ll go through the most important ones, organised on “what" to integrate.
 
 
-### Data <a name="data"></a>
+### Integrating on data <a name="data"></a>
 
 Integrating on data in our example means that the Orders team will expose an API endpoint containing the shopping cart information for a logged in user. The Products team can then build their own component that use that API to display a shopping cart.
 
@@ -166,7 +166,7 @@ This approach means that we will have as many shopping cart components as we hav
 
 Also, if we’re not using [hypermedia controls](http://amundsen.com/hypermedia/hfactor/), we will have a duplication of business logic in the components. Say that we have a rule that says that a user should not be able to proceed to checkout if the user has zero products in their basket. In this case, it means that the rule will be implemented by all shopping cart API consumers.
 
-### Code <a name="code"></a>
+### Integrating on code <a name="code"></a>
 
 In our retail example, integrating on code means that the Orders team will develop and publish code that the Product team will take a dependency on. The teams need to agree on the mechanisms necessary to render the component. Now, if the Product team need to integrate with a Recommendations team, they too need to agree on the mechanisms necessary to render the component.
 
@@ -180,7 +180,7 @@ Another drawback of integrating on code is release management. In our example ab
 
 For the site as a whole, you can either have separate release trains for the separate teams, which will cause inconsistencies on for example how the shopping cart works. Or you can have a big coordinated release train for the whole site, which reduces the benefits of microservice quite a bit.
 
-### Content <a name="content"></a>
+### Integrating on content <a name="content"></a>
 
 Integrating on content in our example means means that the Orders team will expose an API endpoint containing the HTML representation for the shopping cart information for a logged in user. This is similar to when we integrate on data, except that nothing more needs to be done to render the information, other than the web browser software itself.
 
