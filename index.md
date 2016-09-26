@@ -24,6 +24,8 @@ We also want to show that Client Side Includes is a good first choice for transc
 
 Finally, we'll argue that [h-include](https://github.com/gustafnk/h-include) is a good choice for a Client Side Includes library.
 
+<a href="javascript:document.querySelector('#table-of-contents').classList.toggle('show'); document.querySelector('.toc-ellipsis').classList.toggle('hide')">[Show/hide Table of Contents]</a>
+
 ## Table of Contents
 
 <!-- REMOVE THIS TEXT TO ENABLE MarkdownTOC depth=5 autolink="true" autoanchor="true" bracket="round" -->
@@ -78,6 +80,8 @@ Finally, we'll argue that [h-include](https://github.com/gustafnk/h-include) is 
 - [Conclusion](#conclusion)
 
 <!-- /MarkdownTOC -->
+
+<p class="toc-ellipsis">[...]</p>
 
 ---
 

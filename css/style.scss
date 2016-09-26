@@ -29,6 +29,18 @@ pre {
   font-size: 90%;
 }
 
+#table-of-contents + ul {
+  display: none;
+}
+
+#table-of-contents.show + ul {
+  display: block;
+}
+
+.toc-ellipsis.hide {
+  display: none;
+}
+
 // Overrides
 
 p + p {
