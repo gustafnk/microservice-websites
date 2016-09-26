@@ -22,6 +22,12 @@ ul:first-of-type {
   padding-left: 0.75rem;
 }
 
+pre {
+  background-color: lightgrey;
+  padding: 2rem;
+  font-size: 90%;
+}
+
 // Overrides
 
 p + p {

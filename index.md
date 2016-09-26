@@ -200,7 +200,9 @@ Using root relative URLs (i.e.’ /path/to/resource’) to external resources is
 
 Edge-Side Include (ESI) [ESI-STANDARD] is a technology that provides a declarative way to include content on the server-side, like this:
 
-```<esi:include src="/shopping-cart" />```
+```
+<esi:include src="/shopping-cart" />
+```
 
 Edge-Side Includes is today the most popular way of transcluding content on the server.
 
@@ -352,10 +354,10 @@ It’s easy to extend &lt;h-include&gt;, since it’s is a custom element and ex
 
 ```
 var proto = Object.create(HIncludeElement.prototype);
-
-proto.attachedCallback = function(){};
-
-document.registerElement('h-include-manual-loading', { prototype: proto });
+proto.attachedCallback = function() {};
+document.registerElement('h-include-manual-loading', {
+  prototype: proto
+});
 ```
 
 At first, this seems like a strange thing to disable automatic loading, but there are at least two scenarios where this would be beneficial: wrapping content included with ESI with a `<h-include-manual-loading>` element to make the content updatable, and lazy loading of content depending if the element is about to enter the viewport.
@@ -380,7 +382,8 @@ Even if our web servers usually responds fast, we’d like to avoid to show a br
 <!-- Put this code before the first h-include or in the <head> element -->
 <script>
   <!-- https://gist.github.com/egeorjon/6755681 -->
-  document.documentElement.className = document.documentElement.className.replace( /(?:^|\s)no-script(?!\S)/g , '' )
+  document.documentElement.className =
+    document.documentElement.className.replace( /(?:^|\s)no-script(?!\S)/g , '' );
 </script>
 
 <style>
@@ -419,7 +422,9 @@ This approach would cause two HTTP requests in series, since the browser wouldn'
 
 If we want to avoid having series of HTTP request we can use ESI instead, which would look like this:
 
-`<esi:include src="/shopping-cart/component">`
+```
+<esi:include src="/shopping-cart/component">
+```
 
 ...which after inclusion becomes:
 
@@ -473,7 +478,9 @@ This way, we can release new versions of local scripts without forcing consumers
 
 With ESI enabled, we can use the same approach as for loading CSS, i.e. inlining the script reference in the transcluded content, like this:
 
-`<esi:include src="/shopping-cart/component">`
+```
+<esi:include src="/shopping-cart/component">
+```
 
 ...which after inclusion becomes:
 
@@ -511,7 +518,9 @@ First, let’s make sure users without JavaScript get an updated shopping cart w
 
 In the `shopping-cart/add` resource, we then redirect to the value of the `Referer` header, or the shopping cart itself if the header value is not set. In node/express, this could look like this:
 
-`res.redirect(req.header('Referer') || '/shopping-cart');`
+```
+res.redirect(req.header('Referer') || '/shopping-cart');
+```
 
 For users with JavaScript enabled, we want to “hijack" the form submit and replace the default browser behavior with custom behavior, namely to refresh the shopping cart on a successful AJAX form submission. We do this with jQuery:
 
