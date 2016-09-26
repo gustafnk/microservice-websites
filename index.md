@@ -79,6 +79,8 @@ Finally, we'll argue that [h-include](https://github.com/gustafnk/h-include) is 
 
 <!-- /MarkdownTOC -->
 
+---
+
 ## Why Microservices? <a name="why-microservices"></a>
 
 A good place to start to learn about microservices is Martin Fowler and James Lewis’ [article](http://martinfowler.com/articles/microservices.html). For me, the key benefits are:
@@ -98,6 +100,8 @@ Further, when a product is added to the shopping cart, the entire page shouldn't
 The future plan is to create a Recommendations teams for product recommendations and a Social team for customer ratings and reviews. As with the shopping cart, these teams will expose pages from their own services, as well as web UI components that are visible on each product page.
 
 In this article, we will think of our services as Self-Contained Systems, since each system will mostly correspond to a team. 
+
+---
 
 ## <a name="scaling-web-design"></a>Scaling web design: style guides and pattern labs <a name="scaling-web-design-style-guides-and-pattern-labs"></a>
 
@@ -122,6 +126,8 @@ A better approach is to use distinctive names for our pattern lab elements and u
 It’s beyond the scope of this article to go into the topic of responsive/adaptive web design (RWD/AWD). In general, RWD/AWD means that we create a flexibility in design and capabilities for different device dimensions, network profiles, etc – the user experience should be good regardless of what device the user has. From a high-level perspective, this means that designers need to think deeply on how the design changes depending on the differences in device capabilities.
 
 In our case, one dimension of RWD/AWD is how the different pattern lab elements adapt to different device capabilities. Another dimension is how the page layout work for different device capabilities (especially screen size).
+
+---
 
 ## Client-side constraints <a name="client-side-constraints"></a>
 
@@ -152,6 +158,8 @@ On the server-side there is much less change, in terms of frameworks and librari
 For the purposes of this article, the same constraints that apply to client-side web applications apply to isomorphic web applications as well. Therefore, we can think of the two strategies as the same thing, namely using a large amount of templating code on the client-side.
 
 As a side note, we think the [drawbacks of isomorphic web applications](https://www.jayway.com/2016/05/23/6-reasons-isomorphic-web-apps-not-silver-bullet-youre-looking/) are too large, compared with the benefits. However, *isomorphic parts* could be a good choice sometimes.
+
+---
 
 ## Integration techniques <a name="integration-techniques"></a>
 
@@ -293,6 +301,8 @@ ESI and CSI complement each other: ESI can be quite heavyweight, but work really
 One possible strategy could be to use only CSI in the beginning of a project and when the project matures move some of the CSI elements to ESI instead, where appropriate. This way, we defer the investment in the heavier ESI infrastructure until later, allowing us to release earlier and extract value earlier. With regards to CSS, there would be a performance penalty to include a `<link rel="stylesheet">` in a CSI transcluded response (but with HTTP/2 the performance penalty would be limited). Later we could – again, if appropriate – use ESI instead of CSI. However, we can’t use this strategy with JavaScript, due to the way how browsers load JavaScript, all JavaScript files either needs to be available as shared resources or be included with ESI. For more details on this, see the section [Local stylesheets and scripts](#local-stylesheets-and-scripts)..
 
 It's also possible to combine ESI and CSI in related parts of the page. For example, a header menu could be transcluded with ESI and contain a client side included shopping cart. The opposite relationship also works – to include something with CSI that in turn uses ESI to construct a full response.
+
+---
 
 ## Client-Side Transclusion with &lt;h-include&gt; <a name="client-side-transclusion-with-h-include"></a>
 
@@ -621,6 +631,8 @@ Since the only code that has knowledge about when the shopping cart needs to be 
 
 When ESI is part of the infrastructure, we can choose to include the shopping cart with ESI instead. If we want to keep our ability to to partial updates to the shopping cart, we only need to wrap the transcluded content in an `h-include-manual-loading`, which disabled automatic client transclusion but keeps the ability to update the content (see the section on [h-include](#h-include)).
 
+---
+
 ## Example architecture <a name="example-architecture"></a>
 
 We use &lt;h-include&gt; to keep the initial infrastructure lightweight. For stylesheets and JavaScript local to each component, we use the approach in [Local stylesheets and scripts](#local-stylesheets-and-scripts): return stylesheet references in the transcluded the content and reference a JavaScript that in turn uses a script loader. To partially update the shopping cart component, we use the approach in [Server driven partial updates](#server-driven-partial-updates).
@@ -630,6 +642,8 @@ We use &lt;h-include&gt; to keep the initial infrastructure lightweight. For sty
 We replace the &lt;h-include&gt; elements with ESI when appropriate, in order to increase performance and decrease the number of web requests. To reference component local JavaScript, remove the script loaders and inline the script elements with the transcluded content, as described in [Local stylesheets and scripts](#local-stylesheets-and-scripts).
 
 If we want to include the shopping cart with ESI and still partially update the shopping cart when the user adds a product, we need to wrap the transcluded content in an `h-include-manual-loading`.
+
+---
 
 ## Conclusion <a name="conclusion"></a>
 
