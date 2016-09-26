@@ -5,8 +5,9 @@
 @import "typeplate-index";
 
 body {
-  max-width: 45em;
+  max-width: 45rem;
   margin: 0px auto;
+  padding: 0 1rem;
   font-family: georgia,serif;
 }
 
@@ -24,6 +25,7 @@ ul:first-of-type {
 pre {
   background-color: lightgrey;
   padding: 2rem;
+  margin: 0 -1rem;
   font-size: 90%;
 }
 
