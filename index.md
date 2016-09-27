@@ -61,7 +61,7 @@ The article begins with a short introdution to microservices. Before moving on t
 
 A good place to start to learn about microservices is Martin Fowler and James Lewis’ [article](http://martinfowler.com/articles/microservices.html). For me, the key benefits are:
 
-- Less organisational/architectural friction by following Conway’s Law
+- Less organisational/architectural friction by following [Conway’s Law](https://en.wikipedia.org/wiki/Conway%27s_law)
 - Separate deploys for separate services
 - Allows for a heterogenous system, which in turn leads to long-term evolvability
 
@@ -113,7 +113,7 @@ Before we continue, we list our assumptions and the constraints that we get toda
 
 These are the assumptions that we are base our reasoning on:
 
-#### Consumer facing website
+#### Consumer facing website <a name="consumer-facing-websites"></a>
 
 We assume that you are building a consumer facing website. You can still benefit from reading this article if you're building a private web application or similar, but the constraints are quite different.
 
@@ -121,12 +121,12 @@ We assume that you are building a consumer facing website. You can still benefit
 
 Quite related to the above assumption is that if you're building a consumer facing website, you think that it's important that users that browse your website with something else than a desktop web browser should have a good experience.
 
-#### Time to interaction is important
+#### Time to interaction is important <a name="time-to-interaction-is-important"></a>
 
 For a consumer facing website, the metric "Time To Interact" is at least as important as the metric "Time to First Meaningful Render". Again, if you're not building a consumer facing website, this might not be true.
 
 
-#### Long-term evolvability comes from heterogeneity
+#### Long-term evolvability comes from heterogeneity <a name="long-term-evolvability-comes-from-heterogeneity"
 
 In order to evolve a system over time, the system needs to support that parts are built in different technologies, as long as the parts follow an agreed upon protocol. The protocol should be as generic as possible, thus not being based on a particular programming language or framework.
 
@@ -449,7 +449,7 @@ Note that going from CSI to ESI, we now have introduced a performance risk for t
 
 When importing scripts for transcluded content, we are more constrained than when importing CSS, due to how the browsers load JavaScript.
 
-If we don’t want to use ESI at the initial phase of the product development, we need to do a bit of thinking (if we have a limited amount of scripts, one approach could of course be to let all scripts be exposed as shared resources). One approach could be to use HTML Imports [HTML-IMPORTS] to include the scripts, like this:
+If we don’t want to use ESI at the initial phase of the product development, we need to do a bit of thinking (if we have a limited amount of scripts, one approach could of course be to let all scripts be exposed as shared resources). One approach could be to use [HTML Imports](https://www.html5rocks.com/en/tutorials/webcomponents/imports/) to include the scripts, like this:
 
 ```
 <h-include src="/shopping-cart/component">
@@ -647,7 +647,13 @@ If we want to include the shopping cart with ESI and still partially update the 
 
 ## Conclusion <a name="conclusion"></a>
 
-TODO
+For a big enough problem in a big enough organisation, in order to not get friction by violating [Conway's Law](https://en.wikipedia.org/wiki/Conway%27s_law), you need to have at least one system per team. If you develop [consumer facing websites](TBD) and value both ["Time To Interaction" performance] and [long-term evolvability from heterogeneity], you should use server-side rendering. [Integrating on data] is safe, but don't allow for economies of scale (the effort is duplicated by each team). [Integrating on code] creates the need for release trains, which is costly and hurts agility. Integrating on content (HTML) allow the team to not duplicate their efforts, while decoupling their release cycles.
+
+Integrating on content is also called [transclusion] and we like the declarative approaches of translusion the best. One server-side transclusion technique is [Edge-Side Includes](#edge-side-includes) (ESI), which is supported by a few CDNs and some caching HTTP reverse proxies. ESI is infrastructure heavy, so it might hurt your initial project delivery speed. It can introduce performance risks, if one of the servers are having performance problems. ESI is something that we can easily refactor to later, if wanted. Declarative [Client-Side Includes](#client-side-includes) (CSI) allows for better initial project delivery speed, and together with HTTP/2 the performance is not too bad for many scenarios. However, CSI introduces some challenges with loading service local JavaScript, but that challenge is solvable with [script loaders](#local-scripts).
+
+Two related CSI libraries are [hinclude and h-include](#hinclude-and-h-include). The latter is a web components port of the former, with a few added features. In summary, h-include supports transitive includes, fragment extraction, extension points and possible lazy loading (on scroll), but the drawback is that it only supports IE9/IE10 and up.
+
+In order to scale web design (HTML/CSS), we recommend an iterative [Pattern Lab](http://www.bigeng.io/the-living-style-guide-pattern-lab/) approach, where learnings and mutations are fed back to the pattern lab.
 
 ---
 
