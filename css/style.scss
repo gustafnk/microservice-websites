@@ -15,6 +15,13 @@ h1 {
   margin-top: 5rem;
 }
 
+.sub-heading {
+  position: relative;
+  top: -1rem;
+  line-height: 1rem;
+  font-size: larger;
+}
+
 // Table of contents
 ul:first-of-type {
   list-style-type: none;
