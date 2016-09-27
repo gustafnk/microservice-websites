@@ -4,7 +4,7 @@ layout: default
 
 # Microservice Web UIs
 
-How can we develop web UIs where the different parts of the pages are developed by different teams? If you work in a large enough organization which has its product(s) on the web, that is probably a question you have asked yourself several times.
+How can we develop web UIs where the different parts of the pages are developed by different teams? If you work in a large enough organization which has its product(s) on the web, this is probably a question you have asked yourself several times.
 
 There are no lack of technologies to choose from when building web sites today. Three broad strategies can be identified: client-side rendering, server-side rendering, or both (isomorphic web applications).
 
@@ -18,11 +18,14 @@ So, what are good ways of building a network of microservice web UIs?
 
 The meaning behind the word “good" depends on the current and future needs of the organisation responsible for the software and the users of the software. No architecture is good in-itself, it all depends on the context and the needs.
 
-With this article we want to show that [*server-side rendered web UIs integrated with transclusion*](#content) allow for high *long-term evolvability* compared to client-side rendering integrated with shared code. In other words, if you want a system with high long-term evolvability, you should not develop web UIs using only client-side JavaScript and integrate them using a shared components approach.
+With this article we want to show that [*server-side rendered web UIs integrated on content*](#content) (using [transclusion](https://en.wikipedia.org/wiki/Transclusion)) allow for high *long-term evolvability* compared to client-side rendering integrated with shared code. In other words, if you want a system with high long-term evolvability, you should not develop web UIs using only client-side JavaScript and integrate them using a shared components approach.
 
-We also want to show that Client Side Includes is a good first choice for transclusion technology, since they are lightweight and allow for a faster initial release than Edge-Side Includes (ESI). They also allow for keeping the option open for using ESI later, when beneficial.
+We also want to show that Client Side Includes is a good first choice for transclusion technology, since they are lightweight and allow for a faster initial release than Edge-Side Includes (ESI). They also allow for keeping the option open for using ESI later, when beneficial. We describe and compare two related Client Side Include libraries: hinclude and h-include. We also give a suggestion for an approach to work with both global and service local JavaScript and CSS.
 
-Finally, we'll argue that [h-include](https://github.com/gustafnk/h-include) is a good choice for a Client Side Includes library.
+Throughout this article, we use an retail site as an example. In the end of this article, we give a brief description of an example architecture for this retail site.
+
+The article begins with a short introdution to microservices. Before moving on to a comparision of integration techniques, we describe a strategy of how the effort of web design can be scaled effectively with *pattern labs*.
+
 
 <a href="javascript:document.querySelector('#table-of-contents').classList.toggle('show'); document.querySelector('.toc-ellipsis').classList.toggle('hide')">[Show/hide Table of Contents]</a>
 
@@ -153,7 +156,7 @@ Having two frameworks (or ecosystems) on the same page simultaneously is costly,
 
 ### High rate of change on the client-side <a name="high-rate-of-change-on-the-client-side"></a>
 
-The number of technologies for building client-side web applications has formally exploded during the last ten years., which has led to a high rate of change in how we build these applications. However, when the common idea of how we build good client-side web application changes, the view of our current code bases also change: we increasingly get the feeling that our code base is written in a legacy technology. This can lead to that trend-sensitive developers are leaving the organisation for more modern code bases, or that the pressure for rewriting the code increases.
+The number of technologies for building client-side web applications has formally exploded during the last ten years, which has led to a high rate of change in how we build these applications. However, when the common idea of how we build good client-side web application changes, the view of our current code bases also change: we increasingly get the feeling that our code base is written in a legacy technology. This can lead to that trend-sensitive developers are leaving the organisation for more modern code bases, or that the pressure for rewriting the code increases.
 
 On the server-side there is much less change, in terms of frameworks and libraries. This is probably due to the fact that HTTP has been used as the delivery mechanism for server-side rendered web since the early days of the web.
 
