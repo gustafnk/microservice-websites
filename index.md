@@ -6,6 +6,11 @@ layout: default
 
 <em class="sub-heading">Building consumer facing websites with multiple teams</em>
 
+By Gustaf Nilsson Kotte ([@gustaf_nk](https://twitter.com/gustaf_nk/)).<br/>
+Please give feedback and report issues on the [GitHub repository](https://github.com/gustafnk/microservice-web-uis/).
+
+---
+
 How can we develop web UIs where the different parts of the pages are developed by different teams? If you work in a large enough organization which has its product(s) on the web, this is probably a question you have asked yourself several times.
 
 There are no lack of technologies to choose from when building web sites today. Three broad strategies can be identified: client-side rendering, server-side rendering, or both (isomorphic web applications).
