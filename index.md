@@ -207,17 +207,24 @@ Using root relative URLs (i.e.’ /path/to/resource’) to external resources is
 
 #### Edge-Side Includes <a name="edge-side-includes"></a>
 
-Edge-Side Include (ESI) [ESI-STANDARD] is a technology that provides a declarative way to include content on the server-side, like this:
+[Edge-Side Include](https://en.wikipedia.org/wiki/Edge_Side_Includes) (ESI) is a technology that provides a declarative way to include content on the server-side, like this:
 
 ```
 <esi:include src="/shopping-cart" />
 ```
 
-Edge-Side Includes is today the most popular way of transcluding content on the server.
+Edge-Side Includes is today the most popular way of transcluding content on the server-side.
+
+<div class="fact-box">
+<dl class="typl8-lining">
+  <dt><b>Edge</b></dt>
+  <dd>The term <i>edge</i> in Edge-Side Includes should be seen as the last physical node in our control that is passed by a HTTP response <i>before</i> it reaches the user's computer. If we're using a CDN with ESI support, like Akamai or Fastly, we call that layer our edge. Otherwise, if we use the caching HTTP reverse proxy Varnish (which has ESI support) in our infrastructure, that layer can be considered to be our edge. Finally, if we not using either of the above options, we can consider the web server(s) our edge.</dd>
+</dl>
+</div>
 
 ##### Performance <a name="performance"></a>
 
-Since transclusion is made on the server, it's not possible to inspect the returned HTML response and draw a conclusion that ESI was used. However, this property of ESI also introduces risk for degraded performance, since we need to rely on the included services’ performance in order to create a complete page. If the transcluded content is cacheable, we can cache the fragments and the performance risk is removed. But for dynamic content, this option is not available.
+Since transclusion is made on the server-side, it's not possible to inspect the returned HTML response and draw a conclusion that ESI was used. However, this property of ESI also introduces risk for degraded performance, since we need to rely on the included services’ performance in order to create a complete page. If the transcluded content is cacheable, we can cache the fragments and the performance risk is removed. But for dynamic content, this option is not available.
 
 In our example, if we want to transclude the shopping cart (which contains dynamic content) early in the HTML and it at that time is having problems with performance, ESI will block the rest of the response until the service has responded or the ESI request times out.
 
@@ -230,7 +237,7 @@ To be fair though, ESI is really performant when it comes to transcluding static
 
 Another challenge with ESI is headers:
 
-“When an ESI template is processed, a separate request will need to be made for each include encountered. Implementations may use the original request's headers (e.g., Cookie, User-Agent, etc.) when doing so. Additionally, response headers from fragments (e.g., Set-Cookie, Server, Cache-Control, Last-Modified) may be ignored, and should not influence the assembled page." [ESI-STANDARD]
+“When an ESI template is processed, a separate request will need to be made for each include encountered. Implementations may use the original request's headers (e.g., Cookie, User-Agent, etc.) when doing so. Additionally, response headers from fragments (e.g., Set-Cookie, Server, Cache-Control, Last-Modified) may be ignored, and should not influence the assembled page." – [ESI Language Specification 1.0](https://www.w3.org/TR/esi-lang)
 
 So, when considering different solutions for ESI, we need know if the solution forwards the client’s headers or not. And, if not, is there any way to enable forwarding of headers, by means of configuration? Since the most common (all?) web authentication mechanisms rely on headers with session tokens, it’s crucial that these headers are forwarded to the other services.
 
