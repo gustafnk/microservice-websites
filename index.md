@@ -662,6 +662,13 @@ Two related CSI libraries are [hinclude and h-include](#hinclude-and-h-include).
 
 In order to scale web design (HTML/CSS), we recommend an iterative [Pattern Lab](http://www.bigeng.io/the-living-style-guide-pattern-lab/) approach, where learnings and mutations are fed back to the pattern lab.
 
+---
+
+## Acknowledgments
+
+Thanks to Anton Fagerberg, Per Ökvist, Albert Bertilsson, Johan Haleby, Oskar Wickström, and Mikael Freidlitz for valuable feedback during the private preview.
+
+Thank you Sara for your patience and support ❤️
 
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
