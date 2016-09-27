@@ -49,7 +49,7 @@ The article begins with a short introdution to microservices. Before moving on t
   - [Server driven partial updates](#server-driven-partial-updates)
 - [Example architecture](#example-architecture)
 - [Conclusion](#conclusion)
-- [Appendix](#appendix)
+- [Appendix](appendix.html)
 
 <!-- /MarkdownTOC -->
 
@@ -126,7 +126,7 @@ Quite related to the above assumption is that if you're building a consumer faci
 For a consumer facing website, the metric "Time To Interact" is at least as important as the metric "Time to First Meaningful Render". Again, if you're not building a consumer facing website, this might not be true.
 
 
-#### Long-term evolvability comes from heterogeneity <a name="long-term-evolvability-comes-from-heterogeneity"
+#### Long-term evolvability comes from heterogeneity <a name="long-term-evolvability-comes-from-heterogeneity"></a>
 
 In order to evolve a system over time, the system needs to support that parts are built in different technologies, as long as the parts follow an agreed upon protocol. The protocol should be as generic as possible, thus not being based on a particular programming language or framework.
 
@@ -272,7 +272,7 @@ Another downside with CSI is that it’s best if we know the height and width of
 
 With CSI, we also need to follow the cross-origin policy for AJAX requests in the browser, or use CORS (if supported by the browser and enabled in the server). If CORS is not enabled, we need a reverse proxy or load balancer in front of the endpoint, so that they share the same host (both in development mode and production).
 
-Even though iFrames should be considered a CSI technology, it's not a good solution for our purposes. For more details, see the [appendix section on iFrames](#iframes-dont-scale).
+Even though iFrames should be considered a CSI technology, it's not a good solution for our purposes. For more details, see the [appendix section on iFrames](appendix.html#iframes-dont-scale).
 
 ##### Performance <a name="performance-1"></a>
 
@@ -654,21 +654,6 @@ Integrating on content is also called [transclusion] and we like the declarative
 Two related CSI libraries are [hinclude and h-include](#hinclude-and-h-include). The latter is a web components port of the former, with a few added features. In summary, h-include supports transitive includes, fragment extraction, extension points and possible lazy loading (on scroll), but the drawback is that it only supports IE9/IE10 and up.
 
 In order to scale web design (HTML/CSS), we recommend an iterative [Pattern Lab](http://www.bigeng.io/the-living-style-guide-pattern-lab/) approach, where learnings and mutations are fed back to the pattern lab.
-
----
-
-## Appendix
-
-### iFrames don’t scale <a name="iframes-dont-scale"></a>
-
-Technically, iFrames should also be considered to be a declarative CSI technology, but the downsides of using iFrames are that
-
-- each iFrame creates an extra browser process
-- they are hard to style
-- they need a “postMessage bus" to communicate with the parent document
-
-For a small number of integrations on a site, iFrames can be a good solution. But for a microservice web UI solution, iFrames don’t scale – the drawbacks per integration are too large.
-
 
 
 <script>
