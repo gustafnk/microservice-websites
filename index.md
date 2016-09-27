@@ -38,11 +38,13 @@ The article begins with a short introdution to microservices. Before moving on t
 - [Scaling web design: style guides and pattern labs](#scaling-web-design-style-guides-and-pattern-labs)
   - [Different design means different resources](#different-design-means-different-resources)
   - [Responsive/adaptive web design](#responsiveadaptive-web-design)
-- [Client-side constraints](#client-side-constraints)
-  - [Some mobile devices have a slow CPU](#some-mobile-devices-have-a-slow-cpu)
-  - [Less room for change of framework](#less-room-for-change-of-framework)
-  - [High rate of change on the client-side](#high-rate-of-change-on-the-client-side)
-  - [Isomorphic web applications do not resolve the constraints](#isomorphic-web-applications-do-not-resolve-the-constraints)
+- [Assumptions and constraints](#assumptions-and-constraints)
+  - [Assumptions](#assumptions)
+  - [Client-side constraints](#client-side-constraints)
+    - [Some mobile devices have a slow CPU](#some-mobile-devices-have-a-slow-cpu)
+    - [Less room for change of framework](#less-room-for-change-of-framework)
+    - [High rate of change on the client-side](#high-rate-of-change-on-the-client-side)
+    - [Isomorphic web applications do not resolve the constraints](#isomorphic-web-applications-do-not-resolve-the-constraints)
 - [Integration techniques](#integration-techniques)
   - [Integrating on data](#data)
   - [Integrating on code](#code)
@@ -137,17 +139,42 @@ In our case, one dimension of RWD/AWD is how the different pattern lab elements 
 
 ---
 
-## Client-side constraints <a name="client-side-constraints"></a>
+## Assumptions and constraints <a name="assumptions-and-constraints"></a>
+
+Before we continue, we list our assumptions and the constraints that we get today's web browsers.
+
+### Assumptions <a name="assumptions"></a>
+
+These are the assumptions that we are base our reasoning on:
+
+#### Consumer facing website
+
+We assume that you are building a consumer facing website. You can still benefit from reading this article if you're building a private web application or similar, but the constraints are quite different.
+
+#### Not only building for desktop web browsers
+
+Quite related to the above assumption is that if you're building a consumer facing website, you think that it's important that users that browse your website with something else than a desktop web browser should have a good experience.
+
+#### Time to interaction is important
+
+For a consumer facing website, the metric "Time To Interact" is at least as important as the metric "Time to First Meaningful Render". Again, if you're not building a consumer facing website, this might not be true.
+
+
+#### Long-term evolvability comes from heterogeneity
+
+In order to evolve a system over time, the system needs to support that parts are built in different technologies, as long as the parts follow an agreed upon protocol. The protocol should be as generic as possible, thus not being based on a particular programming language or framework.
+
+### Client-side constraints <a name="client-side-constraints"></a>
 
 The environment on the server and the client (the different browsers) are not alike. On the client-side, you are constrained by the user’s device, network quality, and runtime. Also, compared to the server-side, there’s a high degree of *diversity* of devices, network quality, and runtime. The web is messy – which is a good argument for using [Progressive Enhancement](https://en.wikipedia.org/wiki/Progressive_enhancement).
 
-### Some mobile devices have a slow CPU <a name="some-mobile-devices-have-a-slow-cpu"></a>
+#### Some mobile devices have a slow CPU <a name="some-mobile-devices-have-a-slow-cpu"></a>
 
 Historically, the limiting factor has been the network. However, today the limiting factor more and more also tends to be the CPU, since we increasingly use mobile devices when browsing the web. Many websites also rely on a lot of JavaScript being executed before they can show any meaningful content.
 
 Parsing of JavaScript is a CPU bound operation and the CPUs in many mobile devices are not fast. Therefore, you should limit the amount of JavaScript being used on pages capable of being viewed on mobile browsers.
 
-###  Less room for change of framework <a name="less-room-for-change-of-framework"></a>
+####  Less room for change of framework <a name="less-room-for-change-of-framework"></a>
 
 On the server-side, we can partition our systems basically however we want and use different languages and frameworks for the different parts. There is certainly a cost associated with using multiple languages/frameworks at the same time, but this cost is mostly “cognitive" for the organisation. The big upside with allowing for multiple languages/frameworks is that the system can be migrated from using tech A to using tech B over a quite long period of time, without the user being aware of it. 
 
@@ -155,13 +182,13 @@ On the client-side however, the cost of doing the same move would be much higher
 
 Having two frameworks (or ecosystems) on the same page simultaneously is costly, which in turn leads to low evolvability of the system.
 
-### High rate of change on the client-side <a name="high-rate-of-change-on-the-client-side"></a>
+#### High rate of change on the client-side <a name="high-rate-of-change-on-the-client-side"></a>
 
 The number of technologies for building client-side web applications has formally exploded during the last ten years, which has led to a high rate of change in how we build these applications. However, when the common idea of how we build good client-side web application changes, the view of our current code bases also change: we increasingly get the feeling that our code base is written in a legacy technology. This can lead to that trend-sensitive developers are leaving the organisation for more modern code bases, or that the pressure for rewriting the code increases.
 
 On the server-side there is much less change, in terms of frameworks and libraries. This is probably due to the fact that HTTP has been used as the delivery mechanism for server-side rendered web since the early days of the web.
 
-### Isomorphic web applications do not resolve the constraints <a name="isomorphic-web-applications-do-not-resolve-the-constraints"></a>
+#### Isomorphic web applications do not resolve the constraints <a name="isomorphic-web-applications-do-not-resolve-the-constraints"></a>
 
 For the purposes of this article, the same constraints that apply to client-side web applications apply to isomorphic web applications as well. Therefore, we can think of the two strategies as the same thing, namely using a large amount of templating code on the client-side.
 
