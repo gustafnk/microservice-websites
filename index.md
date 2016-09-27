@@ -358,7 +358,7 @@ For small screens, one might want to skip the transclusion of some resources to 
 
 One drawback of `hinclude` is that transcluded responses containing *other* `hinclude` elements are not automatically processed. However, this is solved in &lt;h-include&gt;.
 
-#### <a name="h-include">&lt;h-include&gt</a>; <a name="h-include"></a>
+#### <a name="h-include">&lt;h-include&gt;</a> <a name="h-include"></a>
 
 &lt;h-include&gt; is a port of hinclude using the Web Components standard [Custom Elements](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Custom_Elements) for detecting `hinclude` elements. Among other things, Custom Elements provides us with events when a custom element is created or attached to the DOM. This means that we get transitive transclusion “for free" when using &lt;h-include&gt;.
 
