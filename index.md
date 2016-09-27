@@ -53,7 +53,6 @@ The article begins with a short introdution to microservices. Before moving on t
       - [Development perspective](#development-perspective)
       - [Summary](#summary)
     - [Client Side Includes](#client-side-includes)
-      - [iFrames don’t scale](#iframes-don’t-scale)
       - [Performance](#performance-1)
       - [Headers](#headers-1)
       - [Development perspective](#development-perspective-1)
@@ -81,6 +80,8 @@ The article begins with a short introdution to microservices. Before moving on t
 - [Example architecture](#example-architecture)
   - [Optimizations](#optimizations)
 - [Conclusion](#conclusion)
+- [Appendix](#appendix)
+  - [iFrames don’t scale](#iframes-dont-scale)
 
 <!-- /MarkdownTOC -->
 
@@ -271,15 +272,7 @@ Another downside with CSI is that it’s best if we know the height and width of
 
 With CSI, we also need to follow the cross-origin policy for AJAX requests in the browser, or use CORS (if supported by the browser and enabled in the server). If CORS is not enabled, we need a reverse proxy or load balancer in front of the endpoint, so that they share the same host (both in development mode and production).
 
-##### iFrames don’t scale <a name="iframes-don’t-scale"></a>
-
-Technically, iFrames should also be considered to be a declarative CSI technology, but the downsides of using iFrames are that
-
-each iFrame creates an extra browser process
-they are hard to style
-they need a “postMessage bus" to communicate with the parent document
-
-For a small number of integrations on a site, iFrames can be a good solution. But for a microservice web UI solution, iFrames don’t scale – the drawbacks per integration are too large.
+Even though iFrames should be considered a CSI technology, it's not a good solution for our purposes. For more details, see the [appendix section on iFrames](#iframes-dont-scale).
 
 ##### Performance <a name="performance-1"></a>
 
@@ -655,3 +648,17 @@ If we want to include the shopping cart with ESI and still partially update the 
 ## Conclusion <a name="conclusion"></a>
 
 TODO
+
+---
+
+## Appendix
+
+### iFrames don’t scale <a name="iframes-dont-scale"></a>
+
+Technically, iFrames should also be considered to be a declarative CSI technology, but the downsides of using iFrames are that
+
+- each iFrame creates an extra browser process
+- they are hard to style
+- they need a “postMessage bus" to communicate with the parent document
+
+For a small number of integrations on a site, iFrames can be a good solution. But for a microservice web UI solution, iFrames don’t scale – the drawbacks per integration are too large.
