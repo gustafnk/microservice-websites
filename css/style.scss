@@ -71,6 +71,10 @@ pre, .fact-box {
   margin: 2rem -1rem;
 }
 
+p:last-of-type {
+  margin-bottom: 10rem;
+}
+
 // Overrides
 
 p + p {
