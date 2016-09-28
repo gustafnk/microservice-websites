@@ -775,7 +775,7 @@ In order to scale web design (HTML/CSS), we recommend an iterative [Pattern Lab]
 
 ## [Acknowledgments](#acknowledgments)
 
-Thanks to Anton Fagerberg, Per Ökvist, Albert Bertilsson, Johan Haleby, Oskar Wickström, and Mikael Freidlitz for valuable feedback during the private preview.
+Thanks to Anton Fagerberg, Per Ökvist, Albert Bertilsson, Johan Haleby, Oskar Wickström, Daniel Moberg, and Mikael Freidlitz for valuable feedback during the private preview.
 
 Thank you Sara for your patience and support ❤️
 
