@@ -285,7 +285,7 @@ To be fair though, ESI is really performant when it comes to transcluding static
 
 Another challenge with ESI is headers:
 
-"When an ESI template is processed, a separate request will need to be made for each include encountered. Implementations may use the original request's headers (e.g., Cookie, User-Agent, etc.) when doing so. Additionally, response headers from fragments (e.g., Set-Cookie, Server, Cache-Control, Last-Modified) may be ignored, and should not influence the assembled page." – [ESI Language Specification 1.0](https://www.w3.org/TR/esi-lang)
+> "When an ESI template is processed, a separate request will need to be made for each include encountered. Implementations may use the original request's headers (e.g., Cookie, User-Agent, etc.) when doing so. Additionally, response headers from fragments (e.g., Set-Cookie, Server, Cache-Control, Last-Modified) may be ignored, and should not influence the assembled page." – [ESI Language Specification 1.0](https://www.w3.org/TR/esi-lang)
 
 So, when considering different solutions for ESI, we need know if the solution forwards the client's headers or not. And, if not, is there any way to enable forwarding of headers, by means of configuration? Since the most common (all?) web authentication mechanisms rely on headers with session tokens, it's crucial that these headers are forwarded to the other services.
 
