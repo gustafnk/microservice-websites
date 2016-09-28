@@ -25,7 +25,7 @@ A rhetorical question: what do you think is most important, the network as a who
 
 So, what are good ways of building a network of microservice websites and components?
 
-The meaning behind the word “good" depends on the current and future needs of the organisation responsible for the software and the users of the software. No architecture is good in-itself, it all depends on the context and the needs.
+The meaning behind the word "good" depends on the current and future needs of the organisation responsible for the software and the users of the software. No architecture is good in-itself, it all depends on the context and the needs.
 
 With this article we want to show that [*server-side rendered websites integrated on content*](#integrating-on-content) (using [transclusion](https://en.wikipedia.org/wiki/Transclusion)) allow for high *long-term evolvability* compared to client-side rendering integrated with shared code. In other words, if you want a system with high long-term evolvability, you should not develop websites using only client-side JavaScript and integrate them using a shared components approach.
 
@@ -69,7 +69,7 @@ A good place to start to learn about microservices is Martin Fowler and James Le
 - Separate deploys for separate services
 - Allows for a heterogenous system, which in turn leads to long-term evolvability
 
-The approach of [Self-Contained Systems](http://scs-architecture.org) (SCS) is a specialisation of microservices: a SCS is a “team sized" autonomous web application.
+The approach of [Self-Contained Systems](http://scs-architecture.org) (SCS) is a specialisation of microservices: a SCS is a "team sized" autonomous web application.
 
 <a name="example-retail-site"></a>
 
@@ -93,7 +93,7 @@ Web design across multiple teams is always a challenge, regardless of the softwa
 
 One way to create and communicate around a common web design is to use a *style guide*. A style guide is a toolbox of graphical elements, where some elements in the style guide can consist of other elements from the style guide. 
 
-Using a style guide is not risk free. One risk is that a design team authors a style guide that the teams start to use but over time deviates from. It's hard for a design team to see all the future design needs of the teams. Another risk is that a policy is created that force the teams to use the style guide, either by creating a “style guide CSS library" or by creating a “QA step" before releases. Regardless, forcing a style guide on the teams creates a bottleneck for delivery, which runs opposite to the distributed development style of the microservice architecture.
+Using a style guide is not risk free. One risk is that a design team authors a style guide that the teams start to use but over time deviates from. It's hard for a design team to see all the future design needs of the teams. Another risk is that a policy is created that force the teams to use the style guide, either by creating a "style guide CSS library" or by creating a "QA step" before releases. Regardless, forcing a style guide on the teams creates a bottleneck for delivery, which runs opposite to the distributed development style of the microservice architecture.
 
 A promising improvement on the style guide is the *living style guide* or the *[pattern lab](http://www.bigeng.io/the-living-style-guide-pattern-lab/)*. Here, mutations of the existing style guide elements are fed back into the style guide itself, creating a catalog of existing mutations of some or all of the style guide elements. A subset of the style guide can then be published as a shared resources, directly available for the teams, while still allowing the teams to develop local mutations.
 
@@ -171,7 +171,7 @@ Parsing of JavaScript is a CPU bound operation and the CPUs in many mobile devic
 
 #### [Less room for change of framework](#less-room-for-change-of-framework)
 
-On the server-side, we can partition our systems basically however we want and use different languages and frameworks for the different parts. There is certainly a cost associated with using multiple languages/frameworks at the same time, but this cost is mostly “cognitive" for the organisation. The big upside with allowing for multiple languages/frameworks is that the system can be migrated from using tech A to using tech B over a quite long period of time, without the user being aware of it. 
+On the server-side, we can partition our systems basically however we want and use different languages and frameworks for the different parts. There is certainly a cost associated with using multiple languages/frameworks at the same time, but this cost is mostly "cognitive" for the organisation. The big upside with allowing for multiple languages/frameworks is that the system can be migrated from using tech A to using tech B over a quite long period of time, without the user being aware of it. 
 
 On the client-side however, the cost of doing the same move would be much higher, since the end-user needs to download/parse/execute a double amount of code for the length of the migration. This means that the amount of time that the migration is active is a cost factor as well. And we suspect that this could be a reason behind why teams often want to rewrite their client-side web applications instead of migrating them.
 
@@ -199,7 +199,7 @@ As a side note, we think the [drawbacks of isomorphic web applications](https://
 
 ## [Integration techniques](#integration-techniques)
 
-Going back to our retail example, we see that we need a way to integrate the product pages with the shopping cart. We need to decide where to integrate (client/server), when to integrate (static/dynamic), and what to integrate (data/code/content). All in all, this gives twelve different combinations. We'll go through the most important ones, organised on “what" to integrate.
+Going back to our retail example, we see that we need a way to integrate the product pages with the shopping cart. We need to decide where to integrate (client/server), when to integrate (static/dynamic), and what to integrate (data/code/content). All in all, this gives twelve different combinations. We'll go through the most important ones, organised on "what" to integrate.
 
 
 <a name="integrating-on-data"></a>
@@ -285,7 +285,7 @@ To be fair though, ESI is really performant when it comes to transcluding static
 
 Another challenge with ESI is headers:
 
-“When an ESI template is processed, a separate request will need to be made for each include encountered. Implementations may use the original request's headers (e.g., Cookie, User-Agent, etc.) when doing so. Additionally, response headers from fragments (e.g., Set-Cookie, Server, Cache-Control, Last-Modified) may be ignored, and should not influence the assembled page." – [ESI Language Specification 1.0](https://www.w3.org/TR/esi-lang)
+"When an ESI template is processed, a separate request will need to be made for each include encountered. Implementations may use the original request's headers (e.g., Cookie, User-Agent, etc.) when doing so. Additionally, response headers from fragments (e.g., Set-Cookie, Server, Cache-Control, Last-Modified) may be ignored, and should not influence the assembled page." – [ESI Language Specification 1.0](https://www.w3.org/TR/esi-lang)
 
 So, when considering different solutions for ESI, we need know if the solution forwards the client's headers or not. And, if not, is there any way to enable forwarding of headers, by means of configuration? Since the most common (all?) web authentication mechanisms rely on headers with session tokens, it's crucial that these headers are forwarded to the other services.
 
@@ -303,7 +303,7 @@ If we use a CDN provider, we need another ESI implementation on the developer ma
 
 ##### [Summary](#esi-summary)
 
-Where Edge Side Includes really shines is the transclusion of static resources like menus and footers, but for integration with dynamic content it introduces performance risks. With ESI you need to think about how headers are forwarded when doing HTTP integrations. The development perspective is a bit problematic, at least initially. If you use ESI in a CDN and still want the site to be visible on a developer machine, you'll need to find and use only the “lowest common denominator" features between the CDN and the local ESI implementation.
+Where Edge Side Includes really shines is the transclusion of static resources like menus and footers, but for integration with dynamic content it introduces performance risks. With ESI you need to think about how headers are forwarded when doing HTTP integrations. The development perspective is a bit problematic, at least initially. If you use ESI in a CDN and still want the site to be visible on a developer machine, you'll need to find and use only the "lowest common denominator" features between the CDN and the local ESI implementation.
 
 <a name="client-side-includes"></a>
 
@@ -331,7 +331,7 @@ Even though iFrames should be considered a CSI technology, it's not a good solut
 
 ##### [Performance](#csi-performance)
 
-The performance of CSI is quite the opposite of ESI. It allows the transcluding page to load and render without waiting for the transcluded resources to load. Again, very much like an '<img>' tag. The downside of this, as with images, is that the page can “jump up and down" if we don't specify fixed dimensions of the transcluded content.
+The performance of CSI is quite the opposite of ESI. It allows the transcluding page to load and render without waiting for the transcluded resources to load. Again, very much like an '<img>' tag. The downside of this, as with images, is that the page can "jump up and down" if we don't specify fixed dimensions of the transcluded content.
 
 Before HTTP/2, the browser would create one TCP request for each transclusion, but today more and more browsers ([http://caniuse.com/#feat=http2](http://caniuse.com/#feat=http2), [http://caniuse.com/#feat=spdy](http://caniuse.com/#feat=spdy)) and servers are supporting HTTP/2.
 
@@ -435,7 +435,7 @@ One drawback of hinclude is that transcluded responses containing *other* `hincl
 
 #### [&lt;h-include&gt;](#h-include)
 
-&lt;h-include&gt; is a port of hinclude using the Web Components standard [Custom Elements](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Custom_Elements) for detecting inclusion elements in the DOM. Among other things, Custom Elements provides us with events when a custom element is created or attached to the DOM. This means that we get transitive transclusion “for free" when using &lt;h-include&gt;.
+&lt;h-include&gt; is a port of hinclude using the Web Components standard [Custom Elements](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Custom_Elements) for detecting inclusion elements in the DOM. Among other things, Custom Elements provides us with events when a custom element is created or attached to the DOM. This means that we get transitive transclusion "for free" when using &lt;h-include&gt;.
 
 <a name="easy-to-extend"></a>
 
@@ -633,7 +633,7 @@ In the `shopping-cart/add` resource, we then redirect to the value of the `Refer
 res.redirect(req.header('Referer') || '/shopping-cart');
 ```
 
-For users with JavaScript enabled, we want to “hijack" the form submit and replace the default browser behavior with custom behavior, namely to refresh the shopping cart on a successful AJAX form submission. We do this with jQuery:
+For users with JavaScript enabled, we want to "hijack" the form submit and replace the default browser behavior with custom behavior, namely to refresh the shopping cart on a successful AJAX form submission. We do this with jQuery:
 
 ```
 $(document).on('submit', 'form.hijack', function(event) {
