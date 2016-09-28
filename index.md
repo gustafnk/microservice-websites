@@ -377,7 +377,7 @@ In this section, we'll look at how to transclude content on the client-side usin
 
 ### [hinclude and &lt;h-include&gt;](#hinclude-and-h-include)
 
-We'll start to look at the library `hinclude`.
+We'll start by looking at the library hinclude.
 
 <a name="hinclude"></a>
 
@@ -385,7 +385,7 @@ We'll start to look at the library `hinclude`.
 
 In January 2006, Mark Nottingham sent an email to www-archive list at W3C, claiming authorship for hinclude. Mark uploaded it to GitHub in 2011 and it has had a steady stream of commits since then.
 
-'hinclude' uses a custom xml element name in a separate XML namespace to declaratively include resources, like this:
+hinclude uses a custom xml element name in a separate XML namespace to declaratively include resources, like this:
 
 ```
 <hx:include src="/shopping-cart/component">
@@ -393,7 +393,7 @@ In January 2006, Mark Nottingham sent an email to www-archive list at W3C, claim
 </hx:include>
 ```
 
-When the DOM has loaded, `hinclude` will find all the 'hx:include' elements in the DOM, fetch the associated resources of each element and replace the innerHTML of the `hx:element`s with the responses. If JavaScript is not enabled in the browser or if the request fail, the fallback content (in this example, the link) is still shown.
+When the DOM has loaded, hinclude will find all the `hx:include` elements in the DOM, fetch the associated resources of each element and replace the innerHTML of the `hx:element`s with the responses. If JavaScript is not enabled in the browser or if the request fail, the fallback content (in this example, the link) is still shown.
 
 The result after transclusion will look something like this:
 
@@ -411,7 +411,7 @@ If a link is used as the fallback content, search engines and other crawlers wil
 
 The timing on *when* to replace the innerHTML is quite important. We can't control how fast each service will respond, so if we're transcluding in a lot of different places the UI will initially change a lot, which is not a great user experience. From this perspective, we'd like to wait for all the requests to have been completed before changing the UI. On the other hand, if one service has a performance issue, all the other transclusions are blocked by that request.
 
-In `hinclude`'s synchronous mode, it waits 2.5 seconds (the default value, which can be configured) for all the requests to return before including the finished requests at that time. The remaining requests are included when each return. In `hinclude`'s asynchronous mode, it includes responses as they arrive.
+In hinclude's synchronous mode, it waits 2.5 seconds (the default value, which can be configured) for all the requests to return before including the finished requests at that time. The remaining requests are included when each return. In `hinclude`'s asynchronous mode, it includes responses as they arrive.
 
 <a name="refresh-resources"></a>
 
