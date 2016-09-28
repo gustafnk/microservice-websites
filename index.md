@@ -17,7 +17,7 @@ There are no lack of technologies to choose from when building websites today. T
 
 To co-exist on the same page, the code for the different parts need to be integrated in some way. Apart from *where* we do rendering (client/server/isomorphic), we also need to decide *when* to integrate (static/dynamic) and *what* to integrate (data/code/content).
 
-When we build pages with parts from different teams, we’re building a *network* of pages and parts. The properties of a network as a whole depends largely on the way we integrate the parts, which in turn depends on how we build the parts. But the way we build the parts depends in turn on the way we integrate the parts, which depends on what properties we want the network as a whole to have. How do we resolve this deadlock?
+When we build pages with parts from different teams, we're building a *network* of pages and parts. The properties of a network as a whole depends largely on the way we integrate the parts, which in turn depends on how we build the parts. But the way we build the parts depends in turn on the way we integrate the parts, which depends on what properties we want the network as a whole to have. How do we resolve this deadlock?
 
 A rhetorical question: what do you think is most important, the network as a whole (the parts and their integrations) or the sum of all parts (without the integrations)? We think we shouldn't fall into the trap of letting the parts dictate how we integrate the whole. Instead, the whole should set the constraints on how we can build the parts.
 
@@ -64,9 +64,9 @@ The article begins with a short introdution to microservices. Before moving on t
 
 ## [Why Microservices?](#why-microservices)
 
-A good place to start to learn about microservices is Martin Fowler and James Lewis’ [article](http://martinfowler.com/articles/microservices.html). For me, the key benefits are:
+A good place to start to learn about microservices is Martin Fowler and James Lewis' [article](http://martinfowler.com/articles/microservices.html). For me, the key benefits are:
 
-- Less organisational/architectural friction by following [Conway’s Law](https://en.wikipedia.org/wiki/Conway%27s_law)
+- Less organisational/architectural friction by following [Conway's Law](https://en.wikipedia.org/wiki/Conway%27s_law)
 - Separate deploys for separate services
 - Allows for a heterogenous system, which in turn leads to long-term evolvability
 
@@ -76,9 +76,9 @@ The approach of [Self-Contained Systems](http://scs-architecture.org) (SCS) is a
 
 ### [Example: Retail site](#example-retail-site)
 
-We’ll use a retail site as an example in this article. The retail site has two teams – Products and Orders – where the Products team is responsible for showing the products to the users and the Orders team is responsible for the shopping cart and the checkout flow. The number of items in the shopping cart should be visible on each product page and it should be possible to add products to the shopping cart with a single click.
+We'll use a retail site as an example in this article. The retail site has two teams – Products and Orders – where the Products team is responsible for showing the products to the users and the Orders team is responsible for the shopping cart and the checkout flow. The number of items in the shopping cart should be visible on each product page and it should be possible to add products to the shopping cart with a single click.
 
-Further, when a product is added to the shopping cart, the entire page shouldn't be reloaded (only a partial reload of the shopping cart should be necessary). And the teams want to avoid unnecessary knowledge of each other’s domain, i.e. the Product team should not need to know that the shopping cart should be updated when adding a product to the shopping cart (only the Orders team should know this).
+Further, when a product is added to the shopping cart, the entire page shouldn't be reloaded (only a partial reload of the shopping cart should be necessary). And the teams want to avoid unnecessary knowledge of each other's domain, i.e. the Product team should not need to know that the shopping cart should be updated when adding a product to the shopping cart (only the Orders team should know this).
 
 The future plan is to create a Recommendations teams for product recommendations and a Social team for customer ratings and reviews. As with the shopping cart, these teams will expose pages from their own services, as well as components that are visible on each product page.
 
@@ -94,7 +94,7 @@ Web design across multiple teams is always a challenge, regardless of the softwa
 
 One way to create and communicate around a common web design is to use a *style guide*. A style guide is a toolbox of graphical elements, where some elements in the style guide can consist of other elements from the style guide. 
 
-Using a style guide is not risk free. One risk is that a design team authors a style guide that the teams start to use but over time deviates from. It’s hard for a design team to see all the future design needs of the teams. Another risk is that a policy is created that force the teams to use the style guide, either by creating a “style guide CSS library" or by creating a “QA step" before releases. Regardless, forcing a style guide on the teams creates a bottleneck for delivery, which runs opposite to the distributed development style of the microservice architecture.
+Using a style guide is not risk free. One risk is that a design team authors a style guide that the teams start to use but over time deviates from. It's hard for a design team to see all the future design needs of the teams. Another risk is that a policy is created that force the teams to use the style guide, either by creating a “style guide CSS library" or by creating a “QA step" before releases. Regardless, forcing a style guide on the teams creates a bottleneck for delivery, which runs opposite to the distributed development style of the microservice architecture.
 
 A promising improvement on the style guide is the *living style guide* or the *[pattern lab](http://www.bigeng.io/the-living-style-guide-pattern-lab/)*. Here, mutations of the existing style guide elements are fed back into the style guide itself, creating a catalog of existing mutations of some or all of the style guide elements. A subset of the style guide can then be published as a shared resources, directly available for the teams, while still allowing the teams to develop local mutations.
 
@@ -104,7 +104,7 @@ If one service needs to take a dependency on another service with local mutation
 
 ### [Different design means different resources](#different-design-means-different-resources)
 
-In theory, if the same information is displayed in two different places with different styling, the same HTML markup but different CSS rules could be used, given that there is some way of detecting the different contexts. This would probably be the most Don’t-Repeat-Yourself (DRY) approach. However, being too DRY also introduces coupling. For us, it means that we will have trouble changing our markup without introducing regressions – it’s hard to find out in what way our markup is used and styled by our consumers of the service.
+In theory, if the same information is displayed in two different places with different styling, the same HTML markup but different CSS rules could be used, given that there is some way of detecting the different contexts. This would probably be the most Don't-Repeat-Yourself (DRY) approach. However, being too DRY also introduces coupling. For us, it means that we will have trouble changing our markup without introducing regressions – it's hard to find out in what way our markup is used and styled by our consumers of the service.
 
 A better approach is to use distinctive names for our pattern lab elements and use these names in the stylesheets. This way, we have a one-to-one relationship between the HTML markup for a pattern lab element and the CSS for it, which makes it easier to get feedback on what impact our changes have.
 
@@ -112,7 +112,7 @@ A better approach is to use distinctive names for our pattern lab elements and u
 
 ### [Responsive/adaptive web design](#responsive-adaptive-web-design)
 
-It’s beyond the scope of this article to go into the topic of responsive/adaptive web design (RWD/AWD). In general, RWD/AWD means that we create a flexibility in design and capabilities for different device dimensions, network profiles, etc – the user experience should be good regardless of what device the user has. From a high-level perspective, this means that designers need to think deeply on how the design changes depending on the differences in device capabilities.
+It's beyond the scope of this article to go into the topic of responsive/adaptive web design (RWD/AWD). In general, RWD/AWD means that we create a flexibility in design and capabilities for different device dimensions, network profiles, etc – the user experience should be good regardless of what device the user has. From a high-level perspective, this means that designers need to think deeply on how the design changes depending on the differences in device capabilities.
 
 In our case, one dimension of RWD/AWD is how the different pattern lab elements adapt to different device capabilities. Another dimension is how the page layout work for different device capabilities (especially screen size).
 
@@ -158,7 +158,7 @@ In order to evolve a system over time, the system needs to support that parts ar
 
 ### [Client-side constraints](#client-side-constraints)
 
-The environment on the server and the client (the different browsers) are not alike. On the client-side, you are constrained by the user’s device, network quality, and runtime. Also, compared to the server-side, there’s a high degree of *diversity* of devices, network quality, and runtime. The web is messy – which is a good argument for using [Progressive Enhancement](https://en.wikipedia.org/wiki/Progressive_enhancement).
+The environment on the server and the client (the different browsers) are not alike. On the client-side, you are constrained by the user's device, network quality, and runtime. Also, compared to the server-side, there's a high degree of *diversity* of devices, network quality, and runtime. The web is messy – which is a good argument for using [Progressive Enhancement](https://en.wikipedia.org/wiki/Progressive_enhancement).
 
 <a name="some-mobile-devices-have-a-slow-cpu"></a>
 
@@ -200,7 +200,7 @@ As a side note, we think the [drawbacks of isomorphic web applications](https://
 
 ## [Integration techniques](#integration-techniques)
 
-Going back to our retail example, we see that we need a way to integrate the product pages with the shopping cart. We need to decide where to integrate (client/server), when to integrate (static/dynamic), and what to integrate (data/code/content). All in all, this gives twelve different combinations. We’ll go through the most important ones, organised on “what" to integrate.
+Going back to our retail example, we see that we need a way to integrate the product pages with the shopping cart. We need to decide where to integrate (client/server), when to integrate (static/dynamic), and what to integrate (data/code/content). All in all, this gives twelve different combinations. We'll go through the most important ones, organised on “what" to integrate.
 
 
 <a name="integrating-on-data"></a>
@@ -209,9 +209,9 @@ Going back to our retail example, we see that we need a way to integrate the pro
 
 Integrating on data in our example means that the Orders team will expose an API endpoint containing the shopping cart information for a logged in user. The Products team can then build their own component that use that API to display a shopping cart.
 
-This approach means that we will have as many shopping cart components as we have consumers of the shopping cart API (the Products team is one consumer here). This is both good and bad: we don’t have a lot of coupling, but there is a lot of duplicated effort as well. Integrating on data puts the cost on the consumers, which doesn't scale well if the consumers are all members of the same organisation.
+This approach means that we will have as many shopping cart components as we have consumers of the shopping cart API (the Products team is one consumer here). This is both good and bad: we don't have a lot of coupling, but there is a lot of duplicated effort as well. Integrating on data puts the cost on the consumers, which doesn't scale well if the consumers are all members of the same organisation.
 
-Also, if we’re not using [hypermedia controls](http://amundsen.com/hypermedia/hfactor/), we will have a duplication of business logic in the components. Say that we have a rule that says that a user should not be able to proceed to checkout if the user has zero products in their basket. In this case, it means that the rule will be implemented by all shopping cart API consumers.
+Also, if we're not using [hypermedia controls](http://amundsen.com/hypermedia/hfactor/), we will have a duplication of business logic in the components. Say that we have a rule that says that a user should not be able to proceed to checkout if the user has zero products in their basket. In this case, it means that the rule will be implemented by all shopping cart API consumers.
 
 <a name="integrating-on-code"></a>
 
@@ -235,19 +235,19 @@ For the site as a whole, you can either have separate release trains for the sep
 
 Integrating on content in our example means means that the Orders team will expose an API endpoint containing the HTML representation for the shopping cart information for a logged in user. This is similar to when we integrate on data, except that nothing more needs to be done to render the information, other than the web browser software itself.
 
-Another name for including content from another resource is to *[transclude](https://en.wikipedia.org/wiki/Transclusion)* the content from another service (inlining a document in the current document), like '<img>’ elements in HTML pages.
+Another name for including content from another resource is to *[transclude](https://en.wikipedia.org/wiki/Transclusion)* the content from another service (inlining a document in the current document), like '<img>' elements in HTML pages.
 
 There are several ways to transclude content. One could for example run imperative code to perform HTTP requests on either the server or client and include the responses at the proper places. However, we think that a declarative approach is better, since it mimics the design of other transcluded content in HTML, like images.
 
-Transclusion can be done either on the server or the client. Transclusion on the client is called Client Side Includes (CSI) and transclusion on the server is called Server Side Includes (SSI). However, SSI is also a specific (and old) language for including files or executing cgi-bin scripts in HTML files (or HTTP responses, in general), so the terms are a bit confusing. We’ll try to avoid using the term Server Side Includes for this reason.
+Transclusion can be done either on the server or the client. Transclusion on the client is called Client Side Includes (CSI) and transclusion on the server is called Server Side Includes (SSI). However, SSI is also a specific (and old) language for including files or executing cgi-bin scripts in HTML files (or HTTP responses, in general), so the terms are a bit confusing. We'll try to avoid using the term Server Side Includes for this reason.
 
 <a name="root-relative-urls"></a>
 
 #### [Use root relative URLs in transcluded content](#root-relative-urls)
 
-One additional thing that we need to think about when transcluding content is that our references to external resources (i.e. links and images) needs to be valid after transclusion. Relative URLs (i.e. 'resource/’ or './resource’) are not likely to work, since the location of the transcluded content and the transcluding content are not likely the same. Absolute URLs (i.e. 'https://example.com/resource’) contain the hostname of the resource, which introduce unneccesary coupling between the content and the environment (i.e. development/testing/production).
+One additional thing that we need to think about when transcluding content is that our references to external resources (i.e. links and images) needs to be valid after transclusion. Relative URLs (i.e. 'resource/' or './resource') are not likely to work, since the location of the transcluded content and the transcluding content are not likely the same. Absolute URLs (i.e. 'https://example.com/resource') contain the hostname of the resource, which introduce unneccesary coupling between the content and the environment (i.e. development/testing/production).
 
-Using root relative URLs (i.e.’ /path/to/resource’) to external resources is a better way than relative or absolute URLs, since it only relies on a base path in order to resolve the URL. And if we use the default base path (i.e. the current hostname), we keep things as simple as possible.
+Using root relative URLs (i.e.' /path/to/resource') to external resources is a better way than relative or absolute URLs, since it only relies on a base path in order to resolve the URL. And if we use the default base path (i.e. the current hostname), we keep things as simple as possible.
 
 <a name="edge-side-includes"></a>
 
@@ -272,7 +272,7 @@ Edge Side Includes is today the most popular way of transcluding content on the 
 
 ##### [Performance](#esi-performance)
 
-Since transclusion is made on the server-side, it's not possible to inspect the returned HTML response and draw a conclusion that ESI was used. However, this property of ESI also introduces risk for degraded performance, since we need to rely on the included services’ performance in order to create a complete page. If the transcluded content is cacheable, we can cache the fragments and the performance risk is removed. But for dynamic content, this option is not available.
+Since transclusion is made on the server-side, it's not possible to inspect the returned HTML response and draw a conclusion that ESI was used. However, this property of ESI also introduces risk for degraded performance, since we need to rely on the included services' performance in order to create a complete page. If the transcluded content is cacheable, we can cache the fragments and the performance risk is removed. But for dynamic content, this option is not available.
 
 In our example, if we want to transclude the shopping cart (which contains dynamic content) early in the HTML and it at that time is having problems with performance, ESI will block the rest of the response until the service has responded or the ESI request times out.
 
@@ -288,7 +288,7 @@ Another challenge with ESI is headers:
 
 “When an ESI template is processed, a separate request will need to be made for each include encountered. Implementations may use the original request's headers (e.g., Cookie, User-Agent, etc.) when doing so. Additionally, response headers from fragments (e.g., Set-Cookie, Server, Cache-Control, Last-Modified) may be ignored, and should not influence the assembled page." – [ESI Language Specification 1.0](https://www.w3.org/TR/esi-lang)
 
-So, when considering different solutions for ESI, we need know if the solution forwards the client’s headers or not. And, if not, is there any way to enable forwarding of headers, by means of configuration? Since the most common (all?) web authentication mechanisms rely on headers with session tokens, it’s crucial that these headers are forwarded to the other services.
+So, when considering different solutions for ESI, we need know if the solution forwards the client's headers or not. And, if not, is there any way to enable forwarding of headers, by means of configuration? Since the most common (all?) web authentication mechanisms rely on headers with session tokens, it's crucial that these headers are forwarded to the other services.
 
 <a name="esi-development-perspective"></a>
 
@@ -298,13 +298,13 @@ From a development perspective, ESI is quite problematic. How can we see complet
 
 If we use a cache like Varnish [VARNISH] to get ESI, the development environment either needs to be enhanced with a virtual machine (i.e. VirtualBox) or a container (i.e. Docker), to run the cache on the developer machines. This approach increases the upfront infrastructure investment needed.
 
-If we use a CDN provider, we need another ESI implementation on the developer machines. And that ESI implementation need to match the CDN provider’s implementation, at least for the parts of the ESI specification used. Then, we can either choose to include a cache on the developer machines, or to use a library for your platform, like nodesi [https://github.com/Schibsted-Tech-Polska/nodesi] for node.js. 
+If we use a CDN provider, we need another ESI implementation on the developer machines. And that ESI implementation need to match the CDN provider's implementation, at least for the parts of the ESI specification used. Then, we can either choose to include a cache on the developer machines, or to use a library for your platform, like nodesi [https://github.com/Schibsted-Tech-Polska/nodesi] for node.js. 
 
 <a name="esi-summary"></a>
 
 ##### [Summary](#esi-summary)
 
-Where Edge Side Includes really shines is the transclusion of static resources like menus and footers, but for integration with dynamic content it introduces performance risks. With ESI you need to think about how headers are forwarded when doing HTTP integrations. The development perspective is a bit problematic, at least initially. If you use ESI in a CDN and still want the site to be visible on a developer machine, you’ll need to find and use only the “lowest common denominator" features between the CDN and the local ESI implementation.
+Where Edge Side Includes really shines is the transclusion of static resources like menus and footers, but for integration with dynamic content it introduces performance risks. With ESI you need to think about how headers are forwarded when doing HTTP integrations. The development perspective is a bit problematic, at least initially. If you use ESI in a CDN and still want the site to be visible on a developer machine, you'll need to find and use only the “lowest common denominator" features between the CDN and the local ESI implementation.
 
 <a name="client-side-includes"></a>
 
@@ -314,15 +314,15 @@ Client Side Includes (CSI) is a bit broader concept than ESI, since ESI is a sta
 
 In our example, the shopping cart will be included with an AJAX request to the shopping cart resource, which returns HTML for the browser to render.
 
-It’s not a requirement for CSI to be declarative, but we think it’s a good practice. Some declarative CSI techniques/technologies are:
+It's not a requirement for CSI to be declarative, but we think it's a good practice. Some declarative CSI techniques/technologies are:
 
-- Traversing the DOM for a 'data-’ attribute on an `<a href>` and include the `href`
+- Traversing the DOM for a 'data-' attribute on an `<a href>` and include the `href`
 - Traversing the DOM for an XML element and include its `src` attribute inside the XML element [hinclude.js](https://github.com/mnot/hinclude)
 - Registering a custom element [CE] and include its `src` attribute, may or may not keep the existing element [&lt;h-include&gt;](https://github.com/gustafnk/h-include), [`<include-fragment-element>`](https://github.com/github/include-fragment-element), [`<html-include>`](https://github.com/chris-l/html-include/)
 
-One downside with CSI is that it doesn’t play well with links to JavaScript included dynamically. This means that it’s a bit more cumbersome to integrate a microservice that has dependencies to its own JavaScript. For an example on how this issue can be resolved (and why integrating CSS is not a problem), see the section [Local stylesheets and scripts](#local-stylesheets-and-scripts).
+One downside with CSI is that it doesn't play well with links to JavaScript included dynamically. This means that it's a bit more cumbersome to integrate a microservice that has dependencies to its own JavaScript. For an example on how this issue can be resolved (and why integrating CSS is not a problem), see the section [Local stylesheets and scripts](#local-stylesheets-and-scripts).
 
-Another downside with CSI is that it’s best if we know the height and width of the transcluded content in advance, in order to avoid a flickering UI. This is very similar to how we need to treat image elements in HTML. However, it’s sometimes cumbersome to know exactly how much space is needed for content with variable length. Over time, it’s better if we transclude that kind of content that come early in the DOM with ESI, while content with variable length that comes later in the DOM can be included with CSI. However, we then also need to evaluate the possible performance risks with this change.   
+Another downside with CSI is that it's best if we know the height and width of the transcluded content in advance, in order to avoid a flickering UI. This is very similar to how we need to treat image elements in HTML. However, it's sometimes cumbersome to know exactly how much space is needed for content with variable length. Over time, it's better if we transclude that kind of content that come early in the DOM with ESI, while content with variable length that comes later in the DOM can be included with CSI. However, we then also need to evaluate the possible performance risks with this change.
 
 With CSI, we also need to follow the cross-origin policy for AJAX requests in the browser, or use CORS (if supported by the browser and enabled in the server). If CORS is not enabled, we need a reverse proxy or load balancer in front of the endpoint, so that they share the same host (both in development mode and production).
 
@@ -332,7 +332,7 @@ Even though iFrames should be considered a CSI technology, it's not a good solut
 
 ##### [Performance](#csi-performance)
 
-The performance of CSI is quite the opposite of ESI. It allows the transcluding page to load and render without waiting for the transcluded resources to load. Again, very much like an '<img>’ tag. The downside of this, as with images, is that the page can “jump up and down" if we don’t specify fixed dimensions of the transcluded content.
+The performance of CSI is quite the opposite of ESI. It allows the transcluding page to load and render without waiting for the transcluded resources to load. Again, very much like an '<img>' tag. The downside of this, as with images, is that the page can “jump up and down" if we don't specify fixed dimensions of the transcluded content.
 
 Before HTTP/2, the browser would create one TCP request for each transclusion, but today more and more browsers ([http://caniuse.com/#feat=http2](http://caniuse.com/#feat=http2), [http://caniuse.com/#feat=spdy](http://caniuse.com/#feat=spdy)) and servers are supporting HTTP/2.
 
@@ -342,27 +342,27 @@ And browsers with HTTP/2 are using HTTP/2 for xhr requests as well. So if both t
 
 ##### [Headers](#csi-headers)
 
-Contrary to ESI, you don’t have to think about header forwarding when using CSI, since the resources are transcluded by the browser itself.
+Contrary to ESI, you don't have to think about header forwarding when using CSI, since the resources are transcluded by the browser itself.
 
 <a name="esi-development-perspective"></a>
 
 ##### [Development perspective](#esi-development-perspective)
 
-Again, contrary to ESI, the development perspective of using CSI is very low-friction, since we’re just using the browser to transclude the content.
+Again, contrary to ESI, the development perspective of using CSI is very low-friction, since we're just using the browser to transclude the content.
 
 <a name="esi-summary"></a>
 
 ##### [Summary](#esi-summary)
 
-Client Side Includes is a lightweight alternative to Edge Side Includes. It removes the performance problem of ESI, and adds the 'cross-origin constraint’ and the 'fixed dimensions of transcluded resources’ constraint. CSI is faster with HTTP/2, since AJAX requests to the same origin are made on the same TCP connection.
+Client Side Includes is a lightweight alternative to Edge Side Includes. It removes the performance problem of ESI, and adds the 'cross-origin constraint' and the 'fixed dimensions of transcluded resources' constraint. CSI is faster with HTTP/2, since AJAX requests to the same origin are made on the same TCP connection.
 
 <a name="using-esi-and-csi-together"></a>
 
 #### [Using ESI and CSI together](#using-esi-and-csi-together)
 
-ESI and CSI complement each other: ESI can be quite heavyweight, but work really well with including static resources. CSI is lightweight, but for static and/or cacheable content it would be better for performance to use ESI, especially if the content contains references to JavaScript or CSS. However, the two techniques could very well be used together – use ESI for static content and CSI for dynamic content. A nice side-effect of this combination of techniques is that it’s easier to simulate ESI on a local developer machine if the only thing we use ESI for is to include static resources.
+ESI and CSI complement each other: ESI can be quite heavyweight, but work really well with including static resources. CSI is lightweight, but for static and/or cacheable content it would be better for performance to use ESI, especially if the content contains references to JavaScript or CSS. However, the two techniques could very well be used together – use ESI for static content and CSI for dynamic content. A nice side-effect of this combination of techniques is that it's easier to simulate ESI on a local developer machine if the only thing we use ESI for is to include static resources.
 
-One possible strategy could be to use only CSI in the beginning of a project and when the project matures move some of the CSI elements to ESI instead, where appropriate. This way, we defer the investment in the heavier ESI infrastructure until later, allowing us to release earlier and extract value earlier. With regards to CSS, there would be a performance penalty to include a `<link rel="stylesheet">` in a CSI transcluded response (but with HTTP/2 the performance penalty would be limited). Later we could – again, if appropriate – use ESI instead of CSI. However, we can’t use this strategy with JavaScript, due to the way how browsers load JavaScript, all JavaScript files either needs to be available as shared resources or be included with ESI. For more details on this, see the section [Local stylesheets and scripts](#local-stylesheets-and-scripts)..
+One possible strategy could be to use only CSI in the beginning of a project and when the project matures move some of the CSI elements to ESI instead, where appropriate. This way, we defer the investment in the heavier ESI infrastructure until later, allowing us to release earlier and extract value earlier. With regards to CSS, there would be a performance penalty to include a `<link rel="stylesheet">` in a CSI transcluded response (but with HTTP/2 the performance penalty would be limited). Later we could – again, if appropriate – use ESI instead of CSI. However, we can't use this strategy with JavaScript, due to the way how browsers load JavaScript, all JavaScript files either needs to be available as shared resources or be included with ESI. For more details on this, see the section [Local stylesheets and scripts](#local-stylesheets-and-scripts)..
 
 It's also possible to combine ESI and CSI in related parts of the page. For example, a header menu could be transcluded with ESI and contain a client side included shopping cart. The opposite relationship also works – to include something with CSI that in turn uses ESI to construct a full response.
 
@@ -372,13 +372,13 @@ It's also possible to combine ESI and CSI in related parts of the page. For exam
 
 ## [Client-Side Transclusion with &lt;h-include&gt;](#client-side-transclusion-with-h-include)
 
-In this section, we’ll look at how to transclude content on the client-side using the declarative libraries hinclude and &lt;h-include&gt;. We’ll also give some general advice when using transclusion. For transparency, we want to point out that the author of this article is the creator and core contributor of the &lt;h-include&gt; library.
+In this section, we'll look at how to transclude content on the client-side using the declarative libraries hinclude and &lt;h-include&gt;. We'll also give some general advice when using transclusion. For transparency, we want to point out that the author of this article is the creator and core contributor of the &lt;h-include&gt; library.
 
 <a name="hinclude-and-h-include"></a>
 
 ### [hinclude and &lt;h-include&gt;](#hinclude-and-h-include)
 
-Let’s look at two libraries that provides declarative ways to include content on the client-side: `hinclude` and &lt;h-include&gt;.
+We'll start to look at the library `hinclude`.
 
 <a name="hinclude"></a>
 
@@ -386,7 +386,7 @@ Let’s look at two libraries that provides declarative ways to include content 
 
 In January 2006, Mark Nottingham sent an email to www-archive list at W3C, claiming authorship for hinclude. Mark uploaded it to GitHub in 2011 and it has had a steady stream of commits since then.
 
-'hinclude’ uses a custom xml element name in a separate XML namespace to declaratively include resources, like this:
+'hinclude' uses a custom xml element name in a separate XML namespace to declaratively include resources, like this:
 
 ```
 <hx:include src="/shopping-cart/component">
@@ -394,7 +394,7 @@ In January 2006, Mark Nottingham sent an email to www-archive list at W3C, claim
 </hx:include>
 ```
 
-When the DOM has loaded, `hinclude` will find all the 'hx:include’ elements in the DOM, fetch the associated resources of each element and replace the innerHTML of the `hx:element`s with the responses. If JavaScript is not enabled in the browser or if the request fail, the fallback content (in this example, the link) is still shown.
+When the DOM has loaded, `hinclude` will find all the 'hx:include' elements in the DOM, fetch the associated resources of each element and replace the innerHTML of the `hx:element`s with the responses. If JavaScript is not enabled in the browser or if the request fail, the fallback content (in this example, the link) is still shown.
 
 The result after transclusion will look something like this:
 
@@ -404,21 +404,21 @@ The result after transclusion will look something like this:
 </hx:include>
 ```
 
-If a link is used as the fallback content, search engines and other crawlers will be able to crawl the site without executing JavaScript, so we would consider it a good practice. However, this would mean that the link is shown briefly during initial load. In the section on &lt;h-include&gt; below, we’ll show how to avoid this brief flash of fallback content.
+If a link is used as the fallback content, search engines and other crawlers will be able to crawl the site without executing JavaScript, so we would consider it a good practice. However, this would mean that the link is shown briefly during initial load. In the section on &lt;h-include&gt; below, we'll show how to avoid this brief flash of fallback content.
 
 <a name="timing"></a>
 
 ##### [Timing](#timing)
 
-The timing on *when* to replace the innerHTML is quite important. We can’t control how fast each service will respond, so if we’re transcluding in a lot of different places the UI will initially change a lot, which is not a great user experience. From this perspective, we’d like to wait for all the requests to have been completed before changing the UI. On the other hand, if one service has a performance issue, all the other transclusions are blocked by that request.
+The timing on *when* to replace the innerHTML is quite important. We can't control how fast each service will respond, so if we're transcluding in a lot of different places the UI will initially change a lot, which is not a great user experience. From this perspective, we'd like to wait for all the requests to have been completed before changing the UI. On the other hand, if one service has a performance issue, all the other transclusions are blocked by that request.
 
-In `hinclude`’s synchronous mode, it waits 2.5 seconds (the default value, which can be configured) for all the requests to return before including the finished requests at that time. The remaining requests are included when each return. In `hinclude`’s asynchronous mode, it includes responses as they arrive.
+In `hinclude`'s synchronous mode, it waits 2.5 seconds (the default value, which can be configured) for all the requests to return before including the finished requests at that time. The remaining requests are included when each return. In `hinclude`'s asynchronous mode, it includes responses as they arrive.
 
 <a name="refresh-resources"></a>
 
 ##### [Refresh resources](#refresh-resources)
 
-Since `hinclude` only replaces the innerHTML and keeps the surrounding 'hinclude’ element, we are able to refresh the included resource when needed. For example, if we show a list of products where each product has a form with a button that adds that product to the shopping cart, we can detect those form submissions and refresh the shopping cart after a product was added to the shopping cart.
+Since hinclude only replaces the innerHTML and keeps the surrounding `hinclude` element, we are able to refresh the included resource when needed. For example, if we show a list of products where each product has a form with a button that adds that product to the shopping cart, we can detect those form submissions and refresh the shopping cart after a product was added to the shopping cart.
 
 <a name="conditional-transclusion-for-small-screens"></a>
 
@@ -430,7 +430,7 @@ For small screens, one might want to skip the transclusion of some resources to 
 
 ##### [Transitive transclusion not supported](#transitive-transclusion-not-supported)
 
-One drawback of `hinclude` is that transcluded responses containing *other* `hinclude` elements are not automatically processed. However, this is solved in &lt;h-include&gt;.
+One drawback of hinclude is that transcluded responses containing *other* `hinclude` elements are not automatically processed. However, this is solved in &lt;h-include&gt;.
 
 <a name="h-include"></a>
 
@@ -442,7 +442,7 @@ One drawback of `hinclude` is that transcluded responses containing *other* `hin
 
 ##### [Easy to extend](#easy-to-extend)
 
-&lt;h-include&gt; is easy to extend, since it’s a custom element and exposes its prototype. The simplest extension is to disable automatic transclusion, so that the `refresh` method needs to be called in order to load the content. This is how we would create such an extension, called `h-include-manual-loading`:
+&lt;h-include&gt; is easy to extend, since it's a custom element and exposes its prototype. The simplest extension is to disable automatic transclusion, so that the `refresh` method needs to be called in order to load the content. This is how we would create such an extension, called `h-include-manual-loading`:
 
 ```
 var proto = Object.create(HIncludeElement.prototype);
@@ -474,13 +474,13 @@ There are a few more features in &lt;h-include&gt; that you can read about its [
 
 ##### [Drawbacks](#drawbacks)
 
-In order to use &lt;h-include&gt;, we need to conditionally load a polyfill for Custom Elements, for those browsers that don’t support Custom Elements. There are a few polyfills to choose from but one property that unites them all is that they drop support for Internet Explorer around version 9 or 10.
+In order to use &lt;h-include&gt;, we need to conditionally load a polyfill for Custom Elements, for those browsers that don't support Custom Elements. There are a few polyfills to choose from but one property that unites them all is that they drop support for Internet Explorer around version 9 or 10.
 
 <a name="how-to-avoid-a-brief-flash-of-fallback-content"></a>
 
 ### [How to avoid a brief flash of fallback content](#how-to-avoid-a-brief-flash-of-fallback-content)
 
-Even if our web servers usually responds fast, we’d like to avoid to show a brief flash of fallback content for our hincludes &lt;h-include&gt;s. Here’s an example of how to do it with &lt;h-include&gt;s:
+Even if our web servers usually responds fast, we'd like to avoid to show a brief flash of fallback content for our hincludes and &lt;h-include&gt;s. Here's an example of how to do it with &lt;h-include&gt;s:
 
 ```
 <!-- Put this code before the first h-include or in the <head> element -->
@@ -501,7 +501,7 @@ Even if our web servers usually responds fast, we’d like to avoid to show a br
 
 ```
 
-The first line of code is to detect if JavaScript is enabled in the browser at all, otherwise we’ll always show the fallback content. The first CSS rule then hides all the &lt;h-include&gt;s that are not included (&lt;h-include&gt; adds an `included` class after the AJAX request returns). The second CSS rule shows all included &lt;h-include&gt;s.
+The first line of code is to detect if JavaScript is enabled in the browser at all, otherwise we'll always show the fallback content. The first CSS rule then hides all the &lt;h-include&gt;s that are not included (&lt;h-include&gt; adds an `included` class after the AJAX request returns). The second CSS rule shows all included &lt;h-include&gt;s.
 
 <a name="local-stylesheets-and-scripts"></a>
 
@@ -513,7 +513,7 @@ When integrating microservice websites and components, we need to think more car
 
 #### [Local stylesheets](#local-stylesheets)
 
-If we optimize for browsers supporting HTTP/2 (and SPDY) it’s not necessary to load stylesheets in the head ([https://jakearchibald.com/2016/link-in-body/](https://jakearchibald.com/2016/link-in-body/)). Early in the product lifecycle, we can include references to stylesheets in the transcluded responses, like this:
+If we optimize for browsers supporting HTTP/2 (and SPDY) it's not necessary to load stylesheets in the head ([https://jakearchibald.com/2016/link-in-body/](https://jakearchibald.com/2016/link-in-body/)). Early in the product lifecycle, we can include references to stylesheets in the transcluded responses, like this:
 
 ```
 <h-include src="/shopping-cart/component">
@@ -545,7 +545,7 @@ Note that going from CSI to ESI, we now have introduced a performance risk for t
 
 When importing scripts for transcluded content, we are more constrained than when importing CSS, due to how the browsers load JavaScript.
 
-If we don’t want to use ESI at the initial phase of the product development, we need to do a bit of thinking (if we have a limited amount of scripts, one approach could of course be to let all scripts be exposed as shared resources). One approach could be to use [HTML Imports](https://www.html5rocks.com/en/tutorials/webcomponents/imports/) to include the scripts, like this:
+If we don't want to use ESI at the initial phase of the product development, we need to do a bit of thinking (if we have a limited amount of scripts, one approach could of course be to let all scripts be exposed as shared resources). One approach could be to use [HTML Imports](https://www.html5rocks.com/en/tutorials/webcomponents/imports/) to include the scripts, like this:
 
 ```
 <h-include src="/shopping-cart/component">
@@ -554,7 +554,7 @@ If we don’t want to use ESI at the initial phase of the product development, w
 <link rel="import" href="/shopping-cart/component/scripts">
 ```
 
-One downside with this approach is that the polyfills for HTML Imports use `eval` to run referenced JavaScript files, which is a violation of the [Content Security Policy](https://en.wikipedia.org/wiki/Content_Security_Policy) Level 2 (CSP). Using the CSP removes many common web security threats, so it’s a good practice to enable it, which in turn means that we today should think twice before use HTML Imports.
+One downside with this approach is that the polyfills for HTML Imports use `eval` to run referenced JavaScript files, which is a violation of the [Content Security Policy](https://en.wikipedia.org/wiki/Content_Security_Policy) Level 2 (CSP). Using the CSP removes many common web security threats, so it's a good practice to enable it, which in turn means that we today should think twice before use HTML Imports.
 
 Instead, we can use a script loader, i.e. [little-loader](https://github.com/walmartlabs/little-loader), to load cache busted script files:
 
@@ -617,9 +617,9 @@ When ESI is part of the infrastructure, remove the references to the JavaScript 
 
 ### [Server driven partial updates](#server-driven-partial-updates)
 
-Going back to our retail example, we now know how to expose a shopping cart component service, possibly with CSS and JavaScript references. We also know how to use this shopping cart component service from the consumer side. But what we haven’t covered yet is how to do a partial update of the shopping cart when the user adds products to it.
+Going back to our retail example, we now know how to expose a shopping cart component service, possibly with CSS and JavaScript references. We also know how to use this shopping cart component service from the consumer side. But what we haven't covered yet is how to do a partial update of the shopping cart when the user adds products to it.
 
-First, let’s make sure users without JavaScript get an updated shopping cart when they add products to it. Each product item in the list of products contains a form with a button:
+First, let's make sure users without JavaScript get an updated shopping cart when they add products to it. Each product item in the list of products contains a form with a button:
 
 ```
 <form method="POST" action="/shopping-cart/add" class="hijack">
@@ -654,7 +654,7 @@ $(document).on('submit', 'form.hijack', function(event) {
   });
 ```
 
-For small sites, this can be enough. But for larger sites, this type of code will introduce coupling, since we now have JavaScript code that introduces coupling between the 'add to shopping cart’ forms and the shopping cart itself. How can we remove this coupling?
+For small sites, this can be enough. But for larger sites, this type of code will introduce coupling, since we now have JavaScript code that introduces coupling between the 'add to shopping cart' forms and the shopping cart itself. How can we remove this coupling?
 
 If the server detects that AJAX was used to submit the form, it can return something else than a redirect response. Instead, it can return a list of *events* that some client-side infrastructure should process. In node/express, like this:
 
