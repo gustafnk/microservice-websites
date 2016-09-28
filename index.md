@@ -27,7 +27,7 @@ The meaning behind the word “good" depends on the current and future needs of 
 
 With this article we want to show that [*server-side rendered web UIs integrated on content*](#content) (using [transclusion](https://en.wikipedia.org/wiki/Transclusion)) allow for high *long-term evolvability* compared to client-side rendering integrated with shared code. In other words, if you want a system with high long-term evolvability, you should not develop web UIs using only client-side JavaScript and integrate them using a shared components approach.
 
-We also want to show that Client Side Includes is a good first choice for transclusion technology, since they are lightweight and allow for a faster initial release than Edge-Side Includes (ESI). They also allow for keeping the option open for using ESI later, when beneficial. We describe and compare two related Client Side Include libraries: hinclude and h-include. We also give a suggestion for an approach to work with both global and service local JavaScript and CSS.
+We also want to show that Client Side Includes is a good first choice for transclusion technology, since they are lightweight and allow for a faster initial release than Edge Side Includes (ESI). They also allow for keeping the option open for using ESI later, when beneficial. We describe and compare two related Client Side Include libraries: hinclude and h-include. We also give a suggestion for an approach to work with both global and service local JavaScript and CSS.
 
 Throughout this article, we use an retail site as an example. In the end of this article, we give a brief description of an example architecture for this retail site.
 
@@ -47,7 +47,7 @@ The article begins with a short introdution to microservices. Before moving on t
   - [Integrating on data](#data)
   - [Integrating on code](#code)
   - [Integrating on content](#content)
-    - [Edge-Side Includes](#edge-side-includes)
+    - [Edge Side Includes](#edge-side-includes)
     - [Client Side Includes](#client-side-includes)
     - [Using ESI and CSI together](#using-esi-and-csi-together)
 - [Client-Side Transclusion with &lt;h-include&gt;](#client-side-transclusion-with-h-include)
@@ -212,7 +212,7 @@ One additional thing that we need to think about when transcluding content is th
 
 Using root relative URLs (i.e.’ /path/to/resource’) to external resources is a better way than relative or absolute URLs, since it only relies on a base path in order to resolve the URL. And if we use the default base path (i.e. the current hostname), we keep things as simple as possible.
 
-#### Edge-Side Includes <a name="edge-side-includes"></a>
+#### Edge Side Includes <a name="edge-side-includes"></a>
 
 [Edge-Side Include](https://en.wikipedia.org/wiki/Edge_Side_Includes) (ESI) is a technology that provides a declarative way to include content on the server-side, like this:
 
@@ -220,12 +220,12 @@ Using root relative URLs (i.e.’ /path/to/resource’) to external resources is
 <esi:include src="/shopping-cart" />
 ```
 
-Edge-Side Includes is today the most popular way of transcluding content on the server-side.
+Edge Side Includes is today the most popular way of transcluding content on the server-side.
 
 <div class="fact-box">
 <dl class="typl8-lining">
   <dt><b>Edge</b></dt>
-  <dd>The term <i>edge</i> in Edge-Side Includes should be seen as the last physical node in our control that is passed by a HTTP response <i>before</i> it reaches the user's computer. If we're using a CDN with ESI support, like Akamai or Fastly, we call that layer our edge. Otherwise, if we use the caching HTTP reverse proxy Varnish (which has ESI support) in our infrastructure, that layer can be considered to be our edge. Finally, if we not using either of the above options, we can consider the web server(s) our edge.</dd>
+  <dd>The term <i>edge</i> in Edge Side Includes should be seen as the last physical node in our control that is passed by a HTTP response <i>before</i> it reaches the user's computer. If we're using a CDN with ESI support, like Akamai or Fastly, we call that layer our edge. Otherwise, if we use the caching HTTP reverse proxy Varnish (which has ESI support) in our infrastructure, that layer can be considered to be our edge. Finally, if we not using either of the above options, we can consider the web server(s) our edge.</dd>
 </dl>
 </div>
 
@@ -259,7 +259,7 @@ If we use a CDN provider, we need another ESI implementation on the developer ma
 
 ##### Summary <a name="summary"></a>
 
-Where Edge-Side Includes really shines is the transclusion of static resources like menus and footers, but for integration with dynamic content it introduces performance risks. With ESI you need to think about how headers are forwarded when doing HTTP integrations. The development perspective is a bit problematic, at least initially. If you use ESI in a CDN and still want the site to be visible on a developer machine, you’ll need to find and use only the “lowest common denominator" features between the CDN and the local ESI implementation.
+Where Edge Side Includes really shines is the transclusion of static resources like menus and footers, but for integration with dynamic content it introduces performance risks. With ESI you need to think about how headers are forwarded when doing HTTP integrations. The development perspective is a bit problematic, at least initially. If you use ESI in a CDN and still want the site to be visible on a developer machine, you’ll need to find and use only the “lowest common denominator" features between the CDN and the local ESI implementation.
 
 #### Client Side Includes <a name="client-side-includes"></a>
 
@@ -299,7 +299,7 @@ Again, contrary to ESI, the development perspective of using CSI is very low-fri
 
 ##### Summary <a name="summary-1"></a>
 
-Client-Side Includes is a lightweight alternative to Edge-Side Includes. It removes the performance problem of ESI, and adds the 'cross-origin constraint’ and the 'fixed dimensions of transcluded resources’ constraint. CSI is faster with HTTP/2, since AJAX requests to the same origin are made on the same TCP connection.
+Client Side Includes is a lightweight alternative to Edge Side Includes. It removes the performance problem of ESI, and adds the 'cross-origin constraint’ and the 'fixed dimensions of transcluded resources’ constraint. CSI is faster with HTTP/2, since AJAX requests to the same origin are made on the same TCP connection.
 
 #### Using ESI and CSI together <a name="using-esi-and-csi-together"></a>
 
@@ -660,9 +660,9 @@ If you develop [consumer facing websites](#consumer-facing-websites) and value b
 
 How do we want to integrate our services? [Integrating on data](#data) is safe, but don't allow for economies of scale (the effort is duplicated by each team). [Integrating on code](#code) creates the need for release trains, which is costly and hurts agility. [Integrating on content](#content) (also known as [transclusion](https://en.wikipedia.org/wiki/Transclusion)) allow the teams to decouple their release cycles, while not duplicating their efforts.
 
-One declarative server-side transclusion technique is [Edge-Side Includes](#edge-side-includes) (ESI), which is supported by a few CDNs and some caching HTTP reverse proxies. ESI is infrastructure heavy, so it might hurt your initial project delivery speed. ESI is something that we can easily refactor to later, if wanted.
+One declarative server-side transclusion technique is [Edge Side Includes](#edge-side-includes) (ESI), which is supported by a few CDNs and some caching HTTP reverse proxies. ESI is infrastructure heavy, so it might hurt your initial project delivery speed. ESI is something that we can easily refactor to later, if wanted.
 
-Declarative [Client-Side Includes](#client-side-includes) (CSI) allows for better initial project delivery speed than ESI, and together with HTTP/2 the performance is not too bad for many scenarios. However, CSI introduces some challenges with loading service local JavaScript, but that challenges are solvable with [script loaders](#local-scripts).
+Declarative [Client Side Includes](#client-side-includes) (CSI) allows for better initial project delivery speed than ESI, and together with HTTP/2 the performance is not too bad for many scenarios. However, CSI introduces some challenges with loading service local JavaScript, but that challenges are solvable with [script loaders](#local-scripts).
 
 Two related CSI libraries are [hinclude and &lt;h-include&gt;](#hinclude-and-h-include). The latter is a web components port of the former, with a few added features. In summary, &lt;h-include&gt; supports transitive includes, fragment extraction, extension points, and possible lazy loading on scroll, but the drawback is that it only supports IE9/IE10 and up.
 
