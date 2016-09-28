@@ -53,7 +53,7 @@ The article begins with a short introdution to microservices. Before moving on t
   - [Local stylesheets and scripts](#local-stylesheets-and-scripts)
   - [Server driven partial updates](#server-driven-partial-updates)
 - [Example architecture](#example-architecture)
-- [Conclusion](#conclusion-todo)
+- [Conclusion](#conclusion)
 - [Appendix](appendix.html)
 
 <p class="toc-ellipsis">[...]</p>
