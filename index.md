@@ -33,8 +33,7 @@ Throughout this article, we use an retail site as an example. In the end of this
 
 The article begins with a short introdution to microservices. Before moving on to a comparision of integration techniques, we describe a strategy of how the effort of web design can be scaled effectively with *pattern labs*.
 
-
-<a href="javascript:document.querySelector('#table-of-contents').classList.toggle('show'); document.querySelector('.toc-ellipsis').classList.toggle('hide')">[Show/hide Table of Contents]</a>
+---
 
 ## Table of Contents
 
@@ -55,8 +54,6 @@ The article begins with a short introdution to microservices. Before moving on t
 - [Example architecture](#example-architecture)
 - [Conclusion](#conclusion)
 - [Appendix](appendix.html)
-
-<p class="toc-ellipsis">[...]</p>
 
 ---
 
