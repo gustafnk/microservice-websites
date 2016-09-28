@@ -2,18 +2,18 @@
 layout: default
 ---
 
-# Microservice Web UIs
+# Microservice Websites
 
 <em class="sub-heading">Building consumer facing websites with multiple teams</em>
 
-By Gustaf Nilsson Kotte ([@gustaf_nk](https://twitter.com/gustaf_nk/)).<br/>
-Please give feedback and report issues on the [GitHub repository](https://github.com/gustafnk/microservice-web-uis/).
+By Gustaf Nilsson Kotte ([@gustaf_nk](https://twitter.com/gustaf_nk/))<br/>
+Please give feedback and report issues on the [GitHub repository](https://github.com/gustafnk/microservice-web-uis/)
 
 ---
 
-How can we develop web UIs where the different parts of the pages are developed by different teams? If you work in a large enough organization which has its product(s) on the web, this is probably a question you have asked yourself several times.
+How can we develop websites where the different parts of the pages are developed by different teams? If you work in a large enough organization which has its content and services on the web, this is probably a question you have asked yourself several times.
 
-There are no lack of technologies to choose from when building web sites today. Three broad strategies can be identified: client-side rendering, server-side rendering, or both (isomorphic web applications).
+There are no lack of technologies to choose from when building websites today. Three broad strategies can be identified: client-side rendering, server-side rendering, or both (isomorphic web applications).
 
 To co-exist on the same page, the code for the different parts need to be integrated in some way. Apart from *where* we do rendering (client/server/isomorphic), we also need to decide *when* to integrate (static/dynamic) and *what* to integrate (data/code/content).
 
@@ -21,11 +21,11 @@ When we build pages with parts from different teams, we’re building a *network
 
 A rhetorical question: what do you think is most important, the network as a whole (the parts and their integrations) or the sum of all parts (without the integrations)? we think we shouldn't fall into the trap of letting the parts dictate how we integrate the whole. Instead, the whole should set the constraints on how we can build the parts.
 
-So, what are good ways of building a network of microservice web UIs?
+So, what are good ways of building a network of microservice websites and components?
 
 The meaning behind the word “good" depends on the current and future needs of the organisation responsible for the software and the users of the software. No architecture is good in-itself, it all depends on the context and the needs.
 
-With this article we want to show that [*server-side rendered web UIs integrated on content*](#integrating-on-content) (using [transclusion](https://en.wikipedia.org/wiki/Transclusion)) allow for high *long-term evolvability* compared to client-side rendering integrated with shared code. In other words, if you want a system with high long-term evolvability, you should not develop web UIs using only client-side JavaScript and integrate them using a shared components approach.
+With this article we want to show that [*server-side rendered websites integrated on content*](#integrating-on-content) (using [transclusion](https://en.wikipedia.org/wiki/Transclusion)) allow for high *long-term evolvability* compared to client-side rendering integrated with shared code. In other words, if you want a system with high long-term evolvability, you should not develop websites using only client-side JavaScript and integrate them using a shared components approach.
 
 We also want to show that Client Side Includes is a good first choice for transclusion technology, since they are lightweight and allow for a faster initial release than Edge Side Includes (ESI). They also allow for keeping the option open for using ESI later, when beneficial. We describe and compare two related Client Side Include libraries: hinclude and h-include. We also give a suggestion for an approach to work with both global and service local JavaScript and CSS.
 
@@ -80,7 +80,7 @@ I’ll use a retail site as an example in this article. The retail site has two 
 
 Further, when a product is added to the shopping cart, the entire page shouldn't be reloaded (only a partial reload of the shopping cart should be necessary). And the teams want to avoid unnecessary knowledge of each other’s domain, i.e. the Product team should not need to know that the shopping cart should be updated when adding a product to the shopping cart (only the Orders team should know this).
 
-The future plan is to create a Recommendations teams for product recommendations and a Social team for customer ratings and reviews. As with the shopping cart, these teams will expose pages from their own services, as well as web UI components that are visible on each product page.
+The future plan is to create a Recommendations teams for product recommendations and a Social team for customer ratings and reviews. As with the shopping cart, these teams will expose pages from their own services, as well as components that are visible on each product page.
 
 In this article, we will think of our services as Self-Contained Systems, since each system will mostly correspond to a team. 
 
@@ -276,7 +276,7 @@ Since transclusion is made on the server-side, it's not possible to inspect the 
 
 In our example, if we want to transclude the shopping cart (which contains dynamic content) early in the HTML and it at that time is having problems with performance, ESI will block the rest of the response until the service has responded or the ESI request times out.
 
-Also, one can argue that web UIs integrated with ESI is a violation of [Self-Contained Systems](http://scs-architecture.org/), since the page is no longer autonomous: if the shopping cart request is hanging, the whole page is hanging.
+Also, one can argue that websites integrated with ESI is a violation of [Self-Contained Systems](http://scs-architecture.org/), since the page is no longer autonomous: if the shopping cart request is hanging, the whole page is hanging.
 
 To be fair though, ESI is really performant when it comes to transcluding static HTML files or cacheable content.
 
@@ -507,7 +507,7 @@ The first line of code is to detect if JavaScript is enabled in the browser at a
 
 ### [Local stylesheets and scripts](#local-stylesheets-and-scripts)
 
-When integrating microservice web UIs, we need to think more carefully on how to transclude content that depends on specific stylesheets and/or scripts. Regardless of if we use a pattern lab or not (see [Scaling web design: style guides and pattern labs](#scaling-web-design)), we probably end up in a scenario where we have some JavaScript and CSS exposed in shared resources (globally available), while some resources are only used within a microservice (locally available). How to transclude content that has a dependency locally available JavaScript and/or CSS then needs to be decided.
+When integrating microservice websites and components, we need to think more carefully on how to transclude content that depends on specific stylesheets and/or scripts. Regardless of if we use a pattern lab or not (see [Scaling web design: style guides and pattern labs](#scaling-web-design)), we probably end up in a scenario where we have some JavaScript and CSS exposed in shared resources (globally available), while some resources are only used within a microservice (locally available). How to transclude content that has a dependency locally available JavaScript and/or CSS then needs to be decided.
 
 <a name="local-stylesheets"></a>
 
