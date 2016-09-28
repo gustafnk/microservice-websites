@@ -75,7 +75,7 @@ The approach of [Self-Contained Systems](http://scs-architecture.org) (SCS) is a
 
 ### [Example: Retail site](#example-retail-site)
 
-We'll use a retail site as an example in this article. The retail site has two teams – Products and Orders – where the Products team is responsible for showing the products to the users and the Orders team is responsible for the shopping cart and the checkout flow. The number of items in the shopping cart should be visible on each product page and it should be possible to add products to the shopping cart with a single click.
+We use a retail site as an example in this article. The retail site has two teams – Products and Orders – where the Products team is responsible for showing the products to the users and the Orders team is responsible for the shopping cart and the checkout flow. The number of items in the shopping cart should be visible on each product page and it should be possible to add products to the shopping cart with a single click.
 
 Further, when a product is added to the shopping cart, the entire page shouldn't be reloaded (only a partial reload of the shopping cart should be necessary). And the teams want to avoid unnecessary knowledge of each other's domain, i.e. the Product team should not need to know that the shopping cart should be updated when adding a product to the shopping cart (only the Orders team should know this).
 
@@ -199,7 +199,7 @@ As a side note, we think the [drawbacks of isomorphic web applications](https://
 
 ## [Integration techniques](#integration-techniques)
 
-Going back to our retail example, we see that we need a way to integrate the product pages with the shopping cart. We need to decide where to integrate (client/server), when to integrate (static/dynamic), and what to integrate (data/code/content). All in all, this gives twelve different combinations. We'll go through the most important ones, organised on "what" to integrate.
+Going back to our retail example, we see that we need a way to integrate the product pages with the shopping cart. We need to decide where to integrate (client/server), when to integrate (static/dynamic), and what to integrate (data/code/content). All in all, this gives twelve different combinations. We go through the most important ones, organised on "what" to integrate.
 
 
 <a name="integrating-on-data"></a>
@@ -238,7 +238,7 @@ Another name for including content from another resource is to *[transclude](htt
 
 There are several ways to transclude content. One could for example run imperative code to perform HTTP requests on either the server or client and include the responses at the proper places. However, we think that a declarative approach is better, since it mimics the design of other transcluded content in HTML, like images.
 
-Transclusion can be done either on the server or the client. Transclusion on the client is called Client Side Includes (CSI) and transclusion on the server is called Server Side Includes (SSI). However, SSI is also a specific (and old) language for including files or executing cgi-bin scripts in HTML files (or HTTP responses, in general), so the terms are a bit confusing. We'll try to avoid using the term Server Side Includes for this reason.
+Transclusion can be done either on the server or the client. Transclusion on the client is called Client Side Includes (CSI) and transclusion on the server is called Server Side Includes (SSI). However, SSI is also a specific (and old) language for including files or executing cgi-bin scripts in HTML files (or HTTP responses, in general), so the terms are a bit confusing. We try to avoid using the term Server Side Includes for this reason.
 
 <a name="root-relative-urls"></a>
 
@@ -303,7 +303,7 @@ If we use a CDN provider, we need another ESI implementation on the developer ma
 
 ##### [Summary](#esi-summary)
 
-Where Edge Side Includes really shines is the transclusion of static resources like menus and footers, but for integration with dynamic content it introduces performance risks. With ESI you need to think about how headers are forwarded when doing HTTP integrations. The development perspective is a bit problematic, at least initially. If you use ESI in a CDN and still want the site to be visible on a developer machine, you'll need to find and use only the "lowest common denominator" features between the CDN and the local ESI implementation.
+Where Edge Side Includes really shines is the transclusion of static resources like menus and footers, but for integration with dynamic content it introduces performance risks. With ESI you need to think about how headers are forwarded when doing HTTP integrations. The development perspective is a bit problematic, at least initially. If you use ESI in a CDN and still want the site to be visible on a developer machine, you need to find and use only the "lowest common denominator" features between the CDN and the local ESI implementation.
 
 <a name="client-side-includes"></a>
 
@@ -371,13 +371,13 @@ It's also possible to combine ESI and CSI in related parts of the page. For exam
 
 ## [Client-Side Transclusion with &lt;h-include&gt;](#client-side-transclusion-with-h-include)
 
-In this section, we'll look at how to transclude content on the client-side using the declarative libraries hinclude and &lt;h-include&gt;. We'll also give some general advice when using transclusion. For transparency, we want to point out that the author of this article is the creator and core contributor of the &lt;h-include&gt; library.
+In this section, we look at how to transclude content on the client-side using the declarative libraries hinclude and &lt;h-include&gt;. We also give some general advice when using transclusion. For transparency, we want to point out that the author of this article is the creator and core contributor of the &lt;h-include&gt; library.
 
 <a name="hinclude-and-h-include"></a>
 
 ### [hinclude and &lt;h-include&gt;](#hinclude-and-h-include)
 
-We'll start by looking at the library hinclude.
+We start by looking at the library hinclude.
 
 <a name="hinclude"></a>
 
@@ -403,7 +403,7 @@ The result after transclusion will look something like this:
 </hx:include>
 ```
 
-If a link is used as the fallback content, search engines and other crawlers will be able to crawl the site without executing JavaScript, so we would consider it a good practice. However, this would mean that the link is shown briefly during initial load. In the section on &lt;h-include&gt; below, we'll show how to avoid this brief flash of fallback content.
+If a link is used as the fallback content, search engines and other crawlers will be able to crawl the site without executing JavaScript, so we would consider it a good practice. However, this would mean that the link is shown briefly during initial load. In the section on &lt;h-include&gt; below, we show how to avoid this brief flash of fallback content.
 
 <a name="timing"></a>
 
@@ -500,7 +500,7 @@ Even if our web servers usually responds fast, we'd like to avoid to show a brie
 
 ```
 
-The first line of code is to detect if JavaScript is enabled in the browser at all, otherwise we'll always show the fallback content. The first CSS rule then hides all the &lt;h-include&gt;s that are not included (&lt;h-include&gt; adds an `included` class after the AJAX request returns). The second CSS rule shows all included &lt;h-include&gt;s.
+The first line of code is to detect if JavaScript is enabled in the browser at all, otherwise we always show the fallback content. The first CSS rule then hides all the &lt;h-include&gt;s that are not included (&lt;h-include&gt; adds an `included` class after the AJAX request returns). The second CSS rule shows all included &lt;h-include&gt;s.
 
 <a name="local-stylesheets-and-scripts"></a>
 
