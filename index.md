@@ -7,7 +7,7 @@ layout: default
 <em class="sub-heading">Building consumer facing websites with multiple teams</em>
 
 By Gustaf Nilsson Kotte ([@gustaf_nk](https://twitter.com/gustaf_nk/))<br/>
-Please give feedback and report issues on the [GitHub repository](https://github.com/gustafnk/microservice-web-uis/)
+Please give feedback and report issues on the [GitHub repository](https://github.com/gustafnk/microservice-websites/)
 
 ---
 
