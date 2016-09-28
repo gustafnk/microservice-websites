@@ -35,6 +35,18 @@ img {
   float: left;
 }
 
+@media only screen
+  and (max-device-width: 375px)
+  and (max-device-width: 667px)
+  and (orientation: portrait) {
+  img {
+    max-width: 40rem;
+    float: none;
+    margin: 0 auto;
+    display: block;
+  }
+}
+
 .sub-heading {
   position: relative;
   top: -1rem;
