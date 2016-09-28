@@ -361,13 +361,13 @@ For small screens, one might want to skip the transclusion of some resources to 
 
 One drawback of `hinclude` is that transcluded responses containing *other* `hinclude` elements are not automatically processed. However, this is solved in &lt;h-include&gt;.
 
-#### <a name="h-include">&lt;h-include&gt;</a> <a name="h-include"></a>
+#### &lt;h-include&gt; <a name="h-include"></a>
 
 &lt;h-include&gt; is a port of hinclude using the Web Components standard [Custom Elements](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Custom_Elements) for detecting `hinclude` elements. Among other things, Custom Elements provides us with events when a custom element is created or attached to the DOM. This means that we get transitive transclusion “for free" when using &lt;h-include&gt;.
 
 ##### Easy to extend <a name="easy-to-extend"></a>
 
-It’s easy to extend &lt;h-include&gt;, since it’s is a custom element and exposes its prototype. The simplest extension is to disable automatic transclusion, so that the `refresh` method needs to be called in order to load the content. This is how we would create such an extension, called `h-include-manual-loading`:
+&lt;h-include&gt; is easy to extend, since it’s a custom element and exposes its prototype. The simplest extension is to disable automatic transclusion, so that the `refresh` method needs to be called in order to load the content. This is how we would create such an extension, called `h-include-manual-loading`:
 
 ```
 var proto = Object.create(HIncludeElement.prototype);
@@ -648,7 +648,7 @@ We use &lt;h-include&gt; to keep the initial infrastructure lightweight. For sty
 
 We replace the &lt;h-include&gt; elements with ESI when appropriate, in order to increase performance and decrease the number of web requests. To reference component local JavaScript, remove the script loaders and inline the script elements with the transcluded content, as described in [Local stylesheets and scripts](#local-stylesheets-and-scripts).
 
-If we want to include the shopping cart with ESI and still partially update the shopping cart when the user adds a product, we need to wrap the transcluded content in an `h-include-manual-loading`.
+If we want to include the shopping cart with ESI and still partially update the shopping cart when the user adds a product, we need to wrap the transcluded content in an [`h-include-manual-loading`](#easy-to-extend).
 
 ---
 
