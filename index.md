@@ -76,7 +76,7 @@ The approach of [Self-Contained Systems](http://scs-architecture.org) (SCS) is a
 
 ### [Example: Retail site](#example-retail-site)
 
-I’ll use a retail site as an example in this article. The retail site has two teams – Products and Orders – where the Products team is responsible for showing the products to the users and the Orders team is responsible for the shopping cart and the checkout flow. The number of items in the shopping cart should be visible on each product page and it should be possible to add products to the shopping cart with a single click.
+We’ll use a retail site as an example in this article. The retail site has two teams – Products and Orders – where the Products team is responsible for showing the products to the users and the Orders team is responsible for the shopping cart and the checkout flow. The number of items in the shopping cart should be visible on each product page and it should be possible to add products to the shopping cart with a single click.
 
 Further, when a product is added to the shopping cart, the entire page shouldn't be reloaded (only a partial reload of the shopping cart should be necessary). And the teams want to avoid unnecessary knowledge of each other’s domain, i.e. the Product team should not need to know that the shopping cart should be updated when adding a product to the shopping cart (only the Orders team should know this).
 
@@ -200,7 +200,7 @@ As a side note, we think the [drawbacks of isomorphic web applications](https://
 
 ## [Integration techniques](#integration-techniques)
 
-Going back to our retail example, we see that we need a way to integrate the product pages with the shopping cart. We need to decide where to integrate (client/server), when to integrate (static/dynamic), and what to integrate (data/code/content). All in all, this gives twelve different combinations. I’ll go through the most important ones, organised on “what" to integrate.
+Going back to our retail example, we see that we need a way to integrate the product pages with the shopping cart. We need to decide where to integrate (client/server), when to integrate (static/dynamic), and what to integrate (data/code/content). All in all, this gives twelve different combinations. We’ll go through the most important ones, organised on “what" to integrate.
 
 
 <a name="integrating-on-data"></a>
