@@ -363,7 +363,7 @@ One drawback of `hinclude` is that transcluded responses containing *other* `hin
 
 #### &lt;h-include&gt; <a name="h-include"></a>
 
-&lt;h-include&gt; is a port of hinclude using the Web Components standard [Custom Elements](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Custom_Elements) for detecting `hinclude` elements. Among other things, Custom Elements provides us with events when a custom element is created or attached to the DOM. This means that we get transitive transclusion “for free" when using &lt;h-include&gt;.
+&lt;h-include&gt; is a port of hinclude using the Web Components standard [Custom Elements](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Custom_Elements) for detecting inclusion elements in the DOM. Among other things, Custom Elements provides us with events when a custom element is created or attached to the DOM. This means that we get transitive transclusion “for free" when using &lt;h-include&gt;.
 
 ##### Easy to extend <a name="easy-to-extend"></a>
 
@@ -391,9 +391,13 @@ Another extension to &lt;h-include&gt; could be to be trigger anchor scrolling a
 
 There are a few more features in &lt;h-include&gt; that you can read about its [GitHub page](https://github.com/gustafnk/h-include).
 
-##### How to avoid a brief flash of fallback content <a name="how-to-avoid-a-brief-flash-of-fallback-content"></a>
+##### Drawbacks <a name="drawbacks"></a>
 
-Even if our web servers usually responds fast, we’d like to avoid to show a brief flash of fallback content for our &lt;h-include&gt;s. Here’s an example of how to do it:
+In order to use &lt;h-include&gt;, we need to conditionally load a polyfill for Custom Elements, for those browsers that don’t support Custom Elements. There are a few polyfills to choose from but one property that unites them all is that they drop support for Internet Explorer around version 9 or 10.
+
+### How to avoid a brief flash of fallback content <a name="how-to-avoid-a-brief-flash-of-fallback-content"></a>
+
+Even if our web servers usually responds fast, we’d like to avoid to show a brief flash of fallback content for our hincludes &lt;h-include&gt;s. Here’s an example of how to do it with &lt;h-include&gt;s:
 
 ```
 <!-- Put this code before the first h-include or in the <head> element -->
@@ -415,10 +419,6 @@ Even if our web servers usually responds fast, we’d like to avoid to show a br
 ```
 
 The first line of code is to detect if JavaScript is enabled in the browser at all, otherwise we’ll always show the fallback content. The first CSS rule then hides all the &lt;h-include&gt;s that are not included (&lt;h-include&gt; adds an `included` class after the AJAX request returns). The second CSS rule shows all included &lt;h-include&gt;s.
-
-##### Drawbacks <a name="drawbacks"></a>
-
-In order to use &lt;h-include&gt;, we need to conditionally load a polyfill for Custom Elements, for those browsers that don’t support Custom Elements. There are a few polyfills to choose from but one property that unites them all is that they drop support for Internet Explorer around version 9 or 10.
 
 ### <a name="local-stylesheets-and-scripts"></a>Local stylesheets and scripts <a name="local-stylesheets-and-scripts"></a>
 
