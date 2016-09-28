@@ -25,7 +25,7 @@ So, what are good ways of building a network of microservice web UIs?
 
 The meaning behind the word “good" depends on the current and future needs of the organisation responsible for the software and the users of the software. No architecture is good in-itself, it all depends on the context and the needs.
 
-With this article we want to show that [*server-side rendered web UIs integrated on content*](#content) (using [transclusion](https://en.wikipedia.org/wiki/Transclusion)) allow for high *long-term evolvability* compared to client-side rendering integrated with shared code. In other words, if you want a system with high long-term evolvability, you should not develop web UIs using only client-side JavaScript and integrate them using a shared components approach.
+With this article we want to show that [*server-side rendered web UIs integrated on content*](#integrating-on-content) (using [transclusion](https://en.wikipedia.org/wiki/Transclusion)) allow for high *long-term evolvability* compared to client-side rendering integrated with shared code. In other words, if you want a system with high long-term evolvability, you should not develop web UIs using only client-side JavaScript and integrate them using a shared components approach.
 
 We also want to show that Client Side Includes is a good first choice for transclusion technology, since they are lightweight and allow for a faster initial release than Edge Side Includes (ESI). They also allow for keeping the option open for using ESI later, when beneficial. We describe and compare two related Client Side Include libraries: hinclude and h-include. We also give a suggestion for an approach to work with both global and service local JavaScript and CSS.
 
@@ -42,9 +42,9 @@ The article begins with a short introdution to microservices. Before moving on t
 - [Scaling web design: style guides and pattern labs](#scaling-web-design)
 - [Assumptions and constraints](#assumptions-and-constraints)
 - [Integration techniques](#integration-techniques)
-  - [Integrating on data](#data)
-  - [Integrating on code](#code)
-  - [Integrating on content](#content)
+  - [Integrating on data](#integrating-on-data)
+  - [Integrating on code](#integrating-on-code)
+  - [Integrating on content](#integrating-on-content)
     - [Edge Side Includes](#edge-side-includes)
     - [Client Side Includes](#client-side-includes)
     - [Using ESI and CSI together](#using-esi-and-csi-together)
@@ -203,9 +203,9 @@ As a side note, we think the [drawbacks of isomorphic web applications](https://
 Going back to our retail example, we see that we need a way to integrate the product pages with the shopping cart. We need to decide where to integrate (client/server), when to integrate (static/dynamic), and what to integrate (data/code/content). All in all, this gives twelve different combinations. I’ll go through the most important ones, organised on “what" to integrate.
 
 
-<a name="data"></a>
+<a name="integrating-on-data"></a>
 
-### [Integrating on data](#data)
+### [Integrating on data](#integrating-on-data)
 
 Integrating on data in our example means that the Orders team will expose an API endpoint containing the shopping cart information for a logged in user. The Products team can then build their own component that use that API to display a shopping cart.
 
@@ -213,9 +213,9 @@ This approach means that we will have as many shopping cart components as we hav
 
 Also, if we’re not using [hypermedia controls](http://amundsen.com/hypermedia/hfactor/), we will have a duplication of business logic in the components. Say that we have a rule that says that a user should not be able to proceed to checkout if the user has zero products in their basket. In this case, it means that the rule will be implemented by all shopping cart API consumers.
 
-<a name="code"></a>
+<a name="integrating-on-code"></a>
 
-### [Integrating on code](#code)
+### [Integrating on code](#integrating-on-code)
 
 In our retail example, integrating on code means that the Orders team will develop and publish code that the Product team will take a dependency on. The teams need to agree on the mechanisms necessary to render the component. Now, if the Product team need to integrate with a Recommendations team, they too need to agree on the mechanisms necessary to render the component.
 
@@ -229,9 +229,9 @@ Another drawback of integrating on code is release management. In our example ab
 
 For the site as a whole, you can either have separate release trains for the separate teams, which will cause inconsistencies on for example how the shopping cart works. Or you can have a big coordinated release train for the whole site, which reduces the benefits of microservice quite a bit.
 
-<a name="content"></a>
+<a name="integrating-on-content"></a>
 
-### [Integrating on content](#content)
+### [Integrating on content](#integrating-on-content)
 
 Integrating on content in our example means means that the Orders team will expose an API endpoint containing the HTML representation for the shopping cart information for a logged in user. This is similar to when we integrate on data, except that nothing more needs to be done to render the information, other than the web browser software itself.
 
@@ -759,7 +759,7 @@ With microservices we get a better architectural/organisational fit (see [Conway
 
 If you develop [consumer facing websites](#consumer-facing-websites) and value both ["Time To Interaction"](#time-to-interaction-is-important) performance and [long-term evolvability from heterogeneity](#long-term-evolvability-comes-from-heterogeneity), you should use server-side rendering.
 
-How do we want to integrate our services? [Integrating on data](#data) is safe, but don't allow for economies of scale (the effort is duplicated by each team). [Integrating on code](#code) creates the need for release trains, which is costly and hurts agility. [Integrating on content](#content) (also known as [transclusion](https://en.wikipedia.org/wiki/Transclusion)) allow the teams to decouple their release cycles, while not duplicating their efforts.
+How do we want to integrate our services? [Integrating on data](#integrating-on-data) is safe, but don't allow for economies of scale (the effort is duplicated by each team). [Integrating on code](#integrating-on-code) creates the need for release trains, which is costly and hurts agility. [Integrating on content](#integrating-on-content) (also known as [transclusion](https://en.wikipedia.org/wiki/Transclusion)) allow the teams to decouple their release cycles, while not duplicating their efforts.
 
 One declarative server-side transclusion technique is [Edge Side Includes](#edge-side-includes) (ESI), which is supported by a few CDNs and some caching HTTP reverse proxies. ESI is infrastructure heavy, so it might hurt your initial project delivery speed. ESI is something that we can easily refactor to later, if wanted.
 
