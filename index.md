@@ -2,7 +2,7 @@
 layout: default
 ---
 
-# Microservice Websites
+# Micro&shy;service Websites
 
 <em class="sub-heading">Building consumer facing websites with multiple teams</em>
 
