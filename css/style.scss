@@ -47,6 +47,13 @@ img {
   }
 }
 
+@media only screen
+  and (orientation: portrait) {
+  body {
+    font-size: larger;
+  }
+}
+
 .sub-heading {
   position: relative;
   top: -1rem;
