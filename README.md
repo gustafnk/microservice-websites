@@ -1,9 +1,5 @@
 # Microservice Websites
 
-<em class="sub-heading">Building consumer facing websites with multiple teams</em>
-
----
-
 How can we develop websites where the different parts of the pages are developed by different teams? If you work in a large enough organization which has its content and services on the web, this is probably a question you have asked yourself several times.
 
 There are no lack of technologies to choose from when building websites today. Three broad strategies can be identified: client-side rendering, server-side rendering, or both (isomorphic web applications).
