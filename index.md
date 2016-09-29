@@ -191,8 +191,6 @@ On the server-side there is much less change, in terms of frameworks and librari
 
 For the purposes of this article, the same constraints that apply to client-side web applications apply to isomorphic web applications as well. Therefore, we can think of the two strategies as the same thing, namely using a large amount of templating code on the client-side.
 
-As a side note, we think the [drawbacks of isomorphic web applications](https://www.jayway.com/2016/05/23/6-reasons-isomorphic-web-apps-not-silver-bullet-youre-looking/) are too large, compared with the benefits. However, *isomorphic parts* could be a good choice sometimes.
-
 ---
 
 <a name="integration-techniques"></a>
