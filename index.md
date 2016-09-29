@@ -252,7 +252,7 @@ Using root relative URLs (i.e.' /path/to/resource') to external resources is a b
 
 [Edge-Side Include](https://en.wikipedia.org/wiki/Edge_Side_Includes) (ESI) is a technology that provides a declarative way to include content on the server-side, like this:
 
-```
+```html
 <esi:include src="/shopping-cart" />
 ```
 
@@ -385,7 +385,7 @@ In January 2006, Mark Nottingham sent an email to www-archive list at W3C, claim
 
 hinclude uses a custom xml element name in a separate XML namespace to declaratively include resources, like this:
 
-```
+```html
 <hx:include src="/shopping-cart/component">
   <a href="/shopping-cart/component">Shopping cart</a>
 </hx:include>
@@ -395,7 +395,7 @@ When the DOM has loaded, hinclude will find all the `hx:include` elements in the
 
 The result after transclusion will look something like this:
 
-```
+```html
 <hx:include src="/shopping-cart/component">
   <div>You have 0 items in your <a href="/shopping-cart">shopping cart</a></div>
 </hx:include>
@@ -441,7 +441,7 @@ One drawback of hinclude is that transcluded responses containing *other* `hincl
 
 &lt;h-include&gt; is easy to extend, since it's a custom element and exposes its prototype. The simplest extension is to disable automatic transclusion, so that the `refresh` method needs to be called in order to load the content. This is how we would create such an extension, called `h-include-manual-loading`:
 
-```
+```js
 var proto = Object.create(HIncludeElement.prototype);
 proto.attachedCallback = function() {};
 document.registerElement('h-include-manual-loading', {
@@ -479,7 +479,7 @@ In order to use &lt;h-include&gt;, we need to conditionally load a polyfill for 
 
 Even if our web servers usually responds fast, we'd like to avoid to show a brief flash of fallback content for our hincludes and &lt;h-include&gt;s. Here's an example of how to do it with &lt;h-include&gt;s:
 
-```
+```html
 <!-- Put this code before the first h-include or in the <head> element -->
 <script>
   <!-- https://gist.github.com/egeorjon/6755681 -->
@@ -495,7 +495,6 @@ Even if our web servers usually responds fast, we'd like to avoid to show a brie
     visibility: visible;
   }
 </style>
-
 ```
 
 The first line of code is to detect if JavaScript is enabled in the browser at all, otherwise we always show the fallback content. The first CSS rule then hides all the &lt;h-include&gt;s that are not included (&lt;h-include&gt; adds an `included` class after the AJAX request returns). The second CSS rule shows all included &lt;h-include&gt;s.
@@ -512,7 +511,7 @@ When integrating microservice websites and components, we need to think more car
 
 If we optimize for browsers supporting HTTP/2 (and SPDY) it's not necessary to load stylesheets in the head ([https://jakearchibald.com/2016/link-in-body/](https://jakearchibald.com/2016/link-in-body/)). Early in the product lifecycle, we can include references to stylesheets in the transcluded responses, like this:
 
-```
+```html
 <h-include src="/shopping-cart/component">
   <link rel="stylesheet" href="/shopping-cart/component/style.css"> <!-- after transclusion -->
   <!-- shopping cart content here -->
@@ -523,13 +522,13 @@ This approach would cause two HTTP requests in series, since the browser wouldn'
 
 If we want to avoid having series of HTTP request we can use ESI instead, which would look like this:
 
-```
+```html
 <esi:include src="/shopping-cart/component">
 ```
 
 ...which after inclusion becomes:
 
-```
+```html
 <link rel="stylesheet" href="/shopping-cart/component/style-[hash].css">
 <!-- shopping cart content here -->
 ```
@@ -544,7 +543,7 @@ When importing scripts for transcluded content, we are more constrained than whe
 
 If we don't want to use ESI at the initial phase of the product development, we need to do a bit of thinking (if we have a limited amount of scripts, one approach could of course be to let all scripts be exposed as shared resources). One approach could be to use [HTML Imports](https://www.html5rocks.com/en/tutorials/webcomponents/imports/) to include the scripts, like this:
 
-```
+```html
 <h-include src="/shopping-cart/component">
   <!-- shopping cart content here -->
 </h-include>
@@ -555,7 +554,7 @@ One downside with this approach is that the polyfills for HTML Imports use `eval
 
 Instead, we can use a script loader, i.e. [little-loader](https://github.com/walmartlabs/little-loader), to load cache busted script files:
 
-```
+```html
 <!-- global resource in head -->
 <script src="/shared/vendor/little-loader.js"></script>
 
@@ -571,7 +570,7 @@ Instead, we can use a script loader, i.e. [little-loader](https://github.com/wal
 
 Where `/shopping-cart/component/script.js` would look like this:
 
-```
+```js
 window._lload('/shopping-cart/component/the-script-[hash].js";
 ```
 
@@ -583,13 +582,13 @@ This way, we can release new versions of local scripts without forcing consumers
 
 With ESI enabled, we can use the same approach as for loading CSS, i.e. inlining the script reference in the transcluded content, like this:
 
-```
+```html
 <esi:include src="/shopping-cart/component">
 ```
 
 ...which after inclusion becomes:
 
-```
+```html
 <link rel="stylesheet" href="/shopping-cart/component/style-[hash].css">
 <script src="/shopping-cart/component/script-[hash].js"></script>
 <!-- shopping cart content here -->
@@ -618,7 +617,7 @@ Going back to our retail example, we now know how to expose a shopping cart comp
 
 First, let's make sure users without JavaScript get an updated shopping cart when they add products to it. Each product item in the list of products contains a form with a button:
 
-```
+```html
 <form method="POST" action="/shopping-cart/add" class="hijack">
   <input type="hidden" name="product-id" value="123"> 
   <button type="submit">Add to shopping cart</button>
@@ -627,13 +626,13 @@ First, let's make sure users without JavaScript get an updated shopping cart whe
 
 In the `shopping-cart/add` resource, we then redirect to the value of the `Referer` header, or the shopping cart itself if the header value is not set. In node/express, this could look like this:
 
-```
+```js
 res.redirect(req.header('Referer') || '/shopping-cart');
 ```
 
 For users with JavaScript enabled, we want to "hijack" the form submit and replace the default browser behavior with custom behavior, namely to refresh the shopping cart on a successful AJAX form submission. We do this with jQuery:
 
-```
+```js
 $(document).on('submit', 'form.hijack', function(event) {
     event.preventDefault();
 
@@ -655,7 +654,7 @@ For small sites, this can be enough. But for larger sites, this type of code wil
 
 If the server detects that AJAX was used to submit the form, it can return something else than a redirect response. Instead, it can return a list of *events* that some client-side infrastructure should process. In node/express, like this:
 
-```
+```js
 if (req.xhr) { // req.xhr is true if the header 'X-Requested-With' is 'XMLHttpRequest'
   res.send({ events: ['shopping-cart-item-added'] });
 } else {
@@ -667,7 +666,7 @@ if (req.xhr) { // req.xhr is true if the header 'X-Requested-With' is 'XMLHttpRe
 
 The transcluded content needs to be decorated with a `data-` attribute, to indicate that it should be refreshed on one or several events:
 
-```
+```html
 <div data-refresh-on="shopping-cart-item-added">
   <!-- shopping cart here -->
 </div>
@@ -675,7 +674,7 @@ The transcluded content needs to be decorated with a `data-` attribute, to indic
 
 Finally, we need a piece of client-side infrastructure code to glue this together. The following example could be the seed of such code:
 
-```
+```js
 var IncludesRefresher = {
   refresh: function(eventNames){
 
@@ -713,7 +712,7 @@ In short, for each element with the attribute `data-refresh-on` and each event r
 
 We then need to use the `IncludesRefresher` when we "hijack" the form:
 
-```
+```js
 $(document).on('submit', 'form.hijack', function(event) {
     // ...
 
