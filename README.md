@@ -16,7 +16,7 @@ So, what are good ways of building a network of microservice websites and compon
 
 The meaning behind the word "good" depends on the current and future needs of the organisation responsible for the software and the users of the software. No architecture is good in-itself, it all depends on the context and the needs.
 
-With this article we want to show that [*server-side rendered websites integrated on content*](index.html#integrating-on-content) (using [transclusion](https://en.wikipedia.org/wiki/Transclusion)) allow for high *long-term evolvability* compared to client-side rendering integrated with shared code. In other words, if you want a system with high long-term evolvability, you should not develop websites using only client-side JavaScript and integrate them using a shared components approach.
+With this article we want to show that [*server-side rendered websites integrated on content*](https://gustafnk.github.io/microservice-websites/#integrating-on-content) (using [transclusion](https://en.wikipedia.org/wiki/Transclusion)) allow for high *long-term evolvability* compared to client-side rendering integrated with shared code. In other words, if you want a system with high long-term evolvability, you should not develop websites using only client-side JavaScript and integrate them using a shared components approach.
 
 We also want to show that Client Side Includes is a good first choice for transclusion technology, since they are lightweight and allow for a faster initial release than Edge Side Includes (ESI). They also allow for keeping the option open for using ESI later, when beneficial. We describe and compare two related Client Side Include libraries: hinclude and h-include. We also give a suggestion for an approach to work with both global and service local JavaScript and CSS.
 
@@ -28,20 +28,20 @@ The article begins with a short introdution to microservices. Before moving on t
 
 ## Table of Contents
 
-- [Why Microservices?](index.htmlindex.html#why-microservices)
-- [Scaling web design: style guides and pattern labs](index.html#scaling-web-design)
-- [Assumptions and constraints](index.html#assumptions-and-constraints)
-- [Integration techniques](index.html#integration-techniques)
-  - [Integrating on data](index.html#integrating-on-data)
-  - [Integrating on code](index.html#integrating-on-code)
-  - [Integrating on content](index.html#integrating-on-content)
-    - [Edge Side Includes](index.html#edge-side-includes)
-    - [Client Side Includes](index.html#client-side-includes)
-    - [Using ESI and CSI together](index.html#using-esi-and-csi-together)
-- [Client-Side Transclusion with &lt;h-include&gt;](index.html#client-side-transclusion-with-h-include)
-  - [hinclude and &lt;h-include&gt;](index.html#hinclude-and-h-include)
-  - [Local stylesheets and scripts](index.html#local-stylesheets-and-scripts)
-  - [Server driven partial updates](index.html#server-driven-partial-updates)
-- [Example architecture](index.html#example-architecture)
-- [Conclusion](index.html#conclusion)
+- [Why Microservices?](https://gustafnk.github.io/microservice-websites/#why-microservices)
+- [Scaling web design: style guides and pattern labs](https://gustafnk.github.io/microservice-websites/#scaling-web-design)
+- [Assumptions and constraints](https://gustafnk.github.io/microservice-websites/#assumptions-and-constraints)
+- [Integration techniques](https://gustafnk.github.io/microservice-websites/#integration-techniques)
+  - [Integrating on data](https://gustafnk.github.io/microservice-websites/#integrating-on-data)
+  - [Integrating on code](https://gustafnk.github.io/microservice-websites/#integrating-on-code)
+  - [Integrating on content](https://gustafnk.github.io/microservice-websites/#integrating-on-content)
+    - [Edge Side Includes](https://gustafnk.github.io/microservice-websites/#edge-side-includes)
+    - [Client Side Includes](https://gustafnk.github.io/microservice-websites/#client-side-includes)
+    - [Using ESI and CSI together](https://gustafnk.github.io/microservice-websites/#using-esi-and-csi-together)
+- [Client-Side Transclusion with &lt;h-include&gt;](https://gustafnk.github.io/microservice-websites/#client-side-transclusion-with-h-include)
+  - [hinclude and &lt;h-include&gt;](https://gustafnk.github.io/microservice-websites/#hinclude-and-h-include)
+  - [Local stylesheets and scripts](https://gustafnk.github.io/microservice-websites/#local-stylesheets-and-scripts)
+  - [Server driven partial updates](https://gustafnk.github.io/microservice-websites/#server-driven-partial-updates)
+- [Example architecture](https://gustafnk.github.io/microservice-websites/#example-architecture)
+- [Conclusion](https://gustafnk.github.io/microservice-websites/#conclusion)
 - [Appendix](appendix.html)
