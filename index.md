@@ -89,7 +89,7 @@ In this article, we will think of our services as Self-Contained Systems, since 
 
 ## [Scaling web design: style guides and pattern labs](#scaling-web-design)
 
-Web design across multiple teams is always a challenge, regardless of the software architecture. Even if the microservice architecture allows for mostly autonomous teams, they still need to agree on (or comply to) a common web design.
+Web design across multiple teams is always a challenge, regardless of the software architecture. Even if the microservice architecture allows for mostly autonomous teams, they still need to agree on (or comply with) a common web design.
 
 One way to create and communicate around a common web design is to use a *style guide*. A style guide is a toolbox of graphical elements, where some elements in the style guide can consist of other elements from the style guide. 
 
@@ -145,7 +145,7 @@ Quite related to the above assumption is that if you're building a consumer-faci
 
 #### [Time to interaction is important](#time-to-interaction-is-important)
 
-For a consumer-facing website, the metric "Time To Interact" is at least as important as the metric "Time to First Meaningful Render". Again, if you're not building a consumer-facing website, this might not be true.
+For a consumer-facing website, the metric "Time to Interact" is at least as important as the metric "Time to First Meaningful Render". Again, if you're not building a consumer-facing website, this might not be true.
 
 <a name="long-term-evolvability-comes-from-heterogeneity"></a>
 
@@ -165,7 +165,7 @@ The environment on the server and the client (the different browsers) are not al
 
 Historically, the limiting factor has been the network. However, today the limiting factor more and more also tends to be the CPU, since we increasingly use mobile devices when browsing the web. Many websites also rely on a lot of JavaScript being executed before they can show any meaningful content.
 
-Parsing of JavaScript is a CPU-bound operation and the CPUs in many mobile devices are not fast. Therefore, you should limit the amount of JavaScript being used on pages capable of being viewed on mobile browsers.
+Parsing of JavaScript is a CPU-bound operation and the CPUs on many mobile devices are not fast. Therefore, you should limit the amount of JavaScript being used on pages capable of being viewed on mobile browsers.
 
 <a name="less-room-for-change-of-framework"></a>
 
@@ -181,7 +181,7 @@ Having two frameworks (or ecosystems) on the same page simultaneously is costly,
 
 #### [High rate of change on the client-side](#high-rate-of-change-on-the-client-side)
 
-The number of technologies for building client-side web applications has formally exploded during the last ten years, which has led to a high rate of change in how we build these applications. However, when the common idea of how we build good client-side web application changes, the view of our current code bases also change: we increasingly get the feeling that our code base is written in a legacy technology. This can lead to that trend-sensitive developers are leaving the organisation for more modern code bases, or that the pressure for rewriting the code increases.
+The number of technologies for building client-side web applications has virtually exploded in the last ten years, which has led to a high rate of change in how we build these applications. However, when the common idea of how we build good client-side web applications changes, the view of our current code bases also change: we increasingly get the feeling that our code base is written in a legacy technology. This can lead to trend-sensitive developers leaving the organisation for more modern code bases, or increase the pressure for rewriting the code.
 
 On the server side there is much less change, in terms of frameworks and libraries. This is probably due to the fact that HTTP has been used as the delivery mechanism for server-side rendered web since the early days of the web.
 
@@ -214,7 +214,7 @@ Also, if we're not using [hypermedia controls](http://amundsen.com/hypermedia/hf
 
 ### [Integrating on code](#integrating-on-code)
 
-In our retail example, integrating on code means that the Orders team will develop and publish code that the Product team will take a dependency on. The teams need to agree on the mechanisms necessary to render the component. Now, if the Product team need to integrate with a Recommendations team, they too need to agree on the mechanisms necessary to render the component.
+In our retail example, integrating on code means that the Orders team will develop and publish code that the Product team will depend on. The teams need to agree on the mechanisms necessary to render the component. Now, if the Product team need to integrate with a Recommendations team, they too need to agree on the mechanisms necessary to render the component.
 
 On the server side, one could agree to use the JVM and to only use JVM-based languages. Or, maybe to use some other form of interoperability technique between two separate run-times. 
 
@@ -222,7 +222,7 @@ But on the client side web, the situation is much worse, since the client needs 
 
 This means that the system as a whole can no longer be heterogeneous – not without a large performance penalty – which hurts long-term evolvability.
 
-Another drawback of integrating on code is release management. In our example above, if all three teams have two versions of their software each, NEW and OLD, we get eight possible combinations of possible release artifacts. The solution to this problem is to introduce [release trains](http://www.scaledagileframework.com/agile-release-train/) – you have to be in time to in order for your software to be a part of the Product team release.
+Another drawback of integrating on code is release management. In our example above, if all three teams have two versions of their software each, NEW and OLD, we get eight possible combinations of possible release artifacts. The solution to this problem is to introduce [release trains](http://www.scaledagileframework.com/agile-release-train/) – you have to be in time in order for your software to be a part of the Product team release.
 
 For the site as a whole, you can either have separate release trains for the separate teams, which will cause inconsistencies on for example how the shopping cart works. Or you can have a big coordinated release train for the whole site, which reduces the benefits of microservice quite a bit.
 
@@ -232,7 +232,7 @@ For the site as a whole, you can either have separate release trains for the sep
 
 Integrating on content in our example means means that the Orders team will expose an API endpoint containing the HTML representation for the shopping cart information for a logged in user. This is similar to when we integrate on data, except that nothing more needs to be done to render the information, other than the web browser software itself.
 
-Another name for including content from another resource is to *[transclude](https://en.wikipedia.org/wiki/Transclusion)* the content from another service (inlining a document in the current document), like '&lt;img&gt;' elements in HTML pages.
+Another name for including content from another resource is to *[transclude](https://en.wikipedia.org/wiki/Transclusion)* the content from another service (inlining a document within the current document), like '&lt;img&gt;' elements in HTML pages.
 
 There are several ways to transclude content. One could for example run imperative code to perform HTTP requests on either the server or client and include the responses at the proper places. However, we think that a declarative approach is better, since it mimics the design of other transcluded content in HTML, like images.
 
@@ -753,7 +753,7 @@ If we want to include the shopping cart with ESI and still partially update the 
 
 With microservices we get a better architectural/organisational fit (see [Conway's Law](https://en.wikipedia.org/wiki/Conway%27s_law)), independent team deploys, and support for a heterogenous system.
 
-If you develop [consumer-facing websites](#consumer-facing-websites) and value both ["Time To Interaction"](#time-to-interaction-is-important) performance and [long-term evolvability from heterogeneity](#long-term-evolvability-comes-from-heterogeneity), you should use server-side rendering.
+If you develop [consumer-facing websites](#consumer-facing-websites) and value both ["Time to Interaction"](#time-to-interaction-is-important) performance and [long-term evolvability from heterogeneity](#long-term-evolvability-comes-from-heterogeneity), you should use server-side rendering.
 
 How do we want to integrate our services? [Integrating on data](#integrating-on-data) is safe, but don't allow for economies of scale (the effort is duplicated by each team). [Integrating on code](#integrating-on-code) creates the need for release trains, which is costly and hurts agility. [Integrating on content](#integrating-on-content) (also known as [transclusion](https://en.wikipedia.org/wiki/Transclusion)) allow the teams to decouple their release cycles, while not duplicating their efforts.
 
