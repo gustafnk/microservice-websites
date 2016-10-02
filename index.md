@@ -329,7 +329,7 @@ Even though iFrames should be considered a CSI technology, it's not a good solut
 
 ##### [Performance](#csi-performance)
 
-The performance of CSI is quite the opposite of ESI. It allows the transcluding page to load and render without waiting for the transcluded resources to load. Again, very much like an '<img>' tag. The downside of this, as with images, is that the page can "jump up and down" if we don't specify fixed dimensions of the transcluded content.
+The performance of CSI is quite the opposite of ESI. It allows the transcluding page to load and render without waiting for the transcluded resources to load. Again, very much like an '&lt;img&gt;' tag. The downside of this, as with images, is that the page can "jump up and down" if we don't specify fixed dimensions of the transcluded content.
 
 Before HTTP/2, the browser would create one TCP request for each transclusion, but today more and more browsers ([http://caniuse.com/#feat=http2](http://caniuse.com/#feat=http2), [http://caniuse.com/#feat=spdy](http://caniuse.com/#feat=spdy)) and servers are supporting HTTP/2.
 
