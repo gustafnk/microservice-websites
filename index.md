@@ -4,7 +4,7 @@ layout: default
 
 # Micro&shy;service Websites
 
-<em class="sub-heading">Building consumer facing websites with multiple teams</em>
+<em class="sub-heading">Building consumer-facing websites with multiple teams</em>
 
 By Gustaf Nilsson Kotte ([@gustaf_nk](https://twitter.com/gustaf_nk/))<br/>
 Please give feedback and report issues on the [GitHub repository](https://github.com/gustafnk/microservice-websites/)
@@ -131,33 +131,33 @@ These are the assumptions that we are base our reasoning on:
 
 <a name="consumer-facing-websites"></a>
 
-#### [Consumer facing website](#consumer-facing-websites)
+#### [Consumer-facing website](#consumer-facing-websites)
 
-We assume that you are building a consumer facing website. You can still benefit from reading this article if you're building a private web application or similar, but the constraints are quite different.
+We assume that you are building a consumer-facing website. You can still benefit from reading this article if you're building a private web application or similar, but the constraints are quite different.
 
 <a name="not-only-desktop-web"></a>
 
 #### [Not only building for desktop web browsers](#not-only-desktop-web)
 
-Quite related to the above assumption is that if you're building a consumer facing website, you think that it's important that users that browse your website with something else than a desktop web browser should have a good experience.
+Quite related to the above assumption is that if you're building a consumer-facing website, you think that it's important that users that browse your website with something else than a desktop web browser should have a good experience.
 
 <a name="time-to-interaction-is-important"></a>
 
 #### [Time to interaction is important](#time-to-interaction-is-important)
 
-For a consumer facing website, the metric "Time To Interact" is at least as important as the metric "Time to First Meaningful Render". Again, if you're not building a consumer facing website, this might not be true.
+For a consumer-facing website, the metric "Time To Interact" is at least as important as the metric "Time to First Meaningful Render". Again, if you're not building a consumer-facing website, this might not be true.
 
 <a name="long-term-evolvability-comes-from-heterogeneity"></a>
 
 #### [Long-term evolvability comes from heterogeneity](#long-term-evolvability-comes-from-heterogeneity)
 
-In order to evolve a system over time, the system needs to support that parts are built in different technologies, as long as the parts follow an agreed upon protocol. The protocol should be as generic as possible, thus not being based on a particular programming language or framework.
+In order to evolve a system over time, the system needs to support that parts are built in different technologies, as long as the parts follow an agreed-upon protocol. The protocol should be as generic as possible, thus not being based on a particular programming language or framework.
 
 <a name="client-side-constraints"></a>
 
 ### [Client-side constraints](#client-side-constraints)
 
-The environment on the server and the client (the different browsers) are not alike. On the client-side, you are constrained by the user's device, network quality, and runtime. Also, compared to the server-side, there's a high degree of *diversity* of devices, network quality, and runtime. The web is messy – which is a good argument for using [Progressive Enhancement](https://en.wikipedia.org/wiki/Progressive_enhancement).
+The environment on the server and the client (the different browsers) are not alike. On the client side, you are constrained by the user's device, network quality, and runtime. Also, compared to the server side, there's a high degree of *diversity* of devices, network quality, and runtime. The web is messy – which is a good argument for using [Progressive Enhancement](https://en.wikipedia.org/wiki/Progressive_enhancement).
 
 <a name="some-mobile-devices-have-a-slow-cpu"></a>
 
@@ -165,15 +165,15 @@ The environment on the server and the client (the different browsers) are not al
 
 Historically, the limiting factor has been the network. However, today the limiting factor more and more also tends to be the CPU, since we increasingly use mobile devices when browsing the web. Many websites also rely on a lot of JavaScript being executed before they can show any meaningful content.
 
-Parsing of JavaScript is a CPU bound operation and the CPUs in many mobile devices are not fast. Therefore, you should limit the amount of JavaScript being used on pages capable of being viewed on mobile browsers.
+Parsing of JavaScript is a CPU-bound operation and the CPUs in many mobile devices are not fast. Therefore, you should limit the amount of JavaScript being used on pages capable of being viewed on mobile browsers.
 
 <a name="less-room-for-change-of-framework"></a>
 
 #### [Less room for change of framework](#less-room-for-change-of-framework)
 
-On the server-side, we can partition our systems basically however we want and use different languages and frameworks for the different parts. There is certainly a cost associated with using multiple languages/frameworks at the same time, but this cost is mostly "cognitive" for the organisation. The big upside with allowing for multiple languages/frameworks is that the system can be migrated from using tech A to using tech B over a quite long period of time, without the user being aware of it. 
+On the server side, we can partition our systems basically however we want and use different languages and frameworks for the different parts. There is certainly a cost associated with using multiple languages/frameworks at the same time, but this cost is mostly "cognitive" for the organisation. The big upside with allowing for multiple languages/frameworks is that the system can be migrated from using tech A to using tech B over a quite long period of time, without the user being aware of it. 
 
-On the client-side however, the cost of doing the same move would be much higher, since the end-user needs to download/parse/execute a double amount of code for the length of the migration. This means that the amount of time that the migration is active is a cost factor as well. And we suspect that this could be a reason behind why teams often want to rewrite their client-side web applications instead of migrating them.
+On the client side however, the cost of doing the same move would be much higher, since the end-user needs to download/parse/execute a double amount of code for the length of the migration. This means that the amount of time that the migration is active is a cost factor as well. And we suspect that this could be a reason behind why teams often want to rewrite their client-side web applications instead of migrating them.
 
 Having two frameworks (or ecosystems) on the same page simultaneously is costly, which in turn leads to low evolvability of the system.
 
@@ -183,13 +183,13 @@ Having two frameworks (or ecosystems) on the same page simultaneously is costly,
 
 The number of technologies for building client-side web applications has formally exploded during the last ten years, which has led to a high rate of change in how we build these applications. However, when the common idea of how we build good client-side web application changes, the view of our current code bases also change: we increasingly get the feeling that our code base is written in a legacy technology. This can lead to that trend-sensitive developers are leaving the organisation for more modern code bases, or that the pressure for rewriting the code increases.
 
-On the server-side there is much less change, in terms of frameworks and libraries. This is probably due to the fact that HTTP has been used as the delivery mechanism for server-side rendered web since the early days of the web.
+On the server side there is much less change, in terms of frameworks and libraries. This is probably due to the fact that HTTP has been used as the delivery mechanism for server-side rendered web since the early days of the web.
 
 <a name="isomorphic-web-applications-do-not-resolve-the-constraints"></a>
 
 #### [Isomorphic web applications do not resolve the constraints](#isomorphic-web-applications-do-not-resolve-the-constraints)
 
-For the purposes of this article, the same constraints that apply to client-side web applications apply to isomorphic web applications as well. Therefore, we can think of the two strategies as the same thing, namely using a large amount of templating code on the client-side.
+For the purposes of this article, the same constraints that apply to client-side web applications apply to isomorphic web applications as well. Therefore, we can think of the two strategies as the same thing, namely using a large amount of templating code on the client side.
 
 ---
 
@@ -216,9 +216,9 @@ Also, if we're not using [hypermedia controls](http://amundsen.com/hypermedia/hf
 
 In our retail example, integrating on code means that the Orders team will develop and publish code that the Product team will take a dependency on. The teams need to agree on the mechanisms necessary to render the component. Now, if the Product team need to integrate with a Recommendations team, they too need to agree on the mechanisms necessary to render the component.
 
-On the server-side, one could agree to use the JVM and to only use JVM based languages. Or, maybe to use some other form of interoperability technique between two separate run-times. 
+On the server side, one could agree to use the JVM and to only use JVM-based languages. Or, maybe to use some other form of interoperability technique between two separate run-times. 
 
-But on the client-side web, the situation is much worse, since the client needs to download/read from cache, parse, and execute all the libraries necessary to render all components on the page. For a desktop computer on a fiber connection, this might not be too bad, but on the mobile web, with a limited CPU and network, this is very bad for performance.
+But on the client side web, the situation is much worse, since the client needs to download/read from cache, parse, and execute all the libraries necessary to render all components on the page. For a desktop computer on a fiber connection, this might not be too bad, but on the mobile web, with a limited CPU and network, this is very bad for performance.
 
 This means that the system as a whole can no longer be heterogeneous – not without a large performance penalty – which hurts long-term evolvability.
 
@@ -250,13 +250,13 @@ Using root relative URLs (i.e.' /path/to/resource') to external resources is a b
 
 #### [Edge Side Includes](#edge-side-includes)
 
-[Edge-Side Include](https://en.wikipedia.org/wiki/Edge_Side_Includes) (ESI) is a technology that provides a declarative way to include content on the server-side, like this:
+[Edge-Side Include](https://en.wikipedia.org/wiki/Edge_Side_Includes) (ESI) is a technology that provides a declarative way to include content on the server side, like this:
 
 ```html
 <esi:include src="/shopping-cart">
 ```
 
-Edge Side Includes is today the most popular way of transcluding content on the server-side.
+Edge Side Includes is today the most popular way of transcluding content on the server side.
 
 <div class="fact-box">
 <dl class="typl8-lining">
@@ -269,7 +269,7 @@ Edge Side Includes is today the most popular way of transcluding content on the 
 
 ##### [Performance](#esi-performance)
 
-Since transclusion is made on the server-side, it's not possible to inspect the returned HTML response and draw a conclusion that ESI was used. However, this property of ESI also introduces risk for degraded performance, since we need to rely on the included services' performance in order to create a complete page. If the transcluded content is cacheable, we can cache the fragments and the performance risk is removed. But for dynamic content, this option is not available.
+Since transclusion is made on the server side, it's not possible to inspect the returned HTML response and draw a conclusion that ESI was used. However, this property of ESI also introduces risk for degraded performance, since we need to rely on the included services' performance in order to create a complete page. If the transcluded content is cacheable, we can cache the fragments and the performance risk is removed. But for dynamic content, this option is not available.
 
 In our example, if we want to transclude the shopping cart (which contains dynamic content) early in the HTML and it at that time is having problems with performance, ESI will block the rest of the response until the service has responded or the ESI request times out.
 
@@ -369,7 +369,7 @@ It's also possible to combine ESI and CSI in related parts of the page. For exam
 
 ## [Client-Side Transclusion with &lt;h-include&gt;](#client-side-transclusion-with-h-include)
 
-In this section, we look at how to transclude content on the client-side using the declarative libraries hinclude and &lt;h-include&gt;. We also give some general advice when using transclusion. For transparency, we want to point out that the author of this article is the creator and core contributor of the &lt;h-include&gt; library.
+In this section, we look at how to transclude content on the client side using the declarative libraries hinclude and &lt;h-include&gt;. We also give some general advice when using transclusion. For transparency, we want to point out that the author of this article is the creator and core contributor of the &lt;h-include&gt; library.
 
 <a name="hinclude-and-h-include"></a>
 
@@ -753,7 +753,7 @@ If we want to include the shopping cart with ESI and still partially update the 
 
 With microservices we get a better architectural/organisational fit (see [Conway's Law](https://en.wikipedia.org/wiki/Conway%27s_law)), independent team deploys, and support for a heterogenous system.
 
-If you develop [consumer facing websites](#consumer-facing-websites) and value both ["Time To Interaction"](#time-to-interaction-is-important) performance and [long-term evolvability from heterogeneity](#long-term-evolvability-comes-from-heterogeneity), you should use server-side rendering.
+If you develop [consumer-facing websites](#consumer-facing-websites) and value both ["Time To Interaction"](#time-to-interaction-is-important) performance and [long-term evolvability from heterogeneity](#long-term-evolvability-comes-from-heterogeneity), you should use server-side rendering.
 
 How do we want to integrate our services? [Integrating on data](#integrating-on-data) is safe, but don't allow for economies of scale (the effort is duplicated by each team). [Integrating on code](#integrating-on-code) creates the need for release trains, which is costly and hurts agility. [Integrating on content](#integrating-on-content) (also known as [transclusion](https://en.wikipedia.org/wiki/Transclusion)) allow the teams to decouple their release cycles, while not duplicating their efforts.
 
