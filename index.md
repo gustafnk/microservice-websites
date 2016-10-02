@@ -253,7 +253,7 @@ Using root relative URLs (i.e.' /path/to/resource') to external resources is a b
 [Edge-Side Include](https://en.wikipedia.org/wiki/Edge_Side_Includes) (ESI) is a technology that provides a declarative way to include content on the server side, like this:
 
 ```html
-<esi:include src="/shopping-cart">
+<esi:include src="/shopping-cart"/>
 ```
 
 Edge Side Includes is today the most popular way of transcluding content on the server side.
@@ -523,7 +523,7 @@ This approach would cause two HTTP requests in series, since the browser wouldn'
 If we want to avoid having series of HTTP request we can use ESI instead, which would look like this:
 
 ```html
-<esi:include src="/shopping-cart/component">
+<esi:include src="/shopping-cart/component"/>
 ```
 
 ...which after inclusion becomes:
