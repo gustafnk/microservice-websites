@@ -295,7 +295,7 @@ From a development perspective, ESI is quite problematic. How can we see complet
 
 If we use a cache like Varnish [VARNISH] to get ESI, the development environment either needs to be enhanced with a virtual machine (i.e. VirtualBox) or a container (i.e. Docker), to run the cache on the developer machines. This approach increases the upfront infrastructure investment needed.
 
-If we use a CDN provider, we need another ESI implementation on the developer machines. And that ESI implementation need to match the CDN provider's implementation, at least for the parts of the ESI specification used. Then, we can either choose to include a cache on the developer machines, or to use a library for your platform, like nodesi [https://github.com/Schibsted-Tech-Polska/nodesi] for node.js. 
+If we use a CDN provider, we need another ESI implementation on the developer machines. And that ESI implementation need to match the CDN provider's implementation, at least for the parts of the ESI specification used. Then, we can either choose to include a cache on the developer machines, or to use a library for your platform, like [nodesi](https://github.com/Schibsted-Tech-Polska/nodesi) for node.js. 
 
 <a name="esi-summary"></a>
 
