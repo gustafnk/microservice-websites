@@ -261,7 +261,7 @@ Edge Side Includes is today the most popular way of transcluding content on the 
 <div class="fact-box">
 <dl class="typl8-lining">
   <dt><b>Edge</b></dt>
-  <dd>The term <i>edge</i> in Edge Side Includes should be seen as the last physical node in our control that is passed by a HTTP response <i>before</i> it reaches the user's computer. If we're using a CDN with ESI support, like Akamai or Fastly, we call that layer our edge. Otherwise, if we use the caching HTTP reverse proxy Varnish (which has ESI support) in our infrastructure, that layer can be considered to be our edge. Finally, if we not using either of the above options, we can consider the web server(s) our edge.</dd>
+  <dd>The term <i>edge</i> in Edge Side Includes should be seen as the last physical node in our control that is passed by a HTTP response <i>before</i> it reaches the user's computer. If we're using a CDN with ESI support, like Akamai or Fastly, we call that layer our edge. Otherwise, if we use the caching HTTP reverse proxy Varnish (which has ESI support) in our infrastructure, that layer can be considered to be our edge. Finally, if we're not using either of the above options, we can consider the web server(s) our edge.</dd>
 </dl>
 </div>
 
