@@ -571,7 +571,7 @@ Instead, we can use a script loader, i.e. [little-loader](https://github.com/wal
 Where `/shopping-cart/component/script.js` would look like this:
 
 ```js
-window._lload('/shopping-cart/component/the-script-[hash].js";
+window._lload("/shopping-cart/component/the-script-[hash].js");
 ```
 
 This way, we can release new versions of local scripts without forcing consumers to update their code. However, this approach means that we make HTTP requests in series for loading local scripts, since we need to download `/shopping-cart/component/scripts.js` in order to download the actual scripts the component need.
