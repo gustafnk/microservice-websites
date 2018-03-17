@@ -501,7 +501,9 @@ The first line of code is to detect if JavaScript is enabled in the browser at a
 
 ### [Local stylesheets and scripts](#local-stylesheets-and-scripts)
 
-When integrating microservice websites and components, we need to think more carefully on how to transclude content that depends on specific stylesheets and/or scripts. Regardless of if we use a pattern lab or not (see [Scaling web design: style guides and pattern labs](#scaling-web-design)), we probably end up in a scenario where we have some JavaScript and CSS exposed in shared resources (globally available), while some resources are only used within a microservice (locally available). How to transclude content that has a dependency locally available JavaScript and/or CSS then needs to be decided.
+When integrating microservice websites and components, we need to think more carefully on how to transclude content that depends on specific stylesheets and/or scripts. We probably are in a scenario where we have a small amount of JavaScript and CSS exposed in shared resources (globally available), while most resources are only used within a microservice (locally available). How to transclude content that has a dependency on locally available JavaScript and/or CSS then needs to be decided.
+
+Below, we assume that we use immutable stylesheet and script files, in order to be able to have long browser cache times (i.e. a year). This is a best practice is web development. But it also introduces a complication, since we don't want fragment consumers to need to update their references to a specific hash when the fragment producer updates the style or scripts. Therefor, style and script references need to be part of the transcluded fragments in some way.
 
 <a name="local-stylesheets"></a>
 
