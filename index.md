@@ -510,9 +510,9 @@ When integrating microservice websites and components, we need to think more car
 If we optimize for browsers supporting HTTP/2 (and SPDY) it's not necessary to load stylesheets in the head ([https://jakearchibald.com/2016/link-in-body/](https://jakearchibald.com/2016/link-in-body/)). Early in the product lifecycle, we can include references to stylesheets in the transcluded responses, like this:
 
 ```html
-<h-include src="/shopping-cart/component">
-  <link rel="stylesheet" href="/shopping-cart/component/style.css"> <!-- after transclusion -->
-  <!-- shopping cart content here -->
+<h-include src="/header-footer/component">
+  <link rel="stylesheet" href="/header-footer/component/style.css"> <!-- after transclusion -->
+  <!-- header/footer content here -->
 </h-include>
 ```
 
@@ -521,17 +521,17 @@ This approach would cause two HTTP requests in series, since the browser wouldn'
 If we want to avoid having series of HTTP request we can use ESI instead, which would look like this:
 
 ```html
-<esi:include src="/shopping-cart/component"/>
+<esi:include src="/header-footer/component"/>
 ```
 
 ...which after inclusion becomes:
 
 ```html
-<link rel="stylesheet" href="/shopping-cart/component/style-[hash].css">
-<!-- shopping cart content here -->
+<link rel="stylesheet" href="/header-footer/component/style-[hash].css">
+<!-- header/footer content here -->
 ```
 
-Note that going from CSI to ESI, we now have introduced a performance risk for the transcluding page. Sometimes the benefit is worth the risk and sometimes not. However, the shopping cart's internal architecture matters here as well, so maybe the performance risk is actually quite low.
+But we one more problem to solve. In general, if we want to support the ability to include multiple instances of the same content type, we need to separate the style imports with the content imports, to avoid duplication of stylesheet references.
 
 <a name="local-scripts"></a>
 
@@ -542,37 +542,15 @@ When importing scripts for transcluded content, we are more constrained than whe
 If we don't want to use ESI at the initial phase of the product development, we need to do a bit of thinking (if we have a limited amount of scripts, one approach could of course be to let all scripts be exposed as shared resources). One approach could be to use [HTML Imports](https://www.html5rocks.com/en/tutorials/webcomponents/imports/) to include the scripts, like this:
 
 ```html
-<h-include src="/shopping-cart/component">
-  <!-- shopping cart content here -->
+<h-include src="/header-footer/component">
+  <!-- header/footer content here -->
 </h-include>
-<link rel="import" href="/shopping-cart/component/scripts">
+<link rel="import" href="/header-footer/component/scripts">
 ```
 
 One downside with this approach is that the polyfills for HTML Imports use `eval` to run referenced JavaScript files, which is a violation of the [Content Security Policy](https://en.wikipedia.org/wiki/Content_Security_Policy) Level 2 (CSP). Using the CSP removes many common web security threats, so it's a good practice to enable it, which in turn means that we today should think twice before use HTML Imports.
 
-Instead, we can use a script loader, i.e. [little-loader](https://github.com/walmartlabs/little-loader), to load cache busted script files:
-
-```html
-<!-- global resource in head -->
-<script src="/shared/vendor/little-loader.js"></script>
-
-<!-- shopping cart component -->
-<h-include src="/shopping-cart/component">
-  <!-- shopping cart content here -->
-</h-include>
-<-- more content here -->
-<!-- use the good practice of loading scripts at the bottom of the page -->
-<script src="/shopping-cart/component/scripts.js"></script>
-</body></html>
-```
-
-Where `/shopping-cart/component/script.js` would look like this:
-
-```js
-window._lload("/shopping-cart/component/the-script-[hash].js");
-```
-
-This way, we can release new versions of local scripts without forcing consumers to update their code. However, this approach means that we make HTTP requests in series for loading local scripts, since we need to download `/shopping-cart/component/scripts.js` in order to download the actual scripts the component need.
+But, instead we should start using ESI for loading scripts.
 
 <a name="local-scripts-with-esi-enabled"></a>
 
@@ -581,14 +559,14 @@ This way, we can release new versions of local scripts without forcing consumers
 With ESI enabled, we can use the same approach as for loading CSS, i.e. inlining the script reference in the transcluded content, like this:
 
 ```html
-<esi:include src="/shopping-cart/component">
+<esi:include src="/header-footer/component">
 ```
 
 ...which after inclusion becomes:
 
 ```html
-<link rel="stylesheet" href="/shopping-cart/component/style-[hash].css">
-<script src="/shopping-cart/component/script-[hash].js"></script>
+<link rel="stylesheet" href="/header-footer/component/style-[hash].css">
+<script src="/header-footer/component/script-[hash].js"></script>
 <!-- shopping cart content here -->
 ```
 
@@ -599,6 +577,8 @@ Note that the page rendering now blocks and this point in the code until the scr
 
 The `async` and `defer` attributes are relatively well supported by the browsers. For more details, see [Deep dive into the murky waters of script loading](http://www.html5rocks.com/en/tutorials/speed/script-loading/).
 
+Again, note that we in general want to separate between content and style/script fragments, in order to avoid duplicate link/script tags.
+
 <a name="local-scripts-and-stylesheets-summary"></a>
 
 #### [Summary](#local-scripts-and-stylesheets-summary)
@@ -606,6 +586,8 @@ The `async` and `defer` attributes are relatively well supported by the browsers
 In the beginning of the product development, include stylesheets references in the CSI responses. The services should expose a JavaScript file that in turns calls a script loader. The consumers should reference that JavaScript file at the bottom of each page.
 
 When ESI is part of the infrastructure, remove the references to the JavaScript script loader and inline the scripts with the transcluded content. Note that this operation crosses two service boundaries, so it either needs to be coordinated or the scripts need to be able to detect if they have already been loaded (and then do nothing).
+
+Separate style/script fragments and content fragments to avoid duplication of link/script tags.
 
 <a name="server-driven-partial-updates"></a>
 
