@@ -95,17 +95,7 @@ One way to create and communicate around a common web design is to use a *style 
 
 Using a style guide is not risk free. One risk is that a design team authors a style guide that the teams start to use but over time deviates from. It's hard for a design team to see all the future design needs of the teams. Another risk is that a policy is created that force the teams to use the style guide, either by creating a "style guide CSS library" or by creating a "QA step" before releases. Regardless, forcing a style guide on the teams creates a bottleneck for delivery, which runs opposite to the distributed development style of the microservice architecture.
 
-A promising improvement on the style guide is the *living style guide* or the *[pattern lab](http://www.bigeng.io/the-living-style-guide-pattern-lab/)*. Here, mutations of the existing style guide elements are fed back into the style guide itself, creating a catalog of existing mutations of some or all of the style guide elements. A subset of the style guide can then be published as a shared resources, directly available for the teams, while still allowing the teams to develop local mutations.
-
-If one service needs to take a dependency on another service with local mutations, style information need to be integrated as well. In the section [Local stylesheets and scripts](#local-stylesheets-and-scripts), we cover how this could be implemented.
-
-<a name="different-design-means-different-resources"></a>
-
-### [Different design means different resources](#different-design-means-different-resources)
-
-In theory, if the same information is displayed in two different places with different styling, the same HTML markup but different CSS rules could be used, given that there is some way of detecting the different contexts. This would probably be the most Don't-Repeat-Yourself (DRY) approach. However, being too DRY also introduces coupling. For us, it means that we will have trouble changing our markup without introducing regressions – it's hard to find out in what way our markup is used and styled by our consumers of the service.
-
-A better approach is to use distinctive names for our pattern lab elements and use these names in the stylesheets. This way, we have a one-to-one relationship between the HTML markup for a pattern lab element and the CSS for it, which makes it easier to get feedback on what impact our changes have.
+A promising improvement on the style guide is the *living style guide* or the *[pattern lab](http://www.bigeng.io/the-living-style-guide-pattern-lab/)*. Here, mutations of the existing style guide elements are fed back into the style guide itself, creating a catalog of existing mutations of some or all of the style guide elements.
 
 <a name="responsive-adaptive-web-design"></a>
 
