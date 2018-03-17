@@ -273,9 +273,7 @@ Since transclusion is made on the server side, it's not possible to inspect the 
 
 In our example, if we want to transclude the shopping cart (which contains dynamic content) early in the HTML and it at that time is having problems with performance, ESI will block the rest of the response until the service has responded or the ESI request times out.
 
-Also, one can argue that websites integrated with ESI is a violation of [Self-Contained Systems](http://scs-architecture.org/), since the page is no longer autonomous: if the shopping cart request is hanging, the whole page is hanging.
-
-To be fair though, ESI is really performant when it comes to transcluding static HTML files or cacheable content.
+In theory, one can argue that websites integrated with ESI is a violation of [Self-Contained Systems](http://scs-architecture.org/), since the page is no longer autonomous: if the header/footer requests are hanging, the whole page is hanging. But this is only true in the presence of actual performance problems. Using longer edge-side cache times (hours), together with the ability to purge the edge-side cache, this is not a problem in practice. Using static files (instead of live requests) also removes this problem.
 
 <a name="esi-headers"></a>
 
