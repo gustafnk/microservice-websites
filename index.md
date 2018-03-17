@@ -33,7 +33,7 @@ The meaning behind the word "good" depends on the current and future needs of th
 
 With this article we want to show that [*server-side rendered websites integrated on content*](#integrating-on-content) (using [transclusion](https://en.wikipedia.org/wiki/Transclusion)) allow for high *long-term evolvability* compared to client-side rendering integrated with shared code. In other words, if you want a system with high long-term evolvability, you should not develop websites using only client-side JavaScript and integrate them using a shared components approach.
 
-We also want to show that Client Side Includes is a good first choice for transclusion technology, since they are lightweight and allow for a faster initial release than Edge Side Includes (ESI). They also allow for keeping the option open for using ESI later, when beneficial. We describe and compare two related Client Side Include libraries: hinclude and h-include. We also give a suggestion for an approach to work with both global and service local JavaScript and CSS.
+We describe and compare two related Client Side Include libraries: hinclude and h-include. We also give a suggestion for an approach to work with both global and service local JavaScript and CSS.
 
 Throughout this article, we use an retail site as an example. In the end of this article, we give a brief description of an example architecture for this retail site.
 
@@ -79,7 +79,7 @@ The approach of [Self-Contained Systems](http://scs-architecture.org) (SCS) is a
 
 ### [Example: Retail site](#example-retail-site)
 
-We use a retail site as an example in this article. The retail site has two teams – Products and Orders – where the Products team is responsible for showing the products to the users and the Orders team is responsible for the shopping cart and the checkout flow. The number of items in the shopping cart should be visible on each product page and it should be possible to add products to the shopping cart with a single click.
+We use a retail site as an example in this article. The retail site has three teams – Navigation, Products and Orders – where the Navigation team is responsible for header/footer, the Products team is responsible for showing the products to the users, and the Orders team is responsible for the shopping cart and the checkout flow. The number of items in the shopping cart should be visible on each product page and it should be possible to add products to the shopping cart with a single click.
 
 Further, when a product is added to the shopping cart, the entire page shouldn't be reloaded (only a partial reload of the shopping cart should be necessary). And the teams want to avoid unnecessary knowledge of each other's domain, i.e. the Product team should not need to know that the shopping cart should be updated when adding a product to the shopping cart (only the Orders team should know this).
 
