@@ -11,6 +11,10 @@ Please give feedback and report issues on the [GitHub repository](https://github
 
 ---
 
+**Note:** A *much* more terse version of this article's content and conclusions is found on the site for [Microservice Websites](http://microservice-websites.netlify.com/) (i.e. "manifesto style").
+
+---
+
 How can we develop websites where the different parts of the pages are developed by different teams? If you work in a large enough organization which has its content and services on the web, this is probably a question you have asked yourself several times.
 
 There are no lack of technologies to choose from when building websites today. Three broad strategies can be identified: client-side rendering, server-side rendering, or both (isomorphic web applications).
