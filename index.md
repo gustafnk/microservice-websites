@@ -739,7 +739,7 @@ How do we want to integrate our services? [Integrating on data](#integrating-on-
 
 One declarative server-side transclusion technique is [Edge Side Includes](#edge-side-includes) (ESI), which is supported by a few CDNs and some caching HTTP reverse proxies. ESI is infrastructure heavy, so it might hurt your initial project delivery speed. ESI is something that we can easily refactor to later, if wanted.
 
-Declarative [Client Side Includes](#client-side-includes) (CSI) allows for better initial project delivery speed than ESI, and together with HTTP/2 the performance is not too bad for many scenarios. However, CSI introduces some challenges with loading service local JavaScript, but that challenges are solvable with [script loaders](#local-scripts).
+Declarative [Client Side Includes](#client-side-includes) (CSI) allows for better initial project delivery speed than ESI, and together with HTTP/2 the performance is not too bad for many scenarios. However, one of the largest downsides with CSI is the lack of SEO support out-of-the-box.
 
 Two related CSI libraries are [hinclude and &lt;h-include&gt;](#hinclude-and-h-include). The latter is a web components port of the former, with a few added features. In summary, &lt;h-include&gt; supports transitive includes, fragment extraction, extension points, and possible lazy loading on scroll, but the drawback is that it only supports IE9/IE10 and up.
 
