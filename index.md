@@ -35,7 +35,7 @@ With this article we want to show that [*server-side rendered websites integrate
 
 We describe and compare two related Client Side Include libraries: hinclude and h-include. We also give a suggestion for an approach to work with both global and service local JavaScript and CSS.
 
-Throughout this article, we use an retail site as an example. In the end of this article, we give a brief description of an example architecture for this retail site.
+Throughout this article, we use a retail site as an example. In the end of this article, we give a brief description of an example architecture for this retail site.
 
 The article begins with a short introdution to microservices. Before moving on to a comparision of integration techniques, we describe a strategy of how the effort of web design can be scaled effectively with *pattern labs*.
 
