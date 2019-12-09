@@ -2,7 +2,7 @@
 
 How can we develop websites where the different parts of the pages are developed by different teams? If you work in a large enough organization which has its content and services on the web, this is probably a question you have asked yourself several times.
 
-There are no lack of technologies to choose from when building websites today. Three broad strategies can be identified: client-side rendering, server-side rendering, or both (isomorphic web applications).
+There is no lack of technologies to choose from when building websites today. Three broad strategies can be identified: client-side rendering, server-side rendering, or both (isomorphic web applications).
 
 To co-exist on the same page, the code for the different parts need to be integrated in some way. Apart from *where* we do rendering (client/server/isomorphic), we also need to decide *when* to integrate (static/dynamic) and *what* to integrate (data/code/content).
 
