@@ -224,7 +224,7 @@ For the site as a whole, you can either have separate release trains for the sep
 
 ### [Integrating on content](#integrating-on-content)
 
-Integrating on content in our example means means that the Orders team will expose an API endpoint containing the HTML representation for the shopping cart information for a logged in user. This is similar to when we integrate on data, except that nothing more needs to be done to render the information, other than the web browser software itself.
+Integrating on content in our example means that the Orders team will expose an API endpoint containing the HTML representation for the shopping cart information for a logged in user. This is similar to when we integrate on data, except that nothing more needs to be done to render the information, other than the web browser software itself.
 
 Another name for including content from another resource is to *[transclude](https://en.wikipedia.org/wiki/Transclusion)* the content from another service (inlining a document within the current document), like '&lt;img&gt;' elements in HTML pages.
 
@@ -497,7 +497,7 @@ The first line of code is to detect if JavaScript is enabled in the browser at a
 
 When integrating microservice websites and components, we need to think more carefully on how to transclude content that depends on specific stylesheets and/or scripts. We probably are in a scenario where we have a small amount of JavaScript and CSS exposed in shared resources (globally available), while most resources are only used within a microservice (locally available). How to transclude content that has a dependency on locally available JavaScript and/or CSS then needs to be decided.
 
-Below, we assume that we use immutable stylesheet and script files, in order to be able to have long browser cache times (i.e. a year). This is a best practice is web development. But it also introduces a complication, since we don't want fragment consumers to need to update their references to a specific hash when the fragment producer updates the style or scripts. Therefor, style and script references need to be part of the transcluded fragments in some way.
+Below, we assume that we use immutable stylesheet and script files, in order to be able to have long browser cache times (i.e. a year). This is a best practice in web development. But it also introduces a complication, since we don't want fragment consumers to need to update their references to a specific hash when the fragment producer updates the style or scripts. Therefore, style and script references need to be part of the transcluded fragments in some way.
 
 <a name="local-stylesheets"></a>
 
