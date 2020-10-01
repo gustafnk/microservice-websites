@@ -24,6 +24,8 @@ Throughout this article, we use an retail site as an example. In the end of this
 
 The article begins with a short introdution to microservices. Before moving on to a comparision of integration techniques, we describe a strategy of how the effort of web design can be scaled effectively with *pattern labs*.
 
+hey, thanks you have read the full article few people only read and have patience if you have read this page is for you.
+
 ---
 
 ## Table of Contents
