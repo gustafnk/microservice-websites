@@ -11,7 +11,7 @@ Please give feedback and report issues on the [GitHub repository](https://github
 
 ---
 
-**Note:** A *much* more terse version of this article's content and conclusions is found on the site for [Microservice Websites](http://microservice-websites.netlify.com/) (i.e. "manifesto style").
+**Note:** A *much* more terse version of this article's content and conclusions is found on the site for [Microservice Websites](http://microservice-websites.netlify.app/) (i.e. "manifesto style").
 
 ---
 
